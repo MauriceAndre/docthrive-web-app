@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actionCreators from "../../../../store/actions/archive";
+import { withTranslation } from "react-i18next";
 import { Accordion, Card, ListGroup, Container } from "react-bootstrap";
 import TreeView from "../../../common/TreeView";
-import { withTranslation } from "react-i18next";
 import { initT, t } from "../../../../utils/intl";
-import style from "./ViewSidebar.module.css";
 import { join } from "./../../../../utils/arrayUtils";
+import style from "./ViewSidebar.module.css";
 
 class ViewSidebar extends Component {
   render() {
-    const { tree, selectedElement, onTreeSelect } = this.props;
+    const { tree, selectedElement } = this.props;
     initT(this.props.t, "archivSidebar");
 
     return (
@@ -54,7 +56,7 @@ class ViewSidebar extends Component {
                 <TreeView
                   tree={tree}
                   selected={selectedElement}
-                  onSelect={onTreeSelect}
+                  onSelect={this.props.onSelectElement}
                 />
               </Card.Body>
             </Accordion.Collapse>
@@ -65,4 +67,19 @@ class ViewSidebar extends Component {
   }
 }
 
-export default withTranslation()(ViewSidebar);
+const mapStateToProps = (state) => {
+  return {
+    selectedElement: state.archive.selectedElement,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSelectElement: (element) =>
+      dispatch(actionCreators.setSelectedElement(element)),
+  };
+};
+
+export default withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(ViewSidebar)
+);

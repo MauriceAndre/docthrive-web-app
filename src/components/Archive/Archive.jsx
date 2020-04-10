@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import Iframe from "react-iframe";
 import Toolbar from "./components/Toolbar";
@@ -11,7 +12,6 @@ import style from "./Archive.module.css";
 
 class Archive extends Component {
   state = {
-    selectedElement: {},
     tree: [],
   };
 
@@ -20,14 +20,9 @@ class Archive extends Component {
     this.setState({ tree });
   };
 
-  handleTreeSelect = (element) => {
-    const selectedElement =
-      element.id !== this.state.selectedElement.id ? element : {};
-    this.setState({ selectedElement });
-  };
-
   render() {
-    const { tree, selectedElement } = this.state;
+    const { selectedElement } = this.props;
+    const { tree } = this.state;
     const file =
       "https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_250kB.ppt";
 
@@ -41,11 +36,7 @@ class Archive extends Component {
               style["view-sidebar"],
             ])}
           >
-            <ViewSidebar
-              tree={tree}
-              selectedElement={selectedElement}
-              onTreeSelect={this.handleTreeSelect}
-            />
+            <ViewSidebar tree={tree} />
           </Col>
           <Col className="section-wrapper">
             <Row className="section-content section section-column">
@@ -72,7 +63,7 @@ class Archive extends Component {
                   </Col>
                   {selectedElement.name && (
                     <Col xs={4} className="bg-light section-wrapper">
-                      <MetaSidebar selectedElement={selectedElement} />
+                      <MetaSidebar />
                     </Col>
                   )}
                 </Row>
@@ -85,4 +76,10 @@ class Archive extends Component {
   }
 }
 
-export default Archive;
+const mapStateToProps = (state) => {
+  return {
+    selectedElement: state.archive.selectedElement,
+  };
+};
+
+export default connect(mapStateToProps)(Archive);

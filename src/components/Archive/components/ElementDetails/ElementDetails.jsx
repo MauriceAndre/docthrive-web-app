@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withTranslation } from "react-i18next";
 import { Container, Col, Row, Form } from "react-bootstrap";
 import { formatToDate } from "../../../../utils/dateUtils";
 import { initT, t } from "../../../../utils/intl";
-import { withTranslation } from "react-i18next";
-import PropTypes from "prop-types";
 
 class ElementDetails extends Component {
   meta = [
@@ -89,4 +90,10 @@ ElementDetails.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(ElementDetails);
+const mapStateToProps = (state) => {
+  return {
+    selectedElement: state.archive.selectedElement,
+  };
+};
+
+export default withTranslation()(connect(mapStateToProps)(ElementDetails));

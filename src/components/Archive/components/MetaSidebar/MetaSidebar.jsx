@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { initT, useT, t } from "../../../../utils/intl";
+import { connect } from "react-redux";
 import { Tabs, Tab, Container, Row, Col } from "react-bootstrap";
-import FloatingButton from "./../../../common/FloatingButton";
 import ElementDetails from "./../ElementDetails";
 import ElementHistory from "./../ElementHistory/ElementHistory";
+import FloatingButton from "./../../../common/FloatingButton";
+import { initT, useT, t } from "../../../../utils/intl";
 import "./MetaSidebar.css";
 // import style from "./MetaSidebar.module.css";
 
@@ -39,11 +40,7 @@ function MetaSidebar({ selectedElement }) {
                 title={t("details")}
                 className="section-content"
               >
-                <ElementDetails
-                  selectedElement={selectedElement}
-                  edit={editing}
-                  onSubmit={handleEditClick}
-                />
+                <ElementDetails edit={editing} onSubmit={handleEditClick} />
               </Tab>
               <Tab
                 eventKey="history"
@@ -69,4 +66,10 @@ function MetaSidebar({ selectedElement }) {
   );
 }
 
-export default MetaSidebar;
+const mapStateToProps = (state) => {
+  return {
+    selectedElement: state.archive.selectedElement,
+  };
+};
+
+export default connect(mapStateToProps)(MetaSidebar);
