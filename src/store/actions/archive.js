@@ -1,8 +1,8 @@
-export const SET_SELECTED_ELEMENT = "SET_SELECTED_ELEMENT";
+import * as actionTypes from "./actionTypes";
 
 export const setSelectedElement = (element) => {
   return {
-    type: SET_SELECTED_ELEMENT,
+    type: actionTypes.SET_SELECTED_ELEMENT,
     value: element,
   };
 };

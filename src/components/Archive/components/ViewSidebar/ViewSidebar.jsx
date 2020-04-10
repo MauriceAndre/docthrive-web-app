@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actionCreators from "../../../../store/actions/archive";
+import * as actionCreators from "../../../../store/actions/index";
 import { withTranslation } from "react-i18next";
 import { Accordion, Card, ListGroup, Container } from "react-bootstrap";
 import TreeView from "../../../common/TreeView";

@@ -1,20 +1,21 @@
-import * as actionTypes from "../actions/archive";
+import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "./../utility";
 
 const initialState = {
   selectedElement: {},
 };
 
-const reducer = (state = initialState, action) => {
+const setSelectedElement = (state, action) => {
   let { selectedElement } = state;
+  selectedElement = selectedElement.id !== action.value.id ? action.value : {};
 
+  return updateObject(state, { selectedElement });
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_SELECTED_ELEMENT:
-      selectedElement =
-        selectedElement.id !== action.value.id ? action.value : {};
-      return {
-        ...state,
-        selectedElement,
-      };
+      return setSelectedElement(state, action);
     default:
       break;
   }
