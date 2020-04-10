@@ -1,0 +1,27 @@
+.upload-btn {
+  border-style: dashed !important;
+  width: 50%;
+  transition: width 500ms !important;
+}
+
+.upload-btn:hover {
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .upload-btn {
+    width: 75%;
+  }
+}
+
+@media (max-width: 992px) {
+  .upload-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 850px) {
+  .upload-btn {
+    width: 100%;
+  }
+}

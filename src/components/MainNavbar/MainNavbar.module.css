@@ -1,0 +1,11 @@
+.navbar {
+  background-color: #e0e0e0 !important;
+  height: var(--main-nav-h);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    background-color: #e0e0e0 !important;
+    height: unset;
+  }
+}

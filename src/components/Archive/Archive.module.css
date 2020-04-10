@@ -1,0 +1,9 @@
+.archive {
+}
+
+.view-sidebar {
+}
+
+.toolbar {
+  flex: 0 0 var(--toolbar-h) !important;
+}

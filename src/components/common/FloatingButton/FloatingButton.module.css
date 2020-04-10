@@ -1,0 +1,40 @@
+.btn {
+  position: absolute;
+  bottom: 50px;
+  right: 20px;
+  z-index: 1;
+  border-radius: 50% !important;
+}
+.btn:hover {
+  border-radius: 50rem !important;
+}
+
+.bottom {
+  bottom: 50px;
+  top: unset;
+}
+
+.top {
+  top: 20px;
+  bottom: unset;
+}
+
+.left {
+  left: 20px;
+  right: unset;
+}
+
+.right {
+  right: 20px;
+  left: unset;
+}
+
+.btn-text {
+  display: none;
+}
+
+.btn:hover .btn-text {
+  display: inline;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}

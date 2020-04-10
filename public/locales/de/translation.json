@@ -1,0 +1,54 @@
+{
+  "mainNavbar": {
+    "uploadBtn": {
+      "label": "Hochladen"
+    },
+    "newDocDropdown": {
+      "template": "Vorlage",
+      "word": "Word",
+      "excel": "Excel",
+      "pp": "PowerPoint"
+    }
+  },
+  "searchBar": {
+    "placeholder": "Suche"
+  },
+  "profileDropdown": {
+    "profile": "Mein Profil",
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
+  },
+  "labelSelect": {
+    "noLabelMsg": "Kein Etikett gefunden",
+    "createLabelMsg": "Erstelle",
+    "options": {
+      "invoice": "Rechnung",
+      "contract": "Vertrag",
+      "email": "E-Mail"
+    }
+  },
+  "archivSidebar": {
+    "tabs": {
+      "views": "Ansichten"
+    },
+    "views": {
+      "date": "Datum",
+      "tree": "Baum",
+      "labels": "Etikett"
+    }
+  },
+  "treeView": {
+    "archive": "Archiv"
+  },
+  "elementDetails": {
+    "name": "Bezeichnung",
+    "type": "Typ",
+    "labels": "Etiketts",
+    "createdAt": "Erstellt am",
+    "updatedAt": "Geändert am"
+  },
+  "metaSidebar": {
+    "details": "Details",
+    "history": "Verlauf"
+  }
+}

@@ -1,0 +1,23 @@
+.search-bar {
+  width: 75% !important;
+  transition: width 500ms;
+}
+
+.search-bar:hover {
+  width: 100% !important;
+}
+
+.search-input {
+  border-radius: 25px 0 0 25px !important;
+}
+
+.search-btn {
+  border-color: #ced4da !important;
+  border-radius: 0 25px 25px 0 !important;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    width: 100% !important;
+  }
+}
