@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { Accordion, Card, ListGroup, Container } from "react-bootstrap";
+import TreeView from "./../TreeView";
+import Icon from "./../../../common/Icon";
 import { initT, t } from "../../../../utils/intl";
 import { join } from "./../../../../utils/arrayUtils";
 import style from "./ViewSidebar.module.css";
-import TreeView from "./../TreeView";
 
 class ViewSidebar extends Component {
   render() {
@@ -26,9 +27,15 @@ class ViewSidebar extends Component {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="views">
               <ListGroup variant="flush">
-                <ListGroup.Item action>{t("views.labels")}</ListGroup.Item>
-                <ListGroup.Item action>{t("views.tree")}</ListGroup.Item>
-                <ListGroup.Item action>{t("views.date")}</ListGroup.Item>
+                <ListGroup.Item action>
+                  <Icon name="tags" /> {t("views.labels")}
+                </ListGroup.Item>
+                <ListGroup.Item action>
+                  <Icon name="folder" /> {t("views.tree")}
+                </ListGroup.Item>
+                <ListGroup.Item action>
+                  <Icon name="calendar-alt" /> {t("views.date")}
+                </ListGroup.Item>
               </ListGroup>
             </Accordion.Collapse>
           </Card>

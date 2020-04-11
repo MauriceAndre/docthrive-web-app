@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
 import { getChildren } from "../../../../services/elementService";
-import TreeView from "../../../common/TreeView/TreeView";
+import Tree from "../../../common/TreeView/TreeView";
 
 class TreeView extends Component {
   state = {
@@ -24,7 +24,7 @@ class TreeView extends Component {
     const { rootElements } = this.state;
 
     return (
-      <TreeView
+      <Tree
         rootElements={rootElements}
         selectedId={selectedElement.id}
         onSelect={onSelectElement}
