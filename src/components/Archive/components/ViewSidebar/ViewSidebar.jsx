@@ -4,7 +4,7 @@ import { Accordion, Card, ListGroup, Container } from "react-bootstrap";
 import { initT, t } from "../../../../utils/intl";
 import { join } from "./../../../../utils/arrayUtils";
 import style from "./ViewSidebar.module.css";
-import ArchiveTree from "./../ArchiveTree";
+import TreeView from "./../TreeView";
 
 class ViewSidebar extends Component {
   render() {
@@ -50,7 +50,7 @@ class ViewSidebar extends Component {
                   style["view-body"],
                 ]}
               >
-                <ArchiveTree />
+                <TreeView />
               </Card.Body>
             </Accordion.Collapse>
           </Card>

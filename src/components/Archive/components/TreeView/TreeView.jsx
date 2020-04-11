@@ -4,7 +4,7 @@ import * as actionCreators from "../../../../store/actions/index";
 import { getChildren } from "../../../../services/elementService";
 import TreeView from "../../../common/TreeView/TreeView";
 
-class ArchiveTree extends Component {
+class TreeView extends Component {
   state = {
     rootElements: [],
   };
@@ -47,4 +47,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArchiveTree);
+export default connect(mapStateToProps, mapDispatchToProps)(TreeView);
