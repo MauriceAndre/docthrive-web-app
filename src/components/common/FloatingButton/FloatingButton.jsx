@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import FontAwesome from "react-fontawesome";
 import PropTypes from "prop-types";
-import style from "./FloatingButton.module.css";
+import Icon from "./../Icon";
 import { join } from "./../../../utils/arrayUtils";
+import style from "./FloatingButton.module.css";
 
 const FloatingButton = ({
   text,
@@ -25,7 +25,7 @@ const FloatingButton = ({
   const content = [
     <span className={style["btn-text"]}>{text}</span>,
     " ",
-    <FontAwesome name={icon} />,
+    <Icon name={icon} />,
   ];
 
   return (
