@@ -52,7 +52,7 @@ function MetaSidebar({ selectedElement }) {
               </Tab>
             </Tabs>
             <FloatingButton
-              text={(editing && "save meta") || "edit meta"}
+              text={(editing && t("save")) || t("edit")}
               variant={editing && "success"}
               icon={(editing && "check") || "pen"}
               bottom

@@ -71,7 +71,7 @@ class ElementDetails extends Component {
     initT(this.props.t, "elementDetails");
 
     return (
-      <Container>
+      <Container className="p-3">
         {this.meta.map((props) => {
           props = { ...props };
           props.label = t(props.label);

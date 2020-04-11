@@ -49,6 +49,8 @@
   },
   "metaSidebar": {
     "details": "Details",
-    "history": "Verlauf"
+    "history": "Verlauf",
+    "edit": "bearbeiten",
+    "save": "speichern"
   }
 }
