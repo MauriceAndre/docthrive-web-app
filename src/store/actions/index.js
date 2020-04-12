@@ -1,2 +1,6 @@
-export { setSelectedElement } from "./archive";
+export {
+  setSelectedElement,
+  setElementTypes,
+  updateElementTypes,
+} from "./archive";
 export {} from "./user";
