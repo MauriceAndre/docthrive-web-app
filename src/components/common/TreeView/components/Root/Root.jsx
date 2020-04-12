@@ -12,6 +12,7 @@ class Root extends Component {
   };
 
   rootId = 1;
+  type = 257;
 
   componentDidMount = async () => {
     const children = await this.props.getChildren(this.rootId);
@@ -19,7 +20,7 @@ class Root extends Component {
   };
 
   render() {
-    const { rootId, props, state } = this;
+    const { rootId, type, props, state } = this;
     const { selectedId, onSelect } = props;
     const { children } = state;
     initT(this.props.t, "treeView");
@@ -27,7 +28,7 @@ class Root extends Component {
     return (
       <li key={rootId} className={style.root}>
         <div
-          onClick={() => onSelect({ id: rootId })}
+          onClick={() => onSelect({ id: rootId, type })}
           className={join([
             style["archive-icon"],
             rootId === selectedId && style.selected,
