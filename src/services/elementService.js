@@ -2,7 +2,7 @@ const elements = [
   {
     id: 20,
     name: "2019",
-    type: 257,
+    type: 258,
     parentId: 1,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -10,7 +10,7 @@ const elements = [
   {
     id: 21,
     name: "Jan",
-    type: 257,
+    type: 258,
     parentId: 20,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -18,7 +18,7 @@ const elements = [
   {
     id: 25,
     name: "Feb",
-    type: 257,
+    type: 258,
     parentId: 20,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -53,7 +53,7 @@ const elements = [
   {
     id: 30,
     name: "2020",
-    type: 257,
+    type: 258,
     parentId: 1,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -61,7 +61,7 @@ const elements = [
   {
     id: 31,
     name: "Jan",
-    type: 257,
+    type: 258,
     parentId: 30,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -78,7 +78,7 @@ const elements = [
   {
     id: 35,
     name: "Feb",
-    type: 257,
+    type: 258,
     parentId: 30,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -104,7 +104,7 @@ const elements = [
   {
     id: 40,
     name: "2021",
-    type: 257,
+    type: 258,
     parentId: 1,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -112,7 +112,7 @@ const elements = [
   {
     id: 41,
     name: "Jan",
-    type: 257,
+    type: 258,
     parentId: 40,
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -147,7 +147,7 @@ const elements = [
   {
     id: 45,
     name: "Feb",
-    type: 257,
+    type: 258,
     parentId: 40,
     createdAt: Date.now(),
     updatedAt: Date.now(),

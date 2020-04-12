@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
 import { Table } from "react-bootstrap";
+import Icon from "./../../../common/Icon/Icon";
 import { getChildren } from "../../../../services/elementService";
 import { formatToDate } from "../../../../utils/dateUtils";
 
@@ -47,14 +48,22 @@ class FolderContent extends Component {
           </thead>
           <tbody>
             {elements.map((element) => {
-              const { name, type, date, labels } = element;
+              const { name, createdAt, labels } = element;
+
+              const type = this.props.elementTypes.find(
+                (type) => type.id === element.type
+              );
 
               return (
                 <tr onDoubleClick={() => onSelectElement(element)}>
-                  <td>{type}</td>
-                  <td>{name}</td>
-                  <td>{formatToDate(date)}</td>
-                  <td>{labels && labels.join(", ")}</td>
+                  <td className="align-middle">
+                    <Icon name={type.icon} />
+                  </td>
+                  <td className="align-middle">{name}</td>
+                  <td className="align-middle">{formatToDate(createdAt)}</td>
+                  <td className="align-middle">
+                    {labels && labels.join(", ")}
+                  </td>
                 </tr>
               );
             })}
@@ -65,6 +74,12 @@ class FolderContent extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    elementTypes: state.archive.elementTypes,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onSelectElement: (element) =>
@@ -72,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(FolderContent);
+export default connect(mapStateToProps, mapDispatchToProps)(FolderContent);

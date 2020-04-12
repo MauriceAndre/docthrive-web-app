@@ -2,11 +2,18 @@ const elementTypes = [
   {
     id: 1,
     name: "File",
-    extension: "*",
+    extensions: ["*"],
+    icon: "file",
   },
   {
     id: 257,
+    name: "Root",
+    icon: "archive",
+  },
+  {
+    id: 258,
     name: "Folder",
+    icon: "folder",
   },
 ];
 

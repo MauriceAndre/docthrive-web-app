@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import * as actionTypes from "./../../store/actions/index";
 import { Container, Row, Col } from "react-bootstrap";
 import MainContent from "./components/MainContent";
 import Toolbar from "./components/Toolbar";
@@ -10,6 +11,10 @@ import { isEmpty } from "./../../utils/objectUtils";
 import style from "./Archive.module.css";
 
 class Archive extends Component {
+  componentDidMount() {
+    this.props.initElementTypes();
+  }
+
   render() {
     const { selectedElement } = this.props;
 
@@ -59,4 +64,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Archive);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initElementTypes: () => dispatch(actionTypes.updateElementTypes()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Archive);
