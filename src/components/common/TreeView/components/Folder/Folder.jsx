@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { join } from "./../../../../../utils/arrayUtils";
 import { renderChild } from "./../../utility";
-import style from "../../TreeView.module.css";
+import style from "./../../TreeView.module.css";
 
 class Folder extends Component {
   state = {
