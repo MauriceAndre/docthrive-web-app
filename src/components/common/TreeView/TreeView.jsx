@@ -24,7 +24,7 @@ class TreeView extends Component {
 }
 
 TreeView.propTypes = {
-  selectedId: PropTypes.object,
+  selectedId: PropTypes.number,
   onSelect: PropTypes.func,
   getChildren: PropTypes.func,
 };

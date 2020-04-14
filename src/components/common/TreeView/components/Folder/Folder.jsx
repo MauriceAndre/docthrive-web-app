@@ -24,7 +24,7 @@ class Folder extends Component {
     const { id, name } = element;
 
     return (
-      <li key={id} className={join([style.folder, expanded && style.show])}>
+      <li className={join([style.folder, expanded && style.show])}>
         <div
           onDoubleClick={() => this.handleExpand()}
           className={join([
@@ -53,7 +53,7 @@ class Folder extends Component {
 }
 
 Folder.propTypes = {
-  selectedId: PropTypes.object,
+  selectedId: PropTypes.number,
   onSelect: PropTypes.func,
   getChildren: PropTypes.func,
 };

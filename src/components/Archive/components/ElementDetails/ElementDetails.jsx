@@ -5,6 +5,7 @@ import { withTranslation } from "react-i18next";
 import { Container, Col, Row, Form } from "react-bootstrap";
 import { initT, t } from "../../../../utils/intl";
 import { format } from "../../../../utils/elementUtils";
+import { generateKey } from "./../../../../utils/componentUtils";
 
 class ElementDetails extends Component {
   inputProps = {
@@ -36,7 +37,7 @@ class ElementDetails extends Component {
 
   renderDefault({ label, value }) {
     return (
-      <Row className="my-1">
+      <Row key={generateKey(label, value)} className="my-1">
         <Col xs={5}>
           <span className="text-muted">{label}</span>
         </Col>

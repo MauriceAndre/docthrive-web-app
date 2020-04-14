@@ -11,7 +11,7 @@ class File extends Component {
     const { id, name } = element;
 
     return (
-      <li key={id} className={style.file}>
+      <li className={style.file}>
         <div
           onClick={() => onSelect(element)}
           className={join([
@@ -27,7 +27,7 @@ class File extends Component {
 }
 
 File.propTypes = {
-  selectedId: PropTypes.object,
+  selectedId: PropTypes.number,
   onSelect: PropTypes.func,
 };
 

@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Icon from "./../Icon";
 import { join } from "./../../../utils/arrayUtils";
+import { generateKey } from "./../../../utils/componentUtils";
 import style from "./FloatingButton.module.css";
 
 const FloatingButton = ({
@@ -23,9 +24,14 @@ const FloatingButton = ({
     right && style["right"],
   ];
   const content = [
-    <span className={style["btn-text"]}>{text}</span>,
+    <span
+      key={generateKey("float_btn_text", icon, true)}
+      className={style["btn-text"]}
+    >
+      {text}
+    </span>,
     " ",
-    <Icon name={icon} />,
+    <Icon key={generateKey("float_btn_icon", icon, true)} name={icon} />,
   ];
 
   return (

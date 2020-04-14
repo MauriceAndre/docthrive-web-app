@@ -5,6 +5,7 @@ import { Table } from "react-bootstrap";
 import Icon from "./../../../common/Icon/Icon";
 import { getChildren } from "../../../../services/elementService";
 import { format } from "../../../../utils/elementUtils";
+import { generateKey } from "./../../../../utils/componentUtils";
 import style from "./FolderContent.module.css";
 
 class FolderContent extends Component {
@@ -49,20 +50,38 @@ class FolderContent extends Component {
           </thead>
           <tbody>
             {elements.map((element) => {
-              const { name, createdAt, labels } = format(element);
+              const { name, createdAt, labels, id } = format(element, true);
 
               const type = this.props.elementTypes.find(
                 (type) => type.id === element.type
               );
 
               return (
-                <tr onDoubleClick={() => onSelectElement(element)}>
-                  <td className="w-1 align-middle">
-                    <Icon name={type.icon} />
+                <tr key={id} onDoubleClick={() => onSelectElement(element)}>
+                  <td
+                    key={generateKey(id, "type")}
+                    className="w-1 align-middle"
+                  >
+                    <Icon key={generateKey(id, "type_icon")} name={type.icon} />
                   </td>
-                  <td className="w-5 align-middle">{name}</td>
-                  <td className="w-2 align-middle">{createdAt}</td>
-                  <td className="w-4 align-middle">{labels}</td>
+                  <td
+                    key={generateKey(id, "name")}
+                    className="w-5 align-middle"
+                  >
+                    {name}
+                  </td>
+                  <td
+                    key={generateKey(id, "date")}
+                    className="w-2 align-middle"
+                  >
+                    {createdAt}
+                  </td>
+                  <td
+                    key={generateKey(id, "labels")}
+                    className="w-4 align-middle"
+                  >
+                    {labels}
+                  </td>
                 </tr>
               );
             })}

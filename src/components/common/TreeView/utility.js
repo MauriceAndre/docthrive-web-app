@@ -14,10 +14,10 @@ export function renderChild(element, scope) {
 
   if (isFolder(element)) {
     // folder
-    result = <Folder getChildren={getChildren} {...props} />;
+    result = <Folder key={element.id} getChildren={getChildren} {...props} />;
   } else {
     // file
-    result = <File {...props} />;
+    result = <File key={element.id} {...props} />;
   }
 
   return result;

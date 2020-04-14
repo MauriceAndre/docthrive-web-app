@@ -43,7 +43,7 @@ class Root extends Component {
 }
 
 Root.propTypes = {
-  selectedId: PropTypes.object,
+  selectedId: PropTypes.number,
   onSelect: PropTypes.func,
   getChildren: PropTypes.func,
 };
