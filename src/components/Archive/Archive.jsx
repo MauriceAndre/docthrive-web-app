@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initElementTypes: () => dispatch(actionTypes.updateElementTypes()),
+    initElementTypes: () => dispatch(actionTypes.getElementTypes()),
   };
 };
 
