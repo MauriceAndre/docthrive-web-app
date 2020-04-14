@@ -17,10 +17,10 @@ class ElementDetails extends Component {
     return (
       <Form onSubmit={this.props.onSubmit}>
         <Form.Row className="my-1">
-          <Col xs={5}>
+          <Col xs={12} md={5}>
             <span className="text-muted">{label}</span>
           </Col>
-          <Col xs={7}>
+          <Col xs={12} md={7}>
             {(render && render({ value, label })) || (
               <Form.Control
                 size="sm"
@@ -38,10 +38,10 @@ class ElementDetails extends Component {
   renderDefault({ label, value }) {
     return (
       <Row key={generateKey(label, value)} className="my-1">
-        <Col xs={5}>
+        <Col xs={12} md={5}>
           <span className="text-muted">{label}</span>
         </Col>
-        <Col xs={7}>
+        <Col xs={12} md={7}>
           <span>{value}</span>
         </Col>
       </Row>
@@ -55,7 +55,7 @@ class ElementDetails extends Component {
     const element = format(selectedElement);
 
     return (
-      <Container className="p-3">
+      <Container className="p-3 section-content overflow-auto">
         {Object.keys(element).map((key) => {
           const props = { ...this.inputProps[key] };
           props.label = t(key);
