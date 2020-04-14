@@ -9,8 +9,8 @@ import { generateKey } from "./../../../../utils/componentUtils";
 
 class ElementDetails extends Component {
   inputProps = {
-    createdAt: { type: "date" },
-    updatedAt: { type: "date" },
+    createdAt: { type: "date", readOnly: true },
+    updatedAt: { type: "date", readOnly: true },
   };
 
   renderEdit({ label, value, type, render }) {
@@ -61,7 +61,10 @@ class ElementDetails extends Component {
           props.label = t(key);
           props.value = element[key];
 
-          return (edit && this.renderEdit(props)) || this.renderDefault(props);
+          return (
+            (edit && !props.readOnly && this.renderEdit(props)) ||
+            this.renderDefault(props)
+          );
         })}
       </Container>
     );
