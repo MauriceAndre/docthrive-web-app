@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Iframe from "react-iframe";
-import FolderContent from "./../FolderContent/FolderContent";
+import FolderContent from "./../FolderContent";
 import FloatingButton from "./../../../common/FloatingButton";
 import { isFolder } from "./../../../../utils/elementUtils";
 

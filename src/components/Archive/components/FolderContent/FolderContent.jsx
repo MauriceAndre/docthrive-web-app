@@ -4,7 +4,8 @@ import * as actionCreators from "../../../../store/actions/index";
 import { Table } from "react-bootstrap";
 import Icon from "./../../../common/Icon/Icon";
 import { getChildren } from "../../../../services/elementService";
-import { formatToDate } from "../../../../utils/dateUtils";
+import { format } from "../../../../utils/elementUtils";
+import style from "./FolderContent.module.css";
 
 class FolderContent extends Component {
   state = { elements: [] };
@@ -36,9 +37,9 @@ class FolderContent extends Component {
     const { onSelectElement } = this.props;
 
     return (
-      <div className="h-100">
-        <Table size="sm" striped hover responsive>
-          <thead>
+      <div className="section">
+        <Table size="sm" striped hover responsive className={style.table}>
+          <thead className={style.header}>
             <tr>
               <th>Type</th>
               <th>Name</th>
@@ -48,7 +49,7 @@ class FolderContent extends Component {
           </thead>
           <tbody>
             {elements.map((element) => {
-              const { name, createdAt, labels } = element;
+              const { name, createdAt, labels } = format(element);
 
               const type = this.props.elementTypes.find(
                 (type) => type.id === element.type
@@ -56,14 +57,12 @@ class FolderContent extends Component {
 
               return (
                 <tr onDoubleClick={() => onSelectElement(element)}>
-                  <td className="align-middle">
+                  <td className="w-1 align-middle">
                     <Icon name={type.icon} />
                   </td>
-                  <td className="align-middle">{name}</td>
-                  <td className="align-middle">{formatToDate(createdAt)}</td>
-                  <td className="align-middle">
-                    {labels && labels.join(", ")}
-                  </td>
+                  <td className="w-5 align-middle">{name}</td>
+                  <td className="w-2 align-middle">{createdAt}</td>
+                  <td className="w-4 align-middle">{labels}</td>
                 </tr>
               );
             })}
