@@ -101,7 +101,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSelectElement: (element) =>
-      dispatch(actionCreators.setSelectedElement(element)),
+      dispatch(actionCreators.storeSelectedElement(element)),
   };
 };
 

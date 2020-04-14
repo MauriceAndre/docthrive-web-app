@@ -1,6 +1,8 @@
 export {
   setSelectedElement,
+  storeSelectedElement,
+  getWorkVersion,
   setElementTypes,
-  updateElementTypes,
+  getElementTypes,
 } from "./archive";
 export {} from "./user";

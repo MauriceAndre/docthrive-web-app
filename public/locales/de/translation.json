@@ -52,5 +52,8 @@
     "history": "Verlauf",
     "edit": "bearbeiten",
     "save": "speichern"
+  },
+  "fileContent": {
+    "fullscreen": "Vollbild"
   }
 }
