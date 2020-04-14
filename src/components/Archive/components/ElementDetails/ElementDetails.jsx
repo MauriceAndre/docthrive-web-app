@@ -3,31 +3,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withTranslation } from "react-i18next";
 import { Container, Col, Row, Form } from "react-bootstrap";
-import { formatToDate } from "../../../../utils/dateUtils";
 import { initT, t } from "../../../../utils/intl";
+import { format } from "../../../../utils/elementUtils";
 
 class ElementDetails extends Component {
-  meta = [
-    { label: "name", value: "name" },
-    { label: "type", value: "type" },
-    {
-      label: "labels",
-      value: "labels",
-      format: (labels) => labels && labels.join(", "),
-    },
-    {
-      label: "createdAt",
-      value: "createdAt",
-      format: formatToDate,
-      type: "date",
-    },
-    {
-      label: "updatedAt",
-      value: "updatedAt",
-      format: formatToDate,
-      type: "date",
-    },
-  ];
+  inputProps = {
+    createdAt: { type: "date" },
+    updatedAt: { type: "date" },
+  };
 
   renderEdit({ label, value, type, render }) {
     return (
@@ -51,16 +34,14 @@ class ElementDetails extends Component {
     );
   }
 
-  renderDefault({ label, value, format }) {
-    const placeholder = "-";
-
+  renderDefault({ label, value }) {
     return (
       <Row className="my-1">
         <Col xs={5}>
           <span className="text-muted">{label}</span>
         </Col>
         <Col xs={7}>
-          <span>{(format && format(value)) || value || placeholder}</span>
+          <span>{value}</span>
         </Col>
       </Row>
     );
@@ -70,12 +51,14 @@ class ElementDetails extends Component {
     const { selectedElement, edit } = this.props;
     initT(this.props.t, "elementDetails");
 
+    const element = format(selectedElement);
+
     return (
       <Container className="p-3">
-        {this.meta.map((props) => {
-          props = { ...props };
-          props.label = t(props.label);
-          props.value = selectedElement[props.value];
+        {Object.keys(element).map((key) => {
+          const props = { ...this.inputProps[key] };
+          props.label = t(key);
+          props.value = element[key];
 
           return (edit && this.renderEdit(props)) || this.renderDefault(props);
         })}
