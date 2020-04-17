@@ -13,9 +13,11 @@ import "font-awesome/css/font-awesome.min.css";
 
 // redux begin
 import archiveReducer from "./store/reducers/archive";
+import appReducer from "./store/reducers/app";
 
 const rootReducer = combineReducers({
   archive: archiveReducer,
+  app: appReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
