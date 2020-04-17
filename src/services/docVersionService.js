@@ -3,29 +3,33 @@ const docVersions = [
     id: 1,
     elementId: 22,
     workVersion: true,
+    extension: "ppt",
     type: 1,
     createdAt: Date.now(),
     url:
-      "https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_250kB.ppt",
+      "https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_500kB.ppt",
     version: "1.0",
   },
   {
     id: 1,
     elementId: 26,
     workVersion: true,
+    extension: "xls",
     type: 1,
     createdAt: Date.now(),
     url:
-      "https://file-examples.com/wp-content/uploads/2017/02/file-sample_1MB.doc",
+      "https://file-examples.com/wp-content/uploads/2017/02/file_example_XLS_100.xls",
     version: "1.0",
   },
   {
     id: 1,
     elementId: 28,
     workVersion: true,
+    extension: "docx",
     type: 1,
     createdAt: Date.now(),
-    url: "https://go.microsoft.com/fwlink/?LinkID=521962",
+    url:
+      "https://file-examples.com/wp-content/uploads/2017/02/file-sample_500kB.docx",
     version: "1.0",
   },
 ];

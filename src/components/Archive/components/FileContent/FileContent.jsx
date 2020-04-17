@@ -7,13 +7,25 @@ import { useT, initT, t } from "./../../../../utils/intl";
 function FileContent({ workVersion }) {
   initT(useT(), "fileContent");
   const url = workVersion && workVersion.url;
+  const previewUrl = `https://docs.google.com/gview?url=${url}`;
+
+  const handleClick = () => {
+    var win = window.open(previewUrl, "_blank");
+    if (win != null) win.focus();
+  };
 
   return (
     (url && (
       <div className="h-100">
-        <FloatingButton text={t("fullscreen")} icon="expand-alt" top left />
+        <FloatingButton
+          text={t("fullscreen")}
+          icon="expand-alt"
+          top
+          left
+          onClick={handleClick}
+        />
         <Iframe
-          src={`https://docs.google.com/gview?url=${url}&embedded=true&loop=true&widget=true`}
+          src={`${previewUrl}&embedded=true&loop=true&widget=true`}
           height="100%"
           width="100%"
         />
