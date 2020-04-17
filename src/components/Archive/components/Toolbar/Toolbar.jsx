@@ -1,38 +1,80 @@
-import React, { Component } from "react";
-import { Container, Row, Col, Breadcrumb } from "react-bootstrap";
+import React from "react";
+import { connect } from "react-redux";
+import * as actionCreators from "./../../../../store/actions/index";
+import { t, initT, useT } from "../../../../utils/intl";
+import { Container, Button } from "react-bootstrap";
+import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
-// import FontAwesome from "react-fontawesome";
+import { generateKey } from "./../../../../utils/componentUtils";
+import { moveElement } from "../../../ModalHandler/actions/index";
 import style from "./Toolbar.module.css";
 import "./Toolbar.css";
 
-class Toolbar extends Component {
-  render() {
-    return (
-      <Container
-        fluid
-        className={join(["section-content bg-light", style.toolbar])}
-      >
-        <Row className="section align-items-center">
-          <Col sx={6} className="section-wrapper">
-            <div className="section-content">
-              <Breadcrumb className={style.breadcrumb}>
-                <Breadcrumb.Item href="">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="">Library</Breadcrumb.Item>
-                <Breadcrumb.Item active>Data</Breadcrumb.Item>
-              </Breadcrumb>
-            </div>
-          </Col>
-          <Col sx={6} className="section-wrapper">
-            <div className="section-content">
-              {/* <Button className="rounded-circle">
-                <FontAwesome name="ellipsis-v" />
-              </Button> */}
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-}
+const Toolbar = ({
+  selectedElement,
+  workVersion,
+  onMoveElement,
+  setModal,
+  showModal,
+}) => {
+  initT(useT(), "toolbar");
 
-export default Toolbar;
+  const tools = [
+    {
+      text: t("move"),
+      icon: "arrow-right",
+      handleClick: () => {
+        const onMove = (parentId) => onMoveElement(selectedElement, parentId);
+        setModal(moveElement(showModal, onMove));
+      },
+    },
+    { text: "Copy", icon: "copy", handleClick: () => {} },
+    {
+      text: "Download",
+      icon: "file-download",
+      handleClick: ({ name }, { url, extension }) => {
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = `${name}.${extension}`;
+        a.click();
+      },
+    },
+    { text: "Print", icon: "print", handleClick: () => {} },
+    { text: "View", icon: "list", classes: "ml-auto", handleClick: () => {} },
+  ];
+
+  return (
+    <Container className={join(["section-content bg-light", style.toolbar])}>
+      <div className="section align-items-center justify-content-start">
+        {tools.map(({ text, icon, classes, handleClick }) => (
+          <Button
+            key={generateKey(text, icon, true)}
+            variant="light"
+            className={join(["mx-2", classes])}
+            onClick={() => handleClick(selectedElement, workVersion)}
+          >
+            <Icon name={icon} /> {text}
+          </Button>
+        ))}
+      </div>
+    </Container>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    workVersion: state.archive.workVersion,
+    selectedElement: state.archive.selectedElement,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onMoveElement: (element, parentId) =>
+      dispatch(actionCreators.moveElement(element, parentId)),
+    setModal: (modal) => dispatch(actionCreators.setModal(modal)),
+    showModal: (show) => dispatch(actionCreators.showModal(show)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

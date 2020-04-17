@@ -55,5 +55,14 @@
   },
   "fileContent": {
     "fullscreen": "Vollbild"
+  },
+  "toolbar": {
+    "move": "Verschieben"
+  },
+  "moveElement": {
+    "description": "Bitte wählen sie das Ziel aus",
+    "title": "Element verschieben",
+    "cancel": "abbrechen",
+    "move": "verschieben"
   }
 }
