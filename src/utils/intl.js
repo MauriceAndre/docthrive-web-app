@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 
 let tFnc, namespace;
@@ -5,14 +6,14 @@ let tFnc, namespace;
 export const useT = useTranslation;
 
 export function initT(trans, ns) {
-  tFnc = trans.t || trans;
+  tFnc = (trans && trans.t) || trans;
   namespace = ns;
 }
 
 export function t(key, ...rest) {
   key = namespace ? `${namespace}.${key}` : key;
 
-  return tFnc(key, ...rest);
+  return (tFnc && tFnc(key, ...rest)) || i18next.t(key, ...rest);
 }
 
 export function setNs(ns) {
