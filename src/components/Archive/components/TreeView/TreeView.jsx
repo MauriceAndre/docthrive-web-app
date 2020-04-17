@@ -1,49 +1,43 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
-import { getChildren } from "../../../../services/elementService";
 import Tree from "../../../common/TreeView/TreeView";
 
-class TreeView extends Component {
-  state = {
-    rootElements: [],
+const TreeView = ({
+  selectedElement,
+  onSelectElement,
+  elements,
+  getChildren,
+  availableParents,
+}) => {
+  const handleGetChildren = (parentId) => {
+    if (!availableParents.includes(parentId))
+      getChildren(parentId, availableParents);
   };
 
-  componentDidMount = async () => {
-    const rootElements = await getChildren(1);
+  return (
+    <Tree
+      selectedId={selectedElement.id}
+      onSelect={onSelectElement}
+      getChildren={handleGetChildren}
+      elements={elements}
+    />
+  );
+};
 
-    this.setState({ rootElements });
-  };
-
-  getChildren = async (parentId) => {
-    return await getChildren(parentId);
-  };
-
-  render() {
-    const { selectedElement, onSelectElement } = this.props;
-    const { rootElements } = this.state;
-
-    return (
-      <Tree
-        rootElements={rootElements}
-        selectedId={selectedElement.id}
-        onSelect={onSelectElement}
-        getChildren={this.getChildren}
-      />
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ archive }) => {
   return {
-    selectedElement: state.archive.selectedElement,
+    selectedElement: archive.selectedElement,
+    elements: archive.elements,
+    availableParents: archive.availableParents,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSelectElement: (element) =>
-      dispatch(actionCreators.storeSelectedElement(element)),
+    onSelectElement: (...params) =>
+      dispatch(actionCreators.storeSelectedElement(...params)),
+    getChildren: (...params) => dispatch(actionCreators.getChildren(...params)),
   };
 };
 

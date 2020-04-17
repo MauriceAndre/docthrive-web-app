@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { join } from "./../../../../../utils/arrayUtils";
+import { findByParentId } from "../../../../../utils/elementUtils";
 import { renderChild } from "./../../utility";
 import style from "./../../TreeView.module.css";
 
 class Folder extends Component {
   state = {
-    children: [],
     expanded: false,
   };
 
@@ -14,14 +14,16 @@ class Folder extends Component {
     const { element, getChildren } = this.props;
     const { expanded } = this.state;
 
-    const children = await getChildren(element.id);
-    this.setState({ expanded: !expanded, children });
+    getChildren(element.id);
+    this.setState({ expanded: !expanded });
   };
 
   render() {
-    const { children, expanded } = this.state;
-    const { element, selectedId, onSelect } = this.props;
+    const { expanded } = this.state;
+    const { element, selectedId, onSelect, elements } = this.props;
     const { id, name } = element;
+
+    const children = findByParentId(id, elements);
 
     return (
       <li className={join([style.folder, expanded && style.show])}>
@@ -53,9 +55,10 @@ class Folder extends Component {
 }
 
 Folder.propTypes = {
+  getChildren: PropTypes.func.isRequired,
+  elements: PropTypes.array.isRequired,
   selectedId: PropTypes.number,
   onSelect: PropTypes.func,
-  getChildren: PropTypes.func,
 };
 
 export default Folder;

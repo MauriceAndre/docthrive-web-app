@@ -3,35 +3,39 @@ import PropTypes from "prop-types";
 import { withTranslation } from "react-i18next";
 import { join } from "../../../../../utils/arrayUtils";
 import { initT, t } from "../../../../../utils/intl";
+import { findByParentId } from "../../../../../utils/elementUtils";
 import { renderChild } from "./../../utility";
 import style from "./../../TreeView.module.css";
 
 class Root extends Component {
-  state = {
-    children: [],
+  rootElement = {
+    id: 1,
+    type: 257,
   };
 
-  rootId = 1;
-  type = 257;
-
   componentDidMount = async () => {
-    const children = await this.props.getChildren(this.rootId);
-    this.setState({ children });
+    const { rootElement, props } = this;
+    const { getChildren, onSelect } = props;
+
+    onSelect(rootElement);
+    getChildren(rootElement.id);
   };
 
   render() {
-    const { rootId, type, props, state } = this;
-    const { selectedId, onSelect } = props;
-    const { children } = state;
+    const { props, rootElement } = this;
+    const { selectedId, onSelect, elements } = props;
+    const { id } = rootElement;
     initT(this.props.t, "treeView");
 
+    const children = findByParentId(id, elements);
+
     return (
-      <li key={rootId} className={style.root}>
+      <li key={id} className={style.root}>
         <div
-          onClick={() => onSelect({ id: rootId, type })}
+          onClick={() => onSelect(rootElement)}
           className={join([
             style["archive-icon"],
-            rootId === selectedId && style.selected,
+            id === selectedId && style.selected,
           ])}
         >
           {t("archive")}
@@ -43,9 +47,11 @@ class Root extends Component {
 }
 
 Root.propTypes = {
+  getChildren: PropTypes.func.isRequired,
+  elements: PropTypes.array.isRequired,
   selectedId: PropTypes.number,
   onSelect: PropTypes.func,
-  getChildren: PropTypes.func,
+  onlyFolders: PropTypes.bool,
 };
 
 export default withTranslation()(Root);

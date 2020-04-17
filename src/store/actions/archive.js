@@ -1,11 +1,59 @@
 import * as actionTypes from "./actionTypes";
-import * as elementType from "../../services/elementTypeService";
-import * as docVersion from "../../services/docVersionService";
+import * as elementTypeService from "../../services/elementTypeService";
+import * as docVersionService from "../../services/docVersionService";
+import * as elementService from "../../services/elementService";
+import { updateObject } from "./../utility";
+
+export const addElements = (elements) => {
+  return {
+    type: actionTypes.ADD_ELEMENTS,
+    elements,
+  };
+};
+
+export const updateElement = (id, element) => {
+  return {
+    type: actionTypes.UPDATE_ELEMENT,
+    id,
+    element,
+  };
+};
+
+export const moveElement = (element, parentId) => {
+  return async (dispatch) => {
+    element = updateObject(element, { parentId });
+    dispatch(updateElement(element.id, element));
+    // await server call
+  };
+};
+
+export const copyElement = (element, parentId) => {
+  return async (dispatch) => {
+    // dublicate object and change parentId
+    dispatch(addElements([element]));
+    // await server call
+  };
+};
+
+export const addAvailableParent = (parentId) => {
+  return {
+    type: actionTypes.ADD_AVAILABLE_PARENT,
+    id: parentId,
+  };
+};
+
+export const getChildren = (parentId) => {
+  return async (dispatch) => {
+    const children = await elementService.getChildren(parentId);
+    dispatch(addElements(children));
+    dispatch(addAvailableParent(parentId));
+  };
+};
 
 export const setSelectedElement = (element) => {
   return {
     type: actionTypes.SET_SELECTED_ELEMENT,
-    value: element,
+    selectedElement: element,
   };
 };
 
@@ -20,13 +68,13 @@ export const storeSelectedElement = (element) => {
 export const setWorkVersion = (workVersion) => {
   return {
     type: actionTypes.SET_WORK_VERSION,
-    value: workVersion,
+    workVersion,
   };
 };
 
 export const getWorkVersion = (elementId) => {
   return async (dispatch) => {
-    const workVersion = await docVersion.getWorkVersion(elementId);
+    const workVersion = await docVersionService.getWorkVersion(elementId);
     dispatch(setWorkVersion(workVersion));
   };
 };
@@ -34,13 +82,13 @@ export const getWorkVersion = (elementId) => {
 export const setElementTypes = (elementTypes) => {
   return {
     type: actionTypes.SET_ELEMENT_TYPES,
-    value: elementTypes,
+    elementTypes,
   };
 };
 
 export const getElementTypes = () => {
   return async (dispatch) => {
-    const elementTypes = await elementType.getAllElementTypes();
+    const elementTypes = await elementTypeService.getAllElementTypes();
     dispatch(setElementTypes(elementTypes));
   };
 };
