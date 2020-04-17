@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "./../../../../store/actions/index";
 import { t, initT, useT } from "../../../../utils/intl";
-import { Container, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
+import { isFolder, isFile } from "./../../../../utils/elementUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
-import { moveElement } from "../../../ModalHandler/actions/index";
+import { moveElement, copyElement } from "../../../ModalHandler/actions/index";
 import style from "./Toolbar.module.css";
 import "./Toolbar.css";
 
@@ -14,6 +15,7 @@ const Toolbar = ({
   selectedElement,
   workVersion,
   onMoveElement,
+  onCopyElement,
   setModal,
   showModal,
 }) => {
@@ -28,7 +30,14 @@ const Toolbar = ({
         setModal(moveElement(showModal, onMove));
       },
     },
-    { text: "Copy", icon: "copy", handleClick: () => {} },
+    {
+      text: t("copy"),
+      icon: "copy",
+      handleClick: () => {
+        const onCopy = (parentId) => onCopyElement(selectedElement, parentId);
+        setModal(copyElement(showModal, onCopy));
+      },
+    },
     {
       text: "Download",
       icon: "file-download",
@@ -38,26 +47,39 @@ const Toolbar = ({
         a.download = `${name}.${extension}`;
         a.click();
       },
+      isDisabled: () => isFolder(selectedElement),
     },
-    { text: "Print", icon: "print", handleClick: () => {} },
-    { text: "View", icon: "list", classes: "ml-auto", handleClick: () => {} },
+    {
+      text: "Print",
+      icon: "print",
+      handleClick: () => {},
+      isDisabled: () => isFolder(selectedElement),
+    },
+    {
+      text: "View",
+      icon: "list",
+      classes: "ml-auto",
+      handleClick: () => {},
+      isDisabled: () => isFile(selectedElement),
+    },
   ];
 
   return (
-    <Container className={join(["section-content bg-light", style.toolbar])}>
+    <div className={join(["section-content bg-light", style.toolbar])}>
       <div className="section align-items-center justify-content-start">
-        {tools.map(({ text, icon, classes, handleClick }) => (
+        {tools.map(({ text, icon, classes, handleClick, isDisabled }) => (
           <Button
             key={generateKey(text, icon, true)}
             variant="light"
             className={join(["mx-2", classes])}
             onClick={() => handleClick(selectedElement, workVersion)}
+            disabled={isDisabled && isDisabled()}
           >
             <Icon name={icon} /> {text}
           </Button>
         ))}
       </div>
-    </Container>
+    </div>
   );
 };
 
@@ -72,6 +94,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onMoveElement: (element, parentId) =>
       dispatch(actionCreators.moveElement(element, parentId)),
+    onCopyElement: (element, parentId) =>
+      dispatch(actionCreators.copyElement(element, parentId)),
     setModal: (modal) => dispatch(actionCreators.setModal(modal)),
     showModal: (show) => dispatch(actionCreators.showModal(show)),
   };

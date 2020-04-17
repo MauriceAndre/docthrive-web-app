@@ -1,6 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "./../utility";
 import { replaceById } from "./../../utils/elementUtils";
+import { updateObject } from "./../../utils/objectUtils";
 
 const initialState = {
   elements: [],

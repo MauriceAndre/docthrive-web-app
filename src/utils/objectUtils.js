@@ -1,3 +1,10 @@
+export const updateObject = (oldObject, updatedValues) => {
+  return {
+    ...oldObject,
+    ...updatedValues,
+  };
+};
+
 export function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }

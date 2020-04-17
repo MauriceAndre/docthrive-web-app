@@ -57,12 +57,19 @@
     "fullscreen": "Vollbild"
   },
   "toolbar": {
-    "move": "Verschieben"
+    "move": "Verschieben",
+    "copy": "Kopieren"
   },
   "moveElement": {
     "description": "Bitte wählen sie das Ziel aus",
     "title": "Element verschieben",
     "cancel": "abbrechen",
     "move": "verschieben"
+  },
+  "copyElement": {
+    "description": "Bitte wählen sie das Ziel aus",
+    "title": "Element kopieren",
+    "cancel": "abbrechen",
+    "paste": "einfügen"
   }
 }

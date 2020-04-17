@@ -2,7 +2,8 @@ import * as actionTypes from "./actionTypes";
 import * as elementTypeService from "../../services/elementTypeService";
 import * as docVersionService from "../../services/docVersionService";
 import * as elementService from "../../services/elementService";
-import { updateObject } from "./../utility";
+import { updateObject } from "./../../utils/objectUtils";
+import * as elementUtils from "./../../utils/elementUtils";
 
 export const addElements = (elements) => {
   return {
@@ -27,10 +28,10 @@ export const moveElement = (element, parentId) => {
   };
 };
 
-export const copyElement = (element, parentId) => {
+export const copyElement = (element, newParentId) => {
   return async (dispatch) => {
-    // dublicate object and change parentId
-    dispatch(addElements([element]));
+    const newElement = elementUtils.copyElement(element, newParentId);
+    dispatch(addElements([newElement]));
     // await server call
   };
 };

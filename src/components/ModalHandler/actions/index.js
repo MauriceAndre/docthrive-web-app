@@ -1,1 +1,1 @@
-export { moveElement } from "./tools";
+export { moveElement, copyElement } from "./tools";
