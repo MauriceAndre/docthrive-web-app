@@ -57,7 +57,7 @@ class Folder extends Component {
 Folder.propTypes = {
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
-  selectedId: PropTypes.number,
+  selectedId: PropTypes.string,
   onSelect: PropTypes.func,
 };
 

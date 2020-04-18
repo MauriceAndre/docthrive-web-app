@@ -5,6 +5,12 @@ import * as elementService from "../../services/elementService";
 import { updateObject } from "./../../utils/objectUtils";
 import * as elementUtils from "./../../utils/elementUtils";
 
+const availableParents = [];
+
+export const addAvailableParent = (parentId) => {
+  availableParents.push(parentId);
+};
+
 export const addElements = (elements) => {
   return {
     type: actionTypes.ADD_ELEMENTS,
@@ -36,19 +42,15 @@ export const copyElement = (element, newParentId) => {
   };
 };
 
-export const addAvailableParent = (parentId) => {
-  return {
-    type: actionTypes.ADD_AVAILABLE_PARENT,
-    id: parentId,
-  };
-};
-
 export const getChildren = (parentId) => {
-  return async (dispatch) => {
-    const children = await elementService.getChildren(parentId);
-    dispatch(addElements(children));
-    dispatch(addAvailableParent(parentId));
-  };
+  if (!availableParents.includes(parentId)) {
+    addAvailableParent(parentId);
+    return async (dispatch) => {
+      const children = await elementService.getChildren(parentId);
+      dispatch(addElements(children));
+    };
+  }
+  return { type: actionTypes.CANCEL };
 };
 
 export const setSelectedElement = (element) => {

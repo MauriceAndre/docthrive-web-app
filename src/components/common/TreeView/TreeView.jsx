@@ -31,7 +31,7 @@ const TreeView = ({
 TreeView.propTypes = {
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
-  selectedId: PropTypes.number,
+  selectedId: PropTypes.string,
   onSelect: PropTypes.func,
   onlyFolders: PropTypes.bool,
 };

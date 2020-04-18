@@ -5,12 +5,7 @@ import { Container } from "react-bootstrap";
 import { initT, useT, t } from "../../../../utils/intl";
 import TreeView from "../../../common/TreeView";
 
-function MoveElement({
-  elements,
-  getChildren,
-  availableParents,
-  onSelectElement,
-}) {
+function MoveElement({ elements, getChildren, onSelectElement }) {
   const [selectedElement, setSelectedElement] = useState({});
 
   initT(useT(), "moveElement");
@@ -21,8 +16,7 @@ function MoveElement({
   };
 
   const handleGetChildren = (parentId) => {
-    if (!availableParents.includes(parentId))
-      getChildren(parentId, availableParents);
+    getChildren(parentId);
   };
 
   return (
@@ -46,7 +40,6 @@ function MoveElement({
 const mapStateToProps = ({ archive }) => {
   return {
     elements: archive.elements,
-    availableParents: archive.availableParents,
   };
 };
 

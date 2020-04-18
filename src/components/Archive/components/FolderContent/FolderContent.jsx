@@ -1,100 +1,72 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
 import { Table } from "react-bootstrap";
 import Icon from "./../../../common/Icon/Icon";
-import { getChildren } from "../../../../services/elementService";
-import { format } from "../../../../utils/elementUtils";
+import { format, findByParentId } from "../../../../utils/elementUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
 import style from "./FolderContent.module.css";
 
-class FolderContent extends Component {
-  state = { elements: [] };
+const FolderContent = ({
+  onSelectElement,
+  elements,
+  element,
+  elementTypes,
+  getChildren,
+}) => {
+  const { id } = element;
 
-  componentDidMount = async () => {
-    await this.updateElements();
-  };
+  getChildren(id);
 
-  componentDidUpdate = async (prevProps) => {
-    if (this.props.element !== prevProps.element) {
-      await this.updateElements();
-    }
-  };
+  elements = findByParentId(id, elements);
 
-  updateElements = async () => {
-    const { element } = this.props;
-    const elements = await getChildren(element.id);
-    this.setState({ elements });
-  };
+  return (
+    <div className="section">
+      <Table size="sm" striped hover responsive className={style.table}>
+        <thead className={style.header}>
+          <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Labels</th>
+          </tr>
+        </thead>
+        <tbody>
+          {elements.map((element) => {
+            const { name, createdAt, labels, id } = format(element, true);
 
-  static getDerivedStateFromProps = async ({ element }, prevState) => {
-    if (element !== prevState.element) {
-      return { element: await getChildren(element.id) };
-    } else return null;
-  };
+            const type = elementTypes.find((type) => type.id === element.type);
 
-  render() {
-    const { elements } = this.state;
-    const { onSelectElement } = this.props;
+            return (
+              <tr key={id} onDoubleClick={() => onSelectElement(element)}>
+                <td key={generateKey(id, "type")} className="w-1 align-middle">
+                  <Icon key={generateKey(id, "type_icon")} name={type.icon} />
+                </td>
+                <td key={generateKey(id, "name")} className="w-5 align-middle">
+                  {name}
+                </td>
+                <td key={generateKey(id, "date")} className="w-2 align-middle">
+                  {createdAt}
+                </td>
+                <td
+                  key={generateKey(id, "labels")}
+                  className="w-4 align-middle"
+                >
+                  {labels}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    </div>
+  );
+};
 
-    return (
-      <div className="section">
-        <Table size="sm" striped hover responsive className={style.table}>
-          <thead className={style.header}>
-            <tr>
-              <th>Type</th>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Labels</th>
-            </tr>
-          </thead>
-          <tbody>
-            {elements.map((element) => {
-              const { name, createdAt, labels, id } = format(element, true);
-
-              const type = this.props.elementTypes.find(
-                (type) => type.id === element.type
-              );
-
-              return (
-                <tr key={id} onDoubleClick={() => onSelectElement(element)}>
-                  <td
-                    key={generateKey(id, "type")}
-                    className="w-1 align-middle"
-                  >
-                    <Icon key={generateKey(id, "type_icon")} name={type.icon} />
-                  </td>
-                  <td
-                    key={generateKey(id, "name")}
-                    className="w-5 align-middle"
-                  >
-                    {name}
-                  </td>
-                  <td
-                    key={generateKey(id, "date")}
-                    className="w-2 align-middle"
-                  >
-                    {createdAt}
-                  </td>
-                  <td
-                    key={generateKey(id, "labels")}
-                    className="w-4 align-middle"
-                  >
-                    {labels}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ archive }) => {
   return {
-    elementTypes: state.archive.elementTypes,
+    elementTypes: archive.elementTypes,
+    elements: archive.elements,
   };
 };
 
@@ -102,6 +74,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSelectElement: (element) =>
       dispatch(actionCreators.storeSelectedElement(element)),
+    getChildren: (parentId) => dispatch(actionCreators.getChildren(parentId)),
   };
 };
 

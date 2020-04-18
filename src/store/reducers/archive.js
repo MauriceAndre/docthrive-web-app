@@ -4,7 +4,6 @@ import { updateObject } from "./../../utils/objectUtils";
 
 const initialState = {
   elements: [],
-  availableParents: [],
   selectedElement: {},
   workVersion: null,
   elementTypes: [],
@@ -18,11 +17,6 @@ const addElements = (state, { elements }) => {
 const updateElement = (state, { id, element }) => {
   const elements = replaceById(id, element, state.elements);
   return updateObject(state, { elements });
-};
-
-const addAvailableParent = (state, { id }) => {
-  const availableParents = [...state.availableParents, id];
-  return updateObject(state, { availableParents });
 };
 
 const setSelectedElement = (state, { selectedElement }) => {
@@ -43,8 +37,6 @@ const reducer = (state = initialState, action) => {
       return addElements(state, action);
     case actionTypes.UPDATE_ELEMENT:
       return updateElement(state, action);
-    case actionTypes.ADD_AVAILABLE_PARENT:
-      return addAvailableParent(state, action);
     case actionTypes.SET_SELECTED_ELEMENT:
       return setSelectedElement(state, action);
     case actionTypes.SET_ELEMENT_TYPES:

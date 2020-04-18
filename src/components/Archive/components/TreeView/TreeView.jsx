@@ -8,11 +8,9 @@ const TreeView = ({
   onSelectElement,
   elements,
   getChildren,
-  availableParents,
 }) => {
   const handleGetChildren = (parentId) => {
-    if (!availableParents.includes(parentId))
-      getChildren(parentId, availableParents);
+    getChildren(parentId);
   };
 
   return (
@@ -29,7 +27,6 @@ const mapStateToProps = ({ archive }) => {
   return {
     selectedElement: archive.selectedElement,
     elements: archive.elements,
-    availableParents: archive.availableParents,
   };
 };
 

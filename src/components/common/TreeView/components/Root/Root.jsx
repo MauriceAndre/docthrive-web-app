@@ -9,7 +9,7 @@ import style from "./../../TreeView.module.css";
 
 class Root extends Component {
   rootElement = {
-    id: 1,
+    id: "1",
     type: 257,
   };
 
@@ -49,7 +49,7 @@ class Root extends Component {
 Root.propTypes = {
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
-  selectedId: PropTypes.number,
+  selectedId: PropTypes.string,
   onSelect: PropTypes.func,
   onlyFolders: PropTypes.bool,
 };

@@ -22,7 +22,7 @@ const File = ({ element, selectedId, onSelect }) => {
 };
 
 File.propTypes = {
-  selectedId: PropTypes.number,
+  selectedId: PropTypes.string,
   onSelect: PropTypes.func,
 };
 
