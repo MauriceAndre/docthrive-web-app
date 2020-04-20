@@ -1,8 +1,11 @@
 import React, { Fragment } from "react";
-import { t, initT } from "../../../utils/intl";
+import store from "./../../../store";
+import * as actionCreators from "./../../../store/actions/index";
 import { Button } from "react-bootstrap";
 import MoveElement from "../Modals/MoveElement/MoveElement";
 import CopyElement from "./../Modals/CopyElement/CopyElement";
+import { t, initT } from "../../../utils/intl";
+import { updateObject } from "./../../../utils/objectUtils";
 
 export const moveElement = (showModal, onMove) => {
   let destElement = null;
@@ -39,19 +42,27 @@ export const moveElement = (showModal, onMove) => {
   };
 };
 
-export const copyElement = (showModal, onCopy) => {
-  let destElement = null;
+export const copyElement = (showModal, srcElement) => {
+  let destElement, onSubmit;
+
   initT(null, "copyElement");
 
   const handleDestElement = (element) => {
     destElement = element;
   };
 
-  const onClose = () => {
+  const doSubmit = (data) => {
+    const element = updateObject(srcElement, data);
+    store.dispatch(actionCreators.copyElement(element, destElement.id));
     showModal(false);
   };
-  const onSave = () => {
-    onCopy(destElement.id);
+
+  const handleInitForm = (onSubmitFnc) => {
+    onSubmit = onSubmitFnc;
+    return doSubmit;
+  };
+
+  const onClose = () => {
     showModal(false);
   };
 
@@ -59,17 +70,29 @@ export const copyElement = (showModal, onCopy) => {
     title: t("title"),
     show: true,
     onClose,
-    body: <CopyElement onSelectElement={handleDestElement} />,
+    body: (
+      <CopyElement
+        srcElement={srcElement}
+        onSelectElement={handleDestElement}
+        onInitForm={handleInitForm}
+      />
+    ),
     footer: (
       <Fragment>
         <Button variant="secondary" onClick={onClose}>
           {t("cancel")}
         </Button>
-        <Button variant="primary" onClick={onSave} className="ml-auto">
+        <Button
+          variant="primary"
+          onClick={(e) => onSubmit(e)}
+          className="ml-auto"
+        >
           {t("paste")}
         </Button>
       </Fragment>
     ),
-    options: {},
+    options: {
+      size: "lg",
+    },
   };
 };

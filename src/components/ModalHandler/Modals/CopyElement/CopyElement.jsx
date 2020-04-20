@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
-import { Container } from "react-bootstrap";
-import { initT, useT, t } from "../../../../utils/intl";
+import { Row, Col, Container } from "react-bootstrap";
 import TreeView from "../../../common/TreeView";
+import CopyElementForm from "./CopyElementForm";
+import { initT, useT, t } from "../../../../utils/intl";
 
-function CopyElement({ elements, getChildren, onSelectElement }) {
+function CopyElement({
+  elements,
+  getChildren,
+  onSelectElement,
+  srcElement,
+  onInitForm,
+}) {
   const [selectedElement, setSelectedElement] = useState({});
 
   initT(useT(), "copyElement");
@@ -21,8 +28,11 @@ function CopyElement({ elements, getChildren, onSelectElement }) {
 
   return (
     <Container>
-      <div className="d-flex justify-content-center">
-        <div className="w-100">
+      <Row className="d-flex justify-content-center">
+        <Col xs={12} md={6}>
+          <CopyElementForm srcElement={srcElement} onInitForm={onInitForm} />
+        </Col>
+        <Col xs={12} md={6}>
           <div className="mb-2">{t("description")}:</div>
           <TreeView
             selectedId={selectedElement.id}
@@ -31,8 +41,8 @@ function CopyElement({ elements, getChildren, onSelectElement }) {
             elements={elements}
             onlyFolders={true}
           />
-        </div>
-      </div>
+        </Col>
+      </Row>
     </Container>
   );
 }

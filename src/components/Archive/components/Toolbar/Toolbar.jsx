@@ -15,7 +15,6 @@ const Toolbar = ({
   selectedElement,
   workVersion,
   onMoveElement,
-  onCopyElement,
   setModal,
   showModal,
 }) => {
@@ -34,8 +33,7 @@ const Toolbar = ({
       text: t("copy"),
       icon: "copy",
       handleClick: () => {
-        const onCopy = (parentId) => onCopyElement(selectedElement, parentId);
-        setModal(copyElement(showModal, onCopy));
+        setModal(copyElement(showModal, selectedElement));
       },
     },
     {
@@ -75,7 +73,8 @@ const Toolbar = ({
             onClick={() => handleClick(selectedElement, workVersion)}
             disabled={isDisabled && isDisabled()}
           >
-            <Icon name={icon} /> {text}
+            <Icon name={icon} />
+            <span className="d-none d-md-inline"> {text}</span>
           </Button>
         ))}
       </div>
@@ -94,8 +93,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onMoveElement: (element, parentId) =>
       dispatch(actionCreators.moveElement(element, parentId)),
-    onCopyElement: (element, parentId) =>
-      dispatch(actionCreators.copyElement(element, parentId)),
     setModal: (modal) => dispatch(actionCreators.setModal(modal)),
     showModal: (show) => dispatch(actionCreators.showModal(show)),
   };
