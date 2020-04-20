@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { formatToDate } from "./dateUtils";
+import { isArray } from "./arrayUtils";
 import * as objectUtils from "./objectUtils";
 
 export function generateId() {
@@ -35,11 +36,15 @@ export function getChildren(element, elements) {
 }
 
 export function isFolder(element) {
-  return element.type > 256;
+  element = element || {};
+  element.type = element.type || {};
+  return element.type.id > 256;
 }
 
 export function isFile(element) {
-  return element.type <= 256;
+  element = element || {};
+  element.type = element.type || {};
+  return element.type.id <= 256;
 }
 
 export function findById(id, elements) {
@@ -58,12 +63,12 @@ export function replaceById(id, element, elements) {
   return elements;
 }
 
-const pattern = [
+const formatPattern = [
   { key: "name" },
-  { key: "type" },
+  { key: "type", format: (type) => type.name },
   {
     key: "labels",
-    format: (labels) => labels && labels.join(", "),
+    format: (labels) => labels && labels.map((label) => label.name).join(", "),
     emptyValue: "-",
   },
   {
@@ -78,6 +83,22 @@ const pattern = [
   },
 ];
 
-export function format(element, allKeys) {
+export function format(element, allKeys, pattern) {
+  pattern = pattern || formatPattern;
   return objectUtils.format(element, pattern, allKeys);
+}
+
+export function populate(element, dataset) {
+  const pElement = { ...element };
+
+  for (let key in dataset) {
+    const data = dataset[key];
+    const value = element[key];
+
+    if (isArray(value))
+      pElement[key] = data.filter((item) => value.includes(item.id));
+    else pElement[key] = data.find((item) => value === item.id);
+  }
+
+  return pElement;
 }

@@ -10,7 +10,11 @@ import style from "./../../TreeView.module.css";
 class Root extends Component {
   rootElement = {
     id: "1",
-    type: 257,
+    type: {
+      id: 257,
+      name: "Root",
+      icon: "archive",
+    },
   };
 
   componentDidMount = async () => {

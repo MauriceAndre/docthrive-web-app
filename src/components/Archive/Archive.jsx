@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actionTypes from "./../../store/actions/index";
+import * as actionCreators from "./../../store/actions/index";
 import { Container, Row, Col } from "react-bootstrap";
 import MainContent from "./components/MainContent";
 import Toolbar from "./components/Toolbar";
@@ -13,6 +13,7 @@ import style from "./Archive.module.css";
 class Archive extends Component {
   componentDidMount() {
     this.props.initElementTypes();
+    this.props.initLabels();
   }
 
   render() {
@@ -66,7 +67,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initElementTypes: () => dispatch(actionTypes.getElementTypes()),
+    initElementTypes: () => dispatch(actionCreators.getElementTypes()),
+    initLabels: () => dispatch(actionCreators.getLabels()),
   };
 };
 

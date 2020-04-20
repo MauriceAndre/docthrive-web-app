@@ -7,13 +7,7 @@ import { format, findByParentId } from "../../../../utils/elementUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
 import style from "./FolderContent.module.css";
 
-const FolderContent = ({
-  onSelectElement,
-  elements,
-  element,
-  elementTypes,
-  getChildren,
-}) => {
+const FolderContent = ({ onSelectElement, elements, element, getChildren }) => {
   const { id } = element;
 
   getChildren(id);
@@ -34,8 +28,7 @@ const FolderContent = ({
         <tbody>
           {elements.map((element) => {
             const { name, createdAt, labels, id } = format(element, true);
-
-            const type = elementTypes.find((type) => type.id === element.type);
+            const type = element.type;
 
             return (
               <tr key={id} onDoubleClick={() => onSelectElement(element)}>
@@ -65,7 +58,6 @@ const FolderContent = ({
 
 const mapStateToProps = ({ archive }) => {
   return {
-    elementTypes: archive.elementTypes,
     elements: archive.elements,
   };
 };

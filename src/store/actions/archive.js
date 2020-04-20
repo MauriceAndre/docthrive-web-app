@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import * as elementTypeService from "../../services/elementTypeService";
 import * as docVersionService from "../../services/docVersionService";
 import * as elementService from "../../services/elementService";
+import * as labelService from "../../services/labelService";
 import { updateObject } from "./../../utils/objectUtils";
 import * as elementUtils from "./../../utils/elementUtils";
 
@@ -11,10 +12,11 @@ export const addAvailableParent = (parentId) => {
   availableParents.push(parentId);
 };
 
-export const addElements = (elements) => {
+export const addElements = (elements, populate) => {
   return {
     type: actionTypes.ADD_ELEMENTS,
     elements,
+    populate,
   };
 };
 
@@ -37,7 +39,7 @@ export const moveElement = (element, parentId) => {
 export const copyElement = (element, newParentId) => {
   return async (dispatch) => {
     const newElement = elementUtils.copyElement(element, newParentId);
-    dispatch(addElements([newElement]));
+    dispatch(addElements([newElement], false));
     // await server call
   };
 };
@@ -47,7 +49,7 @@ export const getChildren = (parentId) => {
     addAvailableParent(parentId);
     return async (dispatch) => {
       const children = await elementService.getChildren(parentId);
-      dispatch(addElements(children));
+      dispatch(addElements(children, true));
     };
   }
   return { type: actionTypes.CANCEL };
@@ -93,5 +95,19 @@ export const getElementTypes = () => {
   return async (dispatch) => {
     const elementTypes = await elementTypeService.getAllElementTypes();
     dispatch(setElementTypes(elementTypes));
+  };
+};
+
+export const setLabels = (labels) => {
+  return {
+    type: actionTypes.SET_LABELS,
+    labels,
+  };
+};
+
+export const getLabels = () => {
+  return async (dispatch) => {
+    const labels = await labelService.getAllLabels();
+    dispatch(setLabels(labels));
   };
 };

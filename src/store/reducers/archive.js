@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { replaceById } from "./../../utils/elementUtils";
+import * as elementUtils from "./../../utils/elementUtils";
 import { updateObject } from "./../../utils/objectUtils";
 
 const initialState = {
@@ -7,15 +7,24 @@ const initialState = {
   selectedElement: {},
   workVersion: null,
   elementTypes: [],
+  labels: [],
 };
 
-const addElements = (state, { elements }) => {
+const addElements = (state, { elements, populate }) => {
+  const dataset = { labels: state.labels, type: state.elementTypes };
+
+  if (populate) {
+    elements = elements.map((element) =>
+      elementUtils.populate(element, dataset)
+    );
+  }
+
   elements = [...state.elements, ...elements];
   return updateObject(state, { elements });
 };
 
 const updateElement = (state, { id, element }) => {
-  const elements = replaceById(id, element, state.elements);
+  const elements = elementUtils.replaceById(id, element, state.elements);
   return updateObject(state, { elements });
 };
 
@@ -31,6 +40,10 @@ const setWorkVersion = (state, { workVersion }) => {
   return updateObject(state, { workVersion });
 };
 
+const setLabels = (state, { labels }) => {
+  return updateObject(state, { labels });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_ELEMENTS:
@@ -43,6 +56,8 @@ const reducer = (state = initialState, action) => {
       return setElementTypes(state, action);
     case actionTypes.SET_WORK_VERSION:
       return setWorkVersion(state, action);
+    case actionTypes.SET_LABELS:
+      return setLabels(state, action);
     default:
       break;
   }

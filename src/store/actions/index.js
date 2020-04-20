@@ -10,6 +10,8 @@ export {
   getWorkVersion,
   setElementTypes,
   getElementTypes,
+  setLabels,
+  getLabels,
 } from "./archive";
 export { setModal, showModal } from "./app";
 export {} from "./user";
