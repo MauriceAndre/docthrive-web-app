@@ -31,3 +31,25 @@ export function formatKey(obj, pattern) {
 
   return value;
 }
+
+export const mapping = function (object, keys) {
+  const obj = {};
+
+  if (typeof keys === "string") keys = keys.split(" ");
+
+  for (let key of keys) {
+    let value;
+
+    if (typeof key === "object") {
+      const propKey = Object.keys(key)[0];
+      value = key[propKey];
+      key = propKey;
+    } else {
+      value = object[key];
+    }
+
+    obj[key] = value;
+  }
+
+  return obj;
+};
