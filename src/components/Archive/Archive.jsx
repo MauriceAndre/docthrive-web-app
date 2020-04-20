@@ -38,14 +38,14 @@ class Archive extends Component {
               </Col>
               <Col className="section-wrapper section-fill">
                 <Row className="section-content section">
-                  <Col
-                    xs={(!isEmpty(selectedElement) && 8) || 12}
-                    className="section-wrapper"
-                  >
+                  <Col xs={12} md={8} className="section-wrapper">
                     <MainContent />
                   </Col>
                   {!isEmpty(selectedElement) && (
-                    <Col xs={4} className="bg-light section-wrapper">
+                    <Col
+                      md={4}
+                      className="d-none d-md-block bg-light section-wrapper"
+                    >
                       <MetaSidebar />
                     </Col>
                   )}
