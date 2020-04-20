@@ -10,10 +10,12 @@ export function initT(trans, ns) {
   namespace = ns;
 }
 
-export function t(key, ...rest) {
-  key = namespace ? `${namespace}.${key}` : key;
+export function t(key, useNamespace) {
+  useNamespace = useNamespace === undefined ? true : useNamespace;
 
-  return (tFnc && tFnc(key, ...rest)) || i18next.t(key, ...rest);
+  if (useNamespace) key = namespace ? `${namespace}.${key}` : key;
+
+  return (tFnc && tFnc(key)) || i18next.t(key);
 }
 
 export function setNs(ns) {

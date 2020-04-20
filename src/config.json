@@ -1,0 +1,10 @@
+{
+  "validation": {
+    "element": {
+      "name": {
+        "min": 1,
+        "max": 50
+      }
+    }
+  }
+}

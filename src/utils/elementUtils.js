@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { t } from "./intl";
 import { formatToDate } from "./dateUtils";
 import { isArray } from "./arrayUtils";
 import * as objectUtils from "./objectUtils";
@@ -68,7 +69,15 @@ const formatPattern = [
   { key: "type", format: (type) => type.name },
   {
     key: "labels",
-    format: (labels) => labels && labels.map((label) => label.name).join(", "),
+    format: (labels) =>
+      labels &&
+      labels
+        .map((label) =>
+          label.custom
+            ? label.name
+            : t(`labelSelect.options.${label.name}`, false)
+        )
+        .join(", "),
     emptyValue: "-",
   },
   {

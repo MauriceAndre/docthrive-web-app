@@ -1,7 +1,11 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./../../../common/Form";
+import config from "./../../../../services/configService";
 import { mapping } from "./../../../../utils/objectUtils";
+
+// config
+const elValid = config.validation.element;
 
 class CopyElementForm extends Form {
   state = {
@@ -15,7 +19,11 @@ class CopyElementForm extends Form {
   doSubmit = null;
 
   schema = {
-    name: Joi.string().required().label("Name"),
+    name: Joi.string()
+      .min(elValid.name.min)
+      .max(elValid.name.max)
+      .required()
+      .label("Name"),
     labels: Joi.array().label("Labels"),
   };
 
