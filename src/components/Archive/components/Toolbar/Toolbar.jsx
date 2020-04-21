@@ -7,7 +7,11 @@ import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
 import { isFolder, isFile } from "./../../../../utils/elementUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
-import { moveElement, copyElement } from "../../../ModalHandler/actions/index";
+import {
+  moveElement,
+  copyElement,
+  createFolder,
+} from "../../../ModalHandler/actions/index";
 import style from "./Toolbar.module.css";
 import "./Toolbar.css";
 
@@ -52,6 +56,14 @@ const Toolbar = ({
       icon: "print",
       handleClick: () => {},
       isDisabled: () => isFolder(selectedElement),
+    },
+    {
+      text: t("newFolder"),
+      icon: "folder-plus",
+      handleClick: () => {
+        setModal(createFolder(showModal, selectedElement.id));
+      },
+      isDisabled: () => isFile(selectedElement),
     },
     {
       text: "View",

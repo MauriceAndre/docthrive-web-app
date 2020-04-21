@@ -51,6 +51,7 @@ class LabelSelect extends Component {
       onChange: this.handleChange,
       options: labels,
       noOptionsMessage: () => t("noLabelMsg"),
+      placeholder: t("placeholder"),
     };
 
     return creatable ? (

@@ -3,8 +3,10 @@ import * as elementTypeService from "../../services/elementTypeService";
 import * as docVersionService from "../../services/docVersionService";
 import * as elementService from "../../services/elementService";
 import * as labelService from "../../services/labelService";
+import config from "./../../services/configService";
 import { updateObject } from "./../../utils/objectUtils";
 import * as elementUtils from "./../../utils/elementUtils";
+import store from "../store";
 
 const availableParents = [];
 
@@ -18,6 +20,22 @@ export const addElements = (elements, populate) => {
     elements,
     populate,
   };
+};
+
+export const createElement = (data) => {
+  return async (dispatch) => {
+    const element = elementUtils.createElement(data);
+    dispatch(addElements([element], false));
+    await elementService.saveElement(element);
+  };
+};
+
+export const createFolder = (data) => {
+  data.type = data.type || config.default.types.folder;
+  data = elementUtils.populate(data, {
+    type: store.getState().archive.elementTypes,
+  });
+  return createElement(data);
 };
 
 export const updateElement = (id, element) => {

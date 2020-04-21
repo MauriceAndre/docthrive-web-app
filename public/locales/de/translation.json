@@ -21,6 +21,7 @@
   "labelSelect": {
     "noLabelMsg": "Kein Etikett gefunden",
     "createLabelMsg": "Erstelle",
+    "placeholder": "Auswählen...",
     "options": {
       "invoice": "Rechnung",
       "contract": "Vertrag",
@@ -58,7 +59,8 @@
   },
   "toolbar": {
     "move": "Verschieben",
-    "copy": "Kopieren"
+    "copy": "Kopieren",
+    "newFolder": "Neuer Ordner"
   },
   "moveElement": {
     "description": "Bitte wählen sie das Ziel aus",
@@ -71,5 +73,14 @@
     "title": "Element kopieren",
     "cancel": "abbrechen",
     "paste": "einfügen"
+  },
+  "createFolder": {
+    "title": "Neuer Ordner",
+    "cancel": "abbrechen",
+    "create": "erstellen"
+  },
+  "elementForm": {
+    "name": "Bezeichung",
+    "labels": "Etiketts"
   }
 }

@@ -154,6 +154,10 @@ const elements = [
   },
 ];
 
+export async function saveElement(element) {
+  return null;
+}
+
 export async function getAllElements() {
   return elements;
 }

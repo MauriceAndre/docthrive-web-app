@@ -24,6 +24,7 @@ class Form extends Component {
           value={data[name]}
           placeholder={label}
           onChange={scope.handleChange}
+          autoComplete="off"
           {...rest}
         />
         {error && (

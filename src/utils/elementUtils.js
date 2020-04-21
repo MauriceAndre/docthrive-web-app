@@ -5,21 +5,24 @@ import { isArray } from "./arrayUtils";
 import * as objectUtils from "./objectUtils";
 
 export function generateId() {
-  return Date.now().toString();
+  return Date.now().toString() + Math.floor(Math.random() * 1000);
+}
+
+export function createElement(data) {
+  let element = {
+    id: generateId(),
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  };
+  return objectUtils.updateObject(element, data);
 }
 
 export function copyElement(element, newParentId) {
-  const id = generateId(),
-    createdAt = Date.now(),
-    updatedAt = Date.now(),
-    newElement = objectUtils.updateObject(element, {
-      id,
-      parentId: newParentId,
-      createdAt,
-      updatedAt,
-    });
+  const newElement = createElement({
+    parentId: newParentId,
+  });
 
-  return newElement;
+  return objectUtils.updateObject(element, newElement);
 }
 
 export function getChildren(element, elements) {

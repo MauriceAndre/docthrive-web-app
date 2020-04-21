@@ -5,6 +5,10 @@ export const updateObject = (oldObject, updatedValues) => {
   };
 };
 
+export function isObject(obj) {
+  return typeof obj === "object" && obj !== null;
+}
+
 export function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }

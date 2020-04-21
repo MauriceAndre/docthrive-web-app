@@ -4,6 +4,7 @@ import * as actionCreators from "./../../../store/actions/index";
 import { Button } from "react-bootstrap";
 import MoveElement from "../Modals/MoveElement/MoveElement";
 import CopyElement from "./../Modals/CopyElement/CopyElement";
+import CreateFolder from "./../Modals/CreateFolder/CreateFolder";
 import { t, initT } from "../../../utils/intl";
 import { updateObject } from "./../../../utils/objectUtils";
 
@@ -88,6 +89,50 @@ export const copyElement = (showModal, srcElement) => {
           className="ml-auto"
         >
           {t("paste")}
+        </Button>
+      </Fragment>
+    ),
+    options: {
+      size: "lg",
+    },
+  };
+};
+
+export const createFolder = (showModal, destElementId) => {
+  let onSubmit;
+  initT(null, "createFolder");
+
+  const doSubmit = (data) => {
+    data.parentId = destElementId;
+    store.dispatch(actionCreators.createFolder(data));
+    showModal(false);
+  };
+
+  const handleInitForm = (onSubmitFnc) => {
+    onSubmit = onSubmitFnc;
+    return doSubmit;
+  };
+
+  const onClose = () => {
+    showModal(false);
+  };
+
+  return {
+    title: t("title"),
+    show: true,
+    onClose,
+    body: <CreateFolder onInitForm={handleInitForm} />,
+    footer: (
+      <Fragment>
+        <Button variant="secondary" onClick={onClose}>
+          {t("cancel")}
+        </Button>
+        <Button
+          variant="primary"
+          onClick={(e) => onSubmit(e)}
+          className="ml-auto"
+        >
+          {t("create")}
         </Button>
       </Fragment>
     ),
