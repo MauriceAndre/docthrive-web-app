@@ -14,6 +14,7 @@ export {
   getElementTypes,
   setLabels,
   getLabels,
+  setContentView,
 } from "./archive";
 export { setModal, showModal } from "./app";
 export {} from "./user";

@@ -8,6 +8,7 @@ const initialState = {
   workVersion: null,
   elementTypes: [],
   labels: [],
+  contentView: { key: "list", icon: "list" },
 };
 
 const addElements = (state, { elements, populate }) => {
@@ -44,6 +45,10 @@ const setLabels = (state, { labels }) => {
   return updateObject(state, { labels });
 };
 
+const setContentView = (state, { view }) => {
+  return updateObject(state, { contentView: view });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_ELEMENTS:
@@ -58,6 +63,8 @@ const reducer = (state = initialState, action) => {
       return setWorkVersion(state, action);
     case actionTypes.SET_LABELS:
       return setLabels(state, action);
+    case actionTypes.SET_CONTENT_VIEW:
+      return setContentView(state, action);
     default:
       break;
   }

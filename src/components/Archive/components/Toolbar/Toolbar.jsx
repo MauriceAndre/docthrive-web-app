@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "./../../../../store/actions/index";
 import { t, initT, useT } from "../../../../utils/intl";
-import { Button } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
 import { isFolder, isFile } from "./../../../../utils/elementUtils";
@@ -21,6 +21,8 @@ const Toolbar = ({
   onMoveElement,
   setModal,
   showModal,
+  setView,
+  activeView,
 }) => {
   initT(useT(), "toolbar");
 
@@ -67,37 +69,100 @@ const Toolbar = ({
     },
     {
       text: "View",
-      icon: "list",
+      icon: activeView.icon,
+      type: "dropdown",
+      options: {
+        activeItem: activeView.key,
+        items: [
+          { key: "list", text: "List", icon: "list" },
+          { key: "grid", text: "Grid", icon: "th" },
+        ],
+      },
       classes: "ml-auto",
-      handleClick: () => {},
+      handleClick: (view) => setView(view),
       isDisabled: () => isFile(selectedElement),
     },
   ];
 
+  const renderButton = function ({
+    text,
+    icon,
+    classes,
+    handleClick,
+    isDisabled,
+  }) {
+    return (
+      <Button
+        key={generateKey(text, icon, true)}
+        variant="light"
+        className={join(["mx-2", classes])}
+        onClick={() => handleClick(selectedElement, workVersion)}
+        disabled={isDisabled && isDisabled()}
+      >
+        <Icon name={icon} />
+        <span className="d-none d-md-inline"> {text}</span>
+      </Button>
+    );
+  };
+
+  const renderDropdown = function ({
+    text,
+    icon,
+    classes,
+    handleClick,
+    isDisabled,
+    options,
+  }) {
+    return (
+      <Dropdown
+        key={generateKey(text, icon, true)}
+        className={join(["mx-2", classes])}
+      >
+        <Dropdown.Toggle variant="light" disabled={isDisabled()}>
+          <Icon name={icon} />
+          <span className="d-none d-md-inline"> {text}</span>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {options.items.map((item) => {
+            const { key, text, icon } = item;
+            return (
+              <Dropdown.Item
+                key={key}
+                eventKey={key}
+                active={options.activeItem === key}
+                onSelect={() => handleClick(item)}
+              >
+                <Icon name={icon} />
+                <span> {text}</span>
+              </Dropdown.Item>
+            );
+          })}
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  };
+
   return (
     <div className={join(["section-content bg-light", style.toolbar])}>
       <div className="section align-items-center justify-content-start">
-        {tools.map(({ text, icon, classes, handleClick, isDisabled }) => (
-          <Button
-            key={generateKey(text, icon, true)}
-            variant="light"
-            className={join(["mx-2", classes])}
-            onClick={() => handleClick(selectedElement, workVersion)}
-            disabled={isDisabled && isDisabled()}
-          >
-            <Icon name={icon} />
-            <span className="d-none d-md-inline"> {text}</span>
-          </Button>
-        ))}
+        {tools.map((tool) => {
+          switch (tool.type) {
+            case "dropdown":
+              return renderDropdown(tool);
+            default:
+              return renderButton(tool);
+          }
+        })}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ archive }) => {
   return {
-    workVersion: state.archive.workVersion,
-    selectedElement: state.archive.selectedElement,
+    workVersion: archive.workVersion,
+    selectedElement: archive.selectedElement,
+    activeView: archive.contentView,
   };
 };
 
@@ -107,6 +172,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionCreators.moveElement(element, parentId)),
     setModal: (modal) => dispatch(actionCreators.setModal(modal)),
     showModal: (show) => dispatch(actionCreators.showModal(show)),
+    setView: (view) => dispatch(actionCreators.setContentView(view)),
   };
 };
 

@@ -1,64 +1,44 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
-import { Table } from "react-bootstrap";
-import Icon from "./../../../common/Icon/Icon";
-import { format, findByParentId } from "../../../../utils/elementUtils";
-import { generateKey } from "./../../../../utils/componentUtils";
-import style from "./FolderContent.module.css";
+import { findByParentId } from "../../../../utils/elementUtils";
+import FolderListView from "../FolderListView";
+import FolderGridView from "../FolderGridView";
 
-const FolderContent = ({ onSelectElement, elements, element, getChildren }) => {
+const FolderContent = ({
+  onSelectElement,
+  elements,
+  element,
+  getChildren,
+  view,
+}) => {
   const { id } = element;
 
   getChildren(id);
-
   elements = findByParentId(id, elements);
 
-  return (
-    <div className="section">
-      <Table size="sm" striped hover responsive className={style.table}>
-        <thead className={style.header}>
-          <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Labels</th>
-          </tr>
-        </thead>
-        <tbody>
-          {elements.map((element) => {
-            const { name, createdAt, labels, id } = format(element, true);
-            const type = element.type;
+  const getView = function () {
+    const props = {
+      elements,
+      onSelectElement,
+    };
 
-            return (
-              <tr key={id} onDoubleClick={() => onSelectElement(element)}>
-                <td key={generateKey(id, "type")} className="w-1 align-middle">
-                  <Icon key={generateKey(id, "type_icon")} name={type.icon} />
-                </td>
-                <td key={generateKey(id, "name")} className="w-5 align-middle">
-                  {name}
-                </td>
-                <td key={generateKey(id, "date")} className="w-2 align-middle">
-                  {createdAt}
-                </td>
-                <td
-                  key={generateKey(id, "labels")}
-                  className="w-4 align-middle"
-                >
-                  {labels}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </div>
-  );
+    switch (view.key) {
+      case "grid":
+        return <FolderGridView {...props} />;
+      case "list":
+      default:
+        return <FolderListView {...props} />;
+    }
+  };
+
+  return <div className="section overflow-auto">{getView()}</div>;
 };
 
 const mapStateToProps = ({ archive }) => {
   return {
     elements: archive.elements,
+    view: archive.contentView,
   };
 };
 

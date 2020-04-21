@@ -129,3 +129,10 @@ export const getLabels = () => {
     dispatch(setLabels(labels));
   };
 };
+
+export const setContentView = (view) => {
+  return {
+    type: actionTypes.SET_CONTENT_VIEW,
+    view,
+  };
+};

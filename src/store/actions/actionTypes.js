@@ -7,6 +7,7 @@ export const SET_ELEMENT_TYPES = "SET_ELEMENT_TYPES";
 export const ADD_ELEMENTS = "ADD_ELEMENTS";
 export const UPDATE_ELEMENT = "UPDATE_ELEMENT";
 export const SET_LABELS = "SET_LABELS";
+export const SET_CONTENT_VIEW = "SET_CONTENT_VIEW";
 
 // App
 export const SET_MODAL = "SET_MODAL";
