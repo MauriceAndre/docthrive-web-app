@@ -1,32 +1,7 @@
-import React from "react";
-import Joi from "joi-browser";
-import Form from "./../../../common/Form";
-import config from "./../../../../services/configService";
+import ElementForm from "./../../../common/ElementForm";
 import { mapping } from "./../../../../utils/objectUtils";
 
-// config
-const elValid = config.validation.element;
-
-class CopyElementForm extends Form {
-  state = {
-    data: {
-      name: "",
-      labels: [],
-    },
-    errors: {},
-  };
-
-  doSubmit = null;
-
-  schema = {
-    name: Joi.string()
-      .min(elValid.name.min)
-      .max(elValid.name.max)
-      .required()
-      .label("Name"),
-    labels: Joi.array().label("Labels"),
-  };
-
+class CopyElementForm extends ElementForm {
   componentDidMount() {
     const { srcElement, onInitForm } = this.props;
 
@@ -41,12 +16,7 @@ class CopyElementForm extends Form {
   }
 
   render() {
-    return (
-      <Form.Container>
-        <Form.Input name="name" label="Name" scope={this} />
-        <Form.LabelSelect name="labels" label="Labels" multi scope={this} />
-      </Form.Container>
-    );
+    return super.render();
   }
 }
 
