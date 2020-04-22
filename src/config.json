@@ -11,5 +11,13 @@
     "types": {
       "folder": 258
     }
+  },
+  "archive": {
+    "views": {
+      "grid": {
+        "maxChars": 22,
+        "placeholder": "..."
+      }
+    }
   }
 }

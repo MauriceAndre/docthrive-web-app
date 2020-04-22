@@ -1,3 +1,13 @@
+.card {
+  height: 3rem;
+  width: 12rem;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: lightgray;
+}
+
 .body {
   position: relative;
 }

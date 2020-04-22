@@ -60,7 +60,14 @@
   "toolbar": {
     "move": "Verschieben",
     "copy": "Kopieren",
-    "newFolder": "Neuer Ordner"
+    "newFolder": "Neuer Ordner",
+    "view": {
+      "text": "Ansicht",
+      "options": {
+        "list": "Liste",
+        "grid": "Kachel"
+      }
+    }
   },
   "moveElement": {
     "description": "Bitte wählen sie das Ziel aus",

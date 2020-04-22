@@ -68,14 +68,14 @@ const Toolbar = ({
       isDisabled: () => isFile(selectedElement),
     },
     {
-      text: "View",
+      text: t("view.text"),
       icon: activeView.icon,
       type: "dropdown",
       options: {
         activeItem: activeView.key,
         items: [
-          { key: "list", text: "List", icon: "list" },
-          { key: "grid", text: "Grid", icon: "th" },
+          { key: "list", text: t("view.options.list"), icon: "list" },
+          { key: "grid", text: t("view.options.grid"), icon: "th" },
         ],
       },
       classes: "ml-auto",
