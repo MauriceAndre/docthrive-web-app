@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import FolderContent from "./../FolderContent";
-import FileContent from "./../FileContent";
+import DocumentContent from "./../DocumentContent";
 import { isFolder } from "./../../../../utils/elementUtils";
 
 const MainContent = ({ selectedElement }) => {
@@ -9,7 +9,7 @@ const MainContent = ({ selectedElement }) => {
     <div className="section-content">
       {(isFolder(selectedElement) && (
         <FolderContent element={selectedElement} />
-      )) || <FileContent />}
+      )) || <DocumentContent />}
     </div>
   );
 };

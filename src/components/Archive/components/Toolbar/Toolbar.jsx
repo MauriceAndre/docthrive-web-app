@@ -5,7 +5,7 @@ import { t, initT, useT } from "../../../../utils/intl";
 import { Button, Dropdown } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
-import { isFolder, isFile } from "./../../../../utils/elementUtils";
+import { isFolder, isDocument } from "./../../../../utils/elementUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
 import {
   moveElement,
@@ -65,7 +65,7 @@ const Toolbar = ({
       handleClick: () => {
         setModal(createFolder(showModal, selectedElement.id));
       },
-      isDisabled: () => isFile(selectedElement),
+      isDisabled: () => isDocument(selectedElement),
     },
     {
       text: t("view.text"),
@@ -80,7 +80,7 @@ const Toolbar = ({
       },
       classes: "ml-auto",
       handleClick: (view) => setView(view),
-      isDisabled: () => isFile(selectedElement),
+      isDisabled: () => isDocument(selectedElement),
     },
   ];
 

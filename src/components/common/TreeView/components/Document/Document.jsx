@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { join } from "./../../../../../utils/arrayUtils";
+import { join } from "../../../../../utils/arrayUtils";
 import style from "../../TreeView.module.css";
 
-const File = ({ element, selectedId, onSelect }) => {
+const Document = ({ element, selectedId, onSelect }) => {
   const { id, name } = element;
 
   return (
-    <li className={style.file}>
+    <li className={style.document}>
       <div
         onClick={() => onSelect(element)}
         className={join([
-          style["file-icon"],
+          style["document-icon"],
           selectedId === id && style.selected,
         ])}
       >
@@ -21,9 +21,9 @@ const File = ({ element, selectedId, onSelect }) => {
   );
 };
 
-File.propTypes = {
+Document.propTypes = {
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,
 };
 
-export default File;
+export default Document;

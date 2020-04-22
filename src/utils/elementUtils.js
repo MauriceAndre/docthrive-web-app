@@ -45,7 +45,7 @@ export function isFolder(element) {
   return element.type.id > 256;
 }
 
-export function isFile(element) {
+export function isDocument(element) {
   element = element || {};
   element.type = element.type || {};
   return element.type.id <= 256;

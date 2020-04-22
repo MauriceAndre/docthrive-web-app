@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import Iframe from "react-iframe";
-import FloatingButton from "./../../../common/FloatingButton";
-import { useT, initT, t } from "./../../../../utils/intl";
+import FloatingButton from "../../../common/FloatingButton/FloatingButton";
+import { useT, initT, t } from "../../../../utils/intl";
 
-function FileContent({ workVersion }) {
-  initT(useT(), "fileContent");
+function DocumentContent({ workVersion }) {
+  initT(useT(), "documentContent");
   const url = workVersion && workVersion.url;
   const previewUrl = `https://docs.google.com/gview?url=${url}`;
 
@@ -41,4 +41,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(FileContent);
+export default connect(mapStateToProps)(DocumentContent);

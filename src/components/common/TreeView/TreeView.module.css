@@ -5,9 +5,9 @@
   /* folder-icon */
   --folder-close-icon: "\f07b";
   --folder-open-icon: "\f07c";
-  /* file icon */
-  --file-default-icon: "\f15b";
-  --file-word-icon: "\f1c2";
+  /* document icon */
+  --document-default-icon: "\f15b";
+  --document-word-icon: "\f1c2";
   /* other */
   --caret-right-icon: "\f0da";
   --archive-icon: "\f187";
@@ -27,7 +27,7 @@
   --selected-bg-color: gray;
   /* icons */
   --caret-color: black;
-  --file-color: cornflowerblue;
+  --document-color: cornflowerblue;
   --folder-color: var(--default-color);
 }
 
@@ -72,7 +72,7 @@
 }
 
 /* hover */
-.file-icon:hover,
+.document-icon:hover,
 .folder-icon:hover,
 .archive-icon:hover {
   color: var(--hover-color);
@@ -80,8 +80,8 @@
 }
 
 /* selected */
-.file > .selected,
-.file > .selected:before,
+.document > .selected,
+.document > .selected:before,
 .folder-content.selected > .folder-icon,
 .folder-content.selected > .folder-icon:before,
 .archive-icon.selected {
@@ -94,13 +94,13 @@
 
 .archive-icon,
 .folder-icon,
-.file-icon {
+.document-icon {
   width: 100%;
 }
 
 .archive-icon:before,
 .folder-icon:before,
-.file-icon:before {
+.document-icon:before {
   font-family: var(--font-family-icons);
   margin-right: 5px;
   padding-left: 5px;
@@ -135,8 +135,8 @@
   content: var(--folder-open-icon);
 }
 
-/* file */
-.file-icon:before {
-  content: var(--file-default-icon);
-  color: var(--file-color);
+/* document */
+.document-icon:before {
+  content: var(--document-default-icon);
+  color: var(--document-color);
 }

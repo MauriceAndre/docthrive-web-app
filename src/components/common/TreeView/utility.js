@@ -1,6 +1,6 @@
 import React from "react";
 import Folder from "./components/Folder/Folder";
-import File from "./components/File/File";
+import Document from "./components/Document/Document";
 import { isFolder } from "./../../../utils/elementUtils";
 
 export function renderChild(element, scope) {
@@ -30,9 +30,9 @@ export function renderChild(element, scope) {
       />
     );
   } else {
-    // file
+    // document
     if (onlyFolders) return null;
-    result = <File key={element.id} {...props} />;
+    result = <Document key={element.id} {...props} />;
   }
 
   return result;
