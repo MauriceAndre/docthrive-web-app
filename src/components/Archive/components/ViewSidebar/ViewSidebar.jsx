@@ -28,13 +28,13 @@ class ViewSidebar extends Component {
             <Accordion.Collapse eventKey="views">
               <ListGroup variant="flush">
                 <ListGroup.Item action>
-                  <Icon name="tags" /> {t("views.labels")}
+                  <Icon name="tags" text={t("views.labels")} />
                 </ListGroup.Item>
                 <ListGroup.Item action>
-                  <Icon name="folder" /> {t("views.tree")}
+                  <Icon name="folder" text={t("views.tree")} />
                 </ListGroup.Item>
                 <ListGroup.Item action>
-                  <Icon name="calendar-alt" /> {t("views.date")}
+                  <Icon name="calendar-alt" text={t("views.date")} />
                 </ListGroup.Item>
               </ListGroup>
             </Accordion.Collapse>

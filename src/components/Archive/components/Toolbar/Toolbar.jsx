@@ -132,8 +132,7 @@ const Toolbar = ({
                 active={options.activeItem === key}
                 onSelect={() => handleClick(item)}
               >
-                <Icon name={icon} />
-                <span> {text}</span>
+                <Icon name={icon} text={text} />
               </Dropdown.Item>
             );
           })}
