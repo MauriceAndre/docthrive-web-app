@@ -3,7 +3,11 @@ import FontAwesome from "react-fontawesome";
 import PropTypes from "prop-types";
 
 function Icon({ text, left, right, ...rest }) {
-  let content = [<FontAwesome {...rest} />, " ", <span>{text}</span>];
+  let content = [
+    <FontAwesome key={"icon"} {...rest} />,
+    " ",
+    <span key={"text"}>{text}</span>,
+  ];
 
   if (text) {
     content = left ? content.reverse() : content;
