@@ -6,7 +6,7 @@ import { isFolder } from "./../../../../utils/elementUtils";
 
 const MainContent = ({ selectedElement }) => {
   return (
-    <div className="section-content">
+    <div className="section-content unselectable">
       {(isFolder(selectedElement) && (
         <FolderContent element={selectedElement} />
       )) || <DocumentContent element={selectedElement} />}
