@@ -4,7 +4,7 @@ import { join } from "../../../../../utils/arrayUtils";
 import style from "../../TreeView.module.css";
 
 const Document = ({ element, selectedId, onSelect }) => {
-  const { id, name } = element;
+  const { _id, name } = element;
 
   return (
     <li className={style.document}>
@@ -12,7 +12,7 @@ const Document = ({ element, selectedId, onSelect }) => {
         onClick={() => onSelect(element)}
         className={join([
           style["document-icon"],
-          selectedId === id && style.selected,
+          selectedId === _id && style.selected,
         ])}
       >
         <span>{name}</span>

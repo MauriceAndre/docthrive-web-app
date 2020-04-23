@@ -22,7 +22,7 @@ export function renderChild(element, scope) {
     // folder
     result = (
       <Folder
-        key={element.id}
+        key={element._id}
         getChildren={getChildren}
         elements={elements}
         onlyFolders={onlyFolders}
@@ -32,7 +32,7 @@ export function renderChild(element, scope) {
   } else {
     // document
     if (onlyFolders) return null;
-    result = <Document key={element.id} {...props} />;
+    result = <Document key={element._id} {...props} />;
   }
 
   return result;

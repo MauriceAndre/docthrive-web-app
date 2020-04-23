@@ -1,6 +1,6 @@
 const docVersions = [
   {
-    id: "1",
+    _id: "1",
     elementId: "22",
     workVersion: true,
     extension: "ppt",
@@ -11,7 +11,7 @@ const docVersions = [
     version: "1.0",
   },
   {
-    id: "2",
+    _id: "2",
     elementId: "26",
     workVersion: true,
     extension: "xls",
@@ -22,7 +22,7 @@ const docVersions = [
     version: "1.0",
   },
   {
-    id: "3",
+    _id: "3",
     elementId: "28",
     workVersion: true,
     extension: "docx",
@@ -39,7 +39,7 @@ export async function getAllDocVersions() {
 }
 
 export async function getDocVersion(id) {
-  return docVersions.find((docVersion) => docVersion.id === id);
+  return docVersions.find((docVersion) => docVersion._id === id);
 }
 
 export function getWorkVersion(elementId) {

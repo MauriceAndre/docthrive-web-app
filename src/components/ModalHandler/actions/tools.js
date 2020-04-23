@@ -20,7 +20,7 @@ export const moveElement = (showModal, onMove) => {
     showModal(false);
   };
   const onSave = () => {
-    onMove(destElement.id);
+    onMove(destElement._id);
     showModal(false);
   };
 
@@ -54,7 +54,7 @@ export const copyElement = (showModal, srcElement) => {
 
   const doSubmit = (data) => {
     const element = updateObject(srcElement, data);
-    store.dispatch(actionCreators.copyElement(element, destElement.id));
+    store.dispatch(actionCreators.copyElement(element, destElement._id));
     showModal(false);
   };
 

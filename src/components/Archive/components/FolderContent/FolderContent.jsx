@@ -12,10 +12,10 @@ const FolderContent = ({
   getChildren,
   view,
 }) => {
-  const { id } = element;
+  const { _id } = element;
 
-  getChildren(id);
-  elements = findByParentId(id, elements);
+  getChildren(_id);
+  elements = findByParentId(_id, elements);
 
   const getView = function () {
     const props = {

@@ -10,7 +10,7 @@ export function generateId() {
 
 export function createElement(data) {
   let element = {
-    id: generateId(),
+    _id: generateId(),
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
@@ -29,7 +29,7 @@ export function getChildren(element, elements) {
   const children = [];
 
   if (isFolder(element)) {
-    const result = findByParentId(element.id, elements);
+    const result = findByParentId(element._id, elements);
     result.every((child) => children.push(getChildren(child, elements)));
     children.push(result);
   } else {
@@ -42,17 +42,17 @@ export function getChildren(element, elements) {
 export function isFolder(element) {
   element = element || {};
   element.type = element.type || {};
-  return element.type.id > 256;
+  return element.type._id > 256;
 }
 
 export function isDocument(element) {
   element = element || {};
   element.type = element.type || {};
-  return element.type.id <= 256;
+  return element.type._id <= 256;
 }
 
 export function findById(id, elements) {
-  return elements.find((element) => element.id === id);
+  return elements.find((element) => element._id === id);
 }
 
 export function findByParentId(parentId, elements) {
@@ -61,7 +61,7 @@ export function findByParentId(parentId, elements) {
 
 export function replaceById(id, element, elements) {
   elements = [...elements];
-  var index = _.findIndex(elements, { id });
+  var index = _.findIndex(elements, { _id: id });
 
   elements.splice(index, 1, element);
   return elements;
@@ -108,8 +108,8 @@ export function populate(element, dataset) {
     const value = element[key];
 
     if (isArray(value))
-      pElement[key] = data.filter((item) => value.includes(item.id));
-    else pElement[key] = data.find((item) => value === item.id);
+      pElement[key] = data.filter((item) => value.includes(item._id));
+    else pElement[key] = data.find((item) => value === item._id);
   }
 
   return pElement;

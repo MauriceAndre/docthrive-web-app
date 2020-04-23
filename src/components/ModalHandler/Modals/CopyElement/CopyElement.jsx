@@ -35,7 +35,7 @@ function CopyElement({
         <Col xs={12} md={6}>
           <div className="mb-2">{t("description")}:</div>
           <TreeView
-            selectedId={selectedElement.id}
+            selectedId={selectedElement._id}
             onSelect={handleSelect}
             getChildren={handleGetChildren}
             elements={elements}

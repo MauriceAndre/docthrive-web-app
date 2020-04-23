@@ -13,7 +13,7 @@ function FolderGridView({ elements, onSelectElement }) {
     <div className="w-100">
       <div className="d-flex flex-wrap">
         {elements.map((element) => {
-          const { name, id, type } = element;
+          const { name, _id, type } = element;
           let text =
             name.length > maxChars
               ? name.substr(0, maxChars - placeholder.length) + placeholder
@@ -21,14 +21,14 @@ function FolderGridView({ elements, onSelectElement }) {
 
           return (
             <Card
-              key={id}
+              key={_id}
               className={join(["m-1", style.card])}
               onDoubleClick={() => onSelectElement(element)}
             >
               <Card.Body className={join(["p-2", style.body])}>
                 <Card.Text className={style.text}>
                   <Icon
-                    key={generateKey(id, "type_icon")}
+                    key={generateKey(_id, "type_icon")}
                     name={type.icon}
                     text={text}
                   />

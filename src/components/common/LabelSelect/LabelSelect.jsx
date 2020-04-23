@@ -15,16 +15,16 @@ class LabelSelect extends Component {
     return labels;
   };
 
-  mapToViewModel({ custom, name, id }) {
+  mapToViewModel({ custom, name, _id }) {
     return {
       label: custom ? name : t(`options.${name}`),
-      value: id,
+      value: _id,
     };
   }
 
   mapToDataModel({ value }) {
     let { labels } = this.props;
-    return labels.find((label) => label.id === value);
+    return labels.find((label) => label._id === value);
   }
 
   handleCreateLabel = async (label) => {

@@ -41,7 +41,7 @@ export const createFolder = (data) => {
 export const updateElement = (id, element) => {
   return {
     type: actionTypes.UPDATE_ELEMENT,
-    id,
+    _id: id,
     element,
   };
 };
@@ -49,7 +49,7 @@ export const updateElement = (id, element) => {
 export const moveElement = (element, parentId) => {
   return async (dispatch) => {
     element = updateObject(element, { parentId });
-    dispatch(updateElement(element.id, element));
+    dispatch(updateElement(element._id, element));
     // await server call
   };
 };
@@ -83,7 +83,7 @@ export const setSelectedElement = (element) => {
 export const storeSelectedElement = (element) => {
   return async (dispatch) => {
     dispatch(setSelectedElement(element));
-    const func = getWorkVersion(element.id);
+    const func = getWorkVersion(element._id);
     await func(dispatch);
   };
 };

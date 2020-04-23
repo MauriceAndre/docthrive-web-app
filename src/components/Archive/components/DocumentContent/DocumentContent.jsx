@@ -11,8 +11,8 @@ function DocumentContent({ element, workVersion, getWorkVersion }) {
   const previewUrl = `https://docs.google.com/gview?url=${url}`;
 
   useEffect(() => {
-    getWorkVersion(element.id);
-  }, [element.id, getWorkVersion]);
+    getWorkVersion(element._id);
+  }, [element._id, getWorkVersion]);
 
   const handleClick = () => {
     var win = window.open(previewUrl, "_blank");

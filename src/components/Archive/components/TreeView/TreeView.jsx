@@ -15,7 +15,7 @@ const TreeView = ({
 
   return (
     <Tree
-      selectedId={selectedElement.id}
+      selectedId={selectedElement._id}
       onSelect={onSelectElement}
       getChildren={handleGetChildren}
       elements={elements}

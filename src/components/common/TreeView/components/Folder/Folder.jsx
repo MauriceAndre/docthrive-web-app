@@ -14,16 +14,16 @@ class Folder extends Component {
     const { element, getChildren } = this.props;
     const { expanded } = this.state;
 
-    getChildren(element.id);
+    getChildren(element._id);
     this.setState({ expanded: !expanded });
   };
 
   render() {
     const { expanded } = this.state;
     const { element, selectedId, onSelect, elements } = this.props;
-    const { id, name } = element;
+    const { _id, name } = element;
 
-    const children = findByParentId(id, elements);
+    const children = findByParentId(_id, elements);
 
     return (
       <li className={join([style.folder, expanded && style.show])}>
@@ -32,7 +32,7 @@ class Folder extends Component {
           className={join([
             style["folder-content"],
             "d-flex",
-            selectedId === id && style.selected,
+            selectedId === _id && style.selected,
           ])}
         >
           <span

@@ -63,7 +63,7 @@ const Toolbar = ({
       text: t("newFolder"),
       icon: "folder-plus",
       handleClick: () => {
-        setModal(createFolder(showModal, selectedElement.id));
+        setModal(createFolder(showModal, selectedElement._id));
       },
       isDisabled: () => isDocument(selectedElement),
     },

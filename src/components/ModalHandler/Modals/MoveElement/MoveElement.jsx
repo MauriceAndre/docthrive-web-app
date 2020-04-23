@@ -25,7 +25,7 @@ function MoveElement({ elements, getChildren, onSelectElement }) {
         <div className="w-100">
           <div className="mb-2">{t("description")}:</div>
           <TreeView
-            selectedId={selectedElement.id}
+            selectedId={selectedElement._id}
             onSelect={handleSelect}
             getChildren={handleGetChildren}
             elements={elements}

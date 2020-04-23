@@ -9,9 +9,9 @@ import style from "./../../TreeView.module.css";
 
 class Root extends Component {
   rootElement = {
-    id: "1",
+    _id: "1",
     type: {
-      id: 257,
+      _id: 257,
       name: "Root",
       icon: "archive",
     },
@@ -22,24 +22,24 @@ class Root extends Component {
     const { getChildren, onSelect } = props;
 
     onSelect(rootElement);
-    getChildren(rootElement.id);
+    getChildren(rootElement._id);
   };
 
   render() {
     const { props, rootElement } = this;
     const { selectedId, onSelect, elements } = props;
-    const { id } = rootElement;
+    const { _id } = rootElement;
     initT(this.props.t, "treeView");
 
-    const children = findByParentId(id, elements);
+    const children = findByParentId(_id, elements);
 
     return (
-      <li key={id} className={style.root}>
+      <li key={_id} className={style.root}>
         <div
           onClick={() => onSelect(rootElement)}
           className={join([
             style["archive-icon"],
-            id === selectedId && style.selected,
+            _id === selectedId && style.selected,
           ])}
         >
           {t("archive")}

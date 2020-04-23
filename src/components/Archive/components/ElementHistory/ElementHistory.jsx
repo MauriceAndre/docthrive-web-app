@@ -6,31 +6,31 @@ import Section from "../../../common/Section/Section";
 class ElementHistory extends Component {
   history = [
     {
-      id: 1,
+      _id: 1,
       title: "Create",
       text: "You created a new document",
       createdAt: Date.now(),
     },
     {
-      id: 2,
+      _id: 2,
       title: "Create",
       text: "You created a new document",
       createdAt: Date.now(),
     },
     {
-      id: 3,
+      _id: 3,
       title: "Create",
       text: "You created a new document",
       createdAt: Date.now(),
     },
     {
-      id: 4,
+      _id: 4,
       title: "Create",
       text: "You created a new document",
       createdAt: Date.now(),
     },
     {
-      id: 5,
+      _id: 5,
       title: "Create",
       text: "You created a new document",
       createdAt: Date.now(),
@@ -40,8 +40,8 @@ class ElementHistory extends Component {
   render() {
     return (
       <Section className="overflow-auto p-2">
-        {this.history.map(({ id, title, text, createdAt }) => (
-          <Card key={id} className="my-3">
+        {this.history.map(({ _id, title, text, createdAt }) => (
+          <Card key={_id} className="my-3">
             <Card.Header className="d-flex align-items-center">
               <span>{title}</span>
               <small className="text-muted ml-auto">
