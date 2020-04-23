@@ -1,7 +1,7 @@
 const docVersions = [
   {
-    id: 1,
-    elementId: 22,
+    id: "1",
+    elementId: "22",
     workVersion: true,
     extension: "ppt",
     type: 1,
@@ -11,8 +11,8 @@ const docVersions = [
     version: "1.0",
   },
   {
-    id: 1,
-    elementId: 26,
+    id: "2",
+    elementId: "26",
     workVersion: true,
     extension: "xls",
     type: 1,
@@ -22,8 +22,8 @@ const docVersions = [
     version: "1.0",
   },
   {
-    id: 1,
-    elementId: 28,
+    id: "3",
+    elementId: "28",
     workVersion: true,
     extension: "docx",
     type: 1,

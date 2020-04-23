@@ -9,7 +9,7 @@ const MainContent = ({ selectedElement }) => {
     <div className="section-content">
       {(isFolder(selectedElement) && (
         <FolderContent element={selectedElement} />
-      )) || <DocumentContent />}
+      )) || <DocumentContent element={selectedElement} />}
     </div>
   );
 };

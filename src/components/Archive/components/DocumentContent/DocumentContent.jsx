@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import * as actionCreators from "./../../../../store/actions/index";
 import Iframe from "react-iframe";
-import FloatingButton from "../../../common/FloatingButton/FloatingButton";
+import FloatingButton from "../../../common/FloatingButton";
 import { useT, initT, t } from "../../../../utils/intl";
 
-function DocumentContent({ workVersion }) {
+function DocumentContent({ element, workVersion, getWorkVersion }) {
   initT(useT(), "documentContent");
   const url = workVersion && workVersion.url;
   const previewUrl = `https://docs.google.com/gview?url=${url}`;
+
+  useEffect(() => {
+    getWorkVersion(element.id);
+  }, [element.id, getWorkVersion]);
 
   const handleClick = () => {
     var win = window.open(previewUrl, "_blank");
@@ -35,10 +40,17 @@ function DocumentContent({ workVersion }) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ archive }) => {
   return {
-    workVersion: state.archive.workVersion,
+    workVersion: archive.workVersion,
   };
 };
 
-export default connect(mapStateToProps)(DocumentContent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getWorkVersion: (elementId) =>
+      dispatch(actionCreators.getWorkVersion(elementId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentContent);
