@@ -1,6 +1,7 @@
 .App {
   --main-nav-h: 0;
   --toolbar-h: 0;
+  --breadcrumb-bar-h: 0;
 }
 
 #root,

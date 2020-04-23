@@ -3,6 +3,7 @@ import { t } from "./intl";
 import { formatToDate } from "./dateUtils";
 import { isArray } from "./arrayUtils";
 import * as objectUtils from "./objectUtils";
+import config from "./../services/configService";
 
 export function generateId() {
   return Date.now().toString() + Math.floor(Math.random() * 1000);
@@ -49,6 +50,35 @@ export function isDocument(element) {
   element = element || {};
   element.type = element.type || {};
   return element.type._id <= 256;
+}
+
+export function getPath(element, elements) {
+  if (objectUtils.isEmpty(element)) return [];
+
+  const path = [element];
+  let { parentId } = element;
+
+  while (parentId) {
+    if (parentId === "1") {
+      element = getRootElement();
+      parentId = undefined;
+    } else {
+      element = findById(parentId, elements);
+      parentId = element.parentId;
+    }
+
+    path.unshift(element);
+  }
+
+  return path;
+}
+
+export function getRootElement() {
+  let root = config.archive.rootElement;
+
+  return objectUtils.updateObject(root, {
+    name: t("treeView." + root.name, false),
+  });
 }
 
 export function findById(id, elements) {

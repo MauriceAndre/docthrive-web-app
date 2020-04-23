@@ -13,6 +13,15 @@
     }
   },
   "archive": {
+    "rootElement": {
+      "_id": "1",
+      "name": "archive",
+      "type": {
+        "_id": 257,
+        "name": "Root",
+        "icon": "archive"
+      }
+    },
     "views": {
       "grid": {
         "maxChars": 22,
