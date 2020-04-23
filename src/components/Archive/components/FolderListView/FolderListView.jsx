@@ -1,19 +1,22 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import Icon from "../../../common/Icon/Icon";
+import { t, initT, useT } from "../../../../utils/intl";
+import Icon from "../../../common/Icon";
 import { format } from "../../../../utils/elementUtils";
 import { generateKey } from "../../../../utils/componentUtils";
 import style from "./FolderList.module.css";
 
 function FolderListView({ elements, onSelectElement }) {
+  initT(useT(), "folderListView");
+
   return (
     <Table size="sm" striped hover responsive className={style.table}>
       <thead className={style.header}>
         <tr>
-          <th>Type</th>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Labels</th>
+          <th>{t("type")}</th>
+          <th>{t("name")}</th>
+          <th>{t("date")}</th>
+          <th>{t("labels")}</th>
         </tr>
       </thead>
       <tbody>

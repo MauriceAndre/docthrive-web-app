@@ -89,5 +89,11 @@
   "elementForm": {
     "name": "Bezeichung",
     "labels": "Etiketts"
+  },
+  "folderListView": {
+    "type": "Typ",
+    "name": "Bezeichnung",
+    "date": "Datum",
+    "labels": "Etiketts"
   }
 }
