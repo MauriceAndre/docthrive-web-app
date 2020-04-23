@@ -28,9 +28,9 @@ ModalHandler.propTypes = {
   options: PropTypes.object,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ app }) => {
   return {
-    modal: state.app.modal,
+    modal: app.modal,
   };
 };
 

@@ -77,9 +77,9 @@ ElementDetails.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ archive }) => {
   return {
-    selectedElement: state.archive.selectedElement,
+    selectedElement: archive.selectedElement,
   };
 };
 

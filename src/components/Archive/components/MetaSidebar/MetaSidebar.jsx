@@ -66,9 +66,9 @@ function MetaSidebar({ selectedElement }) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ archive }) => {
   return {
-    selectedElement: state.archive.selectedElement,
+    selectedElement: archive.selectedElement,
   };
 };
 
