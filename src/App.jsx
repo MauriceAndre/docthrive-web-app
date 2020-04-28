@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./App.css"; // don't move!
+import Routes from "./components/Routes";
 import MainNavbar from "./components/MainNavbar/MainNavbar";
 import ModalHandler from "./components/ModalHandler";
-import Routes from "./components/Routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
   state = {};
@@ -14,6 +16,7 @@ class App extends Component {
           <Routes />
         </main>
         <ModalHandler />
+        <ToastContainer />
       </div>
     );
   }

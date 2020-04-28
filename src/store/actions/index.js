@@ -6,6 +6,7 @@ export {
   moveElement,
   copyElement,
   addAvailableParent,
+  uploadDocuments,
   getChildren,
   setSelectedElement,
   storeSelectedElement,

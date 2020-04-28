@@ -1,9 +1,11 @@
 import _ from "lodash";
 import { t } from "./intl";
 import { formatToDate } from "./dateUtils";
-import { isArray } from "./arrayUtils";
+import { isArray, isStringArray } from "./arrayUtils";
 import * as objectUtils from "./objectUtils";
+import * as fileUtils from "./fileUtils";
 import config from "./../services/configService";
+import store from "./../store";
 
 export function generateId() {
   return Date.now().toString() + Math.floor(Math.random() * 1000);
@@ -59,7 +61,7 @@ export function getPath(element, elements) {
   let { parentId } = element;
 
   while (parentId) {
-    if (parentId === "1") {
+    if (parentId === config.archive.rootElement._id) {
       element = getRootElement();
       parentId = undefined;
     } else {
@@ -77,7 +79,7 @@ export function getRootElement() {
   let root = config.archive.rootElement;
 
   return objectUtils.updateObject(root, {
-    name: t("treeView." + root.name, false),
+    name: t("treeView." + root.name, { useNamespace: false }),
   });
 }
 
@@ -108,7 +110,7 @@ const formatPattern = [
         .map((label) =>
           label.custom
             ? label.name
-            : t(`labelSelect.options.${label.name}`, false)
+            : t(`labelSelect.options.${label.name}`, { useNamespace: false })
         )
         .join(", "),
     emptyValue: "-",
@@ -143,4 +145,31 @@ export function populate(element, dataset) {
   }
 
   return pElement;
+}
+
+export function populateWithStore(element, { all, type, labels }) {
+  const dataset = {};
+  const { archive } = store.getState();
+
+  if (type || all) {
+    const key = "type";
+    if (_.isNumber(element[key])) dataset[key] = archive.elementTypes;
+  }
+
+  if (labels || all) {
+    const key = "labels";
+    if (isStringArray(element[key])) dataset[key] = archive.labels;
+  }
+
+  return populate(element, dataset);
+}
+
+export function fileToElement(data, file) {
+  const element = createElement({
+    type: config.default.types.document,
+    ...data,
+    name: fileUtils.getName(file),
+  });
+
+  return element;
 }

@@ -6,7 +6,7 @@ import * as labelService from "../../services/labelService";
 import config from "./../../services/configService";
 import { updateObject } from "./../../utils/objectUtils";
 import * as elementUtils from "./../../utils/elementUtils";
-import store from "../store";
+import { funcIteration } from "../../utils/arrayUtils";
 
 const availableParents = [];
 
@@ -32,8 +32,8 @@ export const createElement = (data) => {
 
 export const createFolder = (data) => {
   data.type = data.type || config.default.types.folder;
-  data = elementUtils.populate(data, {
-    type: store.getState().archive.elementTypes,
+  data = elementUtils.populateWithStore(data, {
+    type: true,
   });
   return createElement(data);
 };
@@ -41,7 +41,7 @@ export const createFolder = (data) => {
 export const updateElement = (id, element) => {
   return {
     type: actionTypes.UPDATE_ELEMENT,
-    _id: id,
+    id,
     element,
   };
 };
@@ -59,6 +59,21 @@ export const copyElement = (element, newParentId) => {
     const newElement = elementUtils.copyElement(element, newParentId);
     dispatch(addElements([newElement], false));
     // await server call
+  };
+};
+
+export const uploadDocuments = (data, files) => {
+  return async (dispatch) => {
+    const elements = funcIteration(files, [
+      { func: elementUtils.fileToElement, params: (file) => [data, file] },
+      {
+        func: elementUtils.populateWithStore,
+        params: (element) => [element, { type: true }],
+      },
+    ]);
+
+    dispatch(addElements(elements, false));
+    // upload documents
   };
 };
 

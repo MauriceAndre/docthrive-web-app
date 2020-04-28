@@ -1,1 +1,6 @@
-export { moveElement, copyElement, createFolder } from "./tools";
+export {
+  moveElement,
+  copyElement,
+  createFolder,
+  uploadDocuments,
+} from "./tools";

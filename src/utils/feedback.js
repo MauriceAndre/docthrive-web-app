@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const TYPE = {
+export const TYPE = {
   DEFAULT: toast.TYPE.DEFAULT,
   SUCCESS: toast.TYPE.SUCCESS,
   INFO: toast.TYPE.INFO,
@@ -8,9 +8,13 @@ const TYPE = {
   ERROR: toast.TYPE.ERROR,
 };
 
-// const form = function(content, type) {
-//   call(content, { type, autoClose: 2500 });
-// };
+export const form = function (content, type) {
+  call(content, { type, autoClose: 2500 });
+};
+
+export const action = function (...props) {
+  form(...props);
+};
 
 // const register = function(content, type) {
 //   type = type || TYPE.SUCCESS;
@@ -36,8 +40,6 @@ const TYPE = {
 //   });
 // };
 
-const call = function (content, options) {
+export const call = function (content, options) {
   toast(content, options);
 };
-
-export default { TYPE, form, register, login };

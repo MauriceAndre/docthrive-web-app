@@ -5,10 +5,12 @@ import { Button } from "react-bootstrap";
 import MoveElement from "../Modals/MoveElement/MoveElement";
 import CopyElement from "./../Modals/CopyElement/CopyElement";
 import CreateFolder from "./../Modals/CreateFolder/CreateFolder";
+import UploadDocuments from "./../Modals/UploadDocuments/UploadDocuments";
 import { t, initT } from "../../../utils/intl";
 import { updateObject } from "./../../../utils/objectUtils";
+import * as feedback from "./../../../utils/feedback";
 
-export const moveElement = (showModal, onMove) => {
+export const moveElement = (showModal, srcElement) => {
   let destElement = null;
   initT(null, "moveElement");
 
@@ -16,11 +18,16 @@ export const moveElement = (showModal, onMove) => {
     destElement = element;
   };
 
-  const onClose = () => {
+  const doSubmit = () => {
+    store.dispatch(actionCreators.moveElement(srcElement, destElement._id));
     showModal(false);
+    feedback.action(
+      t("moveElement.feedback.succ", { data: srcElement, useNamespace: false }),
+      feedback.TYPE.SUCCESS
+    );
   };
-  const onSave = () => {
-    onMove(destElement._id);
+
+  const onClose = () => {
     showModal(false);
   };
 
@@ -34,7 +41,7 @@ export const moveElement = (showModal, onMove) => {
         <Button variant="secondary" onClick={onClose}>
           {t("cancel")}
         </Button>
-        <Button variant="primary" onClick={onSave} className="ml-auto">
+        <Button variant="primary" onClick={doSubmit} className="ml-auto">
           {t("move")}
         </Button>
       </Fragment>
@@ -56,6 +63,10 @@ export const copyElement = (showModal, srcElement) => {
     const element = updateObject(srcElement, data);
     store.dispatch(actionCreators.copyElement(element, destElement._id));
     showModal(false);
+    feedback.action(
+      t("copyElement.feedback.succ", { data, useNamespace: false }),
+      feedback.TYPE.SUCCESS
+    );
   };
 
   const handleInitForm = (onSubmitFnc) => {
@@ -106,6 +117,10 @@ export const createFolder = (showModal, destElementId) => {
     data.parentId = destElementId;
     store.dispatch(actionCreators.createFolder(data));
     showModal(false);
+    feedback.action(
+      t("createFolder.feedback.succ", { data, useNamespace: false }),
+      feedback.TYPE.SUCCESS
+    );
   };
 
   const handleInitForm = (onSubmitFnc) => {
@@ -133,6 +148,56 @@ export const createFolder = (showModal, destElementId) => {
           className="ml-auto"
         >
           {t("create")}
+        </Button>
+      </Fragment>
+    ),
+    options: {
+      size: "lg",
+    },
+  };
+};
+
+export const uploadDocuments = (showModal, files) => {
+  let onSubmit;
+  initT(null, "uploadDocuments");
+
+  const doSubmit = (data, files) => {
+    store.dispatch(actionCreators.uploadDocuments(data, files));
+    showModal(false);
+    feedback.action(
+      t("uploadDocuments.feedback.succ", {
+        data: { count: files.length },
+        useNamespace: false,
+      }),
+      feedback.TYPE.SUCCESS
+    );
+  };
+
+  const handleInitForm = (onSubmitFnc) => {
+    onSubmit = onSubmitFnc;
+    return doSubmit;
+  };
+
+  const onClose = () => {
+    showModal(false);
+  };
+
+  return {
+    title: t("title"),
+    show: true,
+    onClose,
+    body: <UploadDocuments onInitForm={handleInitForm} files={files} />,
+    footer: (
+      <Fragment>
+        <Button variant="secondary" onClick={onClose}>
+          {t("cancel")}
+        </Button>
+        <Button
+          variant="primary"
+          onClick={(e) => onSubmit(e)}
+          className="ml-auto"
+        >
+          {t("upload")}
         </Button>
       </Fragment>
     ),

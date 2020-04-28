@@ -9,8 +9,10 @@
   },
   "default": {
     "types": {
-      "folder": 258
-    }
+      "folder": 258,
+      "document": 1
+    },
+    "contentView": { "key": "list", "icon": "list" }
   },
   "archive": {
     "rootElement": {
@@ -27,6 +29,12 @@
         "maxChars": 22,
         "placeholder": "..."
       }
+    }
+  },
+  "components": {
+    "list": {
+      "maxChars": 40,
+      "placeholder": "..."
     }
   }
 }

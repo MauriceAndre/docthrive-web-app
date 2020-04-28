@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 import * as elementUtils from "./../../utils/elementUtils";
 import { updateObject } from "./../../utils/objectUtils";
+import config from "./../../services/configService";
 
 const initialState = {
   elements: [],
@@ -8,7 +9,7 @@ const initialState = {
   workVersion: null,
   elementTypes: [],
   labels: [],
-  contentView: { key: "list", icon: "list" },
+  contentView: config.default.contentView,
 };
 
 const addElements = (state, { elements, populate }) => {

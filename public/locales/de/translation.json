@@ -1,8 +1,5 @@
 {
   "mainNavbar": {
-    "uploadBtn": {
-      "label": "Hochladen"
-    },
     "newDocDropdown": {
       "template": "Vorlage",
       "word": "Word",
@@ -73,18 +70,23 @@
     "description": "Bitte wählen sie das Ziel aus",
     "title": "Element verschieben",
     "cancel": "abbrechen",
-    "move": "verschieben"
+    "move": "verschieben",
+    "feedback": { "succ": "Element \"{{name}}\" verschoben" }
   },
   "copyElement": {
     "description": "Bitte wählen sie das Ziel aus",
     "title": "Element kopieren",
     "cancel": "abbrechen",
-    "paste": "einfügen"
+    "paste": "einfügen",
+    "feedback": { "succ": "Element \"{{name}}\" kopiert" }
   },
   "createFolder": {
     "title": "Neuer Ordner",
     "cancel": "abbrechen",
-    "create": "erstellen"
+    "create": "erstellen",
+    "feedback": {
+      "succ": "Neuer Ordner \"{{name}}\" erstellt"
+    }
   },
   "elementForm": {
     "name": "Bezeichung",
@@ -95,5 +97,21 @@
     "name": "Bezeichnung",
     "date": "Datum",
     "labels": "Etiketts"
+  },
+  "uploadButton": {
+    "label": "Hochladen"
+  },
+  "uploadDocuments": {
+    "title": "Dokumente hochladen",
+    "cancel": "abbrechen",
+    "upload": "hochladen",
+    "labels": "Etiketts",
+    "selectedFilesDesc": "Sie haben {{count}} dokumente ausgewählt",
+    "feedback": {
+      "succ": "{{count}} Dokumente hochgeladen"
+    }
+  },
+  "dropzone": {
+    "desc": "Drag & Drop hier oder klicke um Dateien auszuwählen"
   }
 }
