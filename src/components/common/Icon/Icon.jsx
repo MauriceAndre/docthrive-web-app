@@ -2,9 +2,13 @@ import React from "react";
 import FontAwesome from "react-fontawesome";
 import PropTypes from "prop-types";
 
-function Icon({ text, left, right, ...rest }) {
+function Icon({ name, text, left, right, ...rest }) {
   let content = [
-    <FontAwesome key={"icon"} {...rest} />,
+    name ? (
+      <FontAwesome key={"icon"} name={name} {...rest} />
+    ) : (
+      <span {...rest}></span>
+    ),
     " ",
     <span key={"text"}>{text}</span>,
   ];
@@ -19,7 +23,7 @@ function Icon({ text, left, right, ...rest }) {
 }
 
 Icon.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   text: PropTypes.string,
   left: PropTypes.bool,
   right: PropTypes.bool,
