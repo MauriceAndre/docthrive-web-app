@@ -1,0 +1,37 @@
+.item {
+  border-width: 1px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+  font-size: 0.9rem;
+}
+
+.delete {
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  transition: color 250ms;
+}
+
+.delete:hover {
+  color: white !important;
+}
+
+.delete-icon {
+  z-index: 1;
+}
+
+.delete-bg {
+  background-color: var(--danger);
+  height: 100%;
+  width: 0%;
+  transition: width 500ms;
+  position: absolute;
+  right: 0;
+}
+
+.delete:hover .delete-bg {
+  width: 100%;
+}
