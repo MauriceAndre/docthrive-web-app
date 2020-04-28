@@ -18,7 +18,6 @@ import "./Toolbar.css";
 const Toolbar = ({
   selectedElement,
   workVersion,
-  onMoveElement,
   setModal,
   showModal,
   setView,
@@ -30,17 +29,12 @@ const Toolbar = ({
     {
       text: t("move"),
       icon: "arrow-right",
-      handleClick: () => {
-        const onMove = (parentId) => onMoveElement(selectedElement, parentId);
-        setModal(moveElement(showModal, onMove));
-      },
+      handleClick: () => setModal(moveElement(showModal, selectedElement)),
     },
     {
       text: t("copy"),
       icon: "copy",
-      handleClick: () => {
-        setModal(copyElement(showModal, selectedElement));
-      },
+      handleClick: () => setModal(copyElement(showModal, selectedElement)),
     },
     {
       text: "Download",
@@ -62,9 +56,7 @@ const Toolbar = ({
     {
       text: t("newFolder"),
       icon: "folder-plus",
-      handleClick: () => {
-        setModal(createFolder(showModal, selectedElement._id));
-      },
+      handleClick: () => setModal(createFolder(showModal, selectedElement._id)),
       isDisabled: () => isDocument(selectedElement),
     },
     {
@@ -167,8 +159,6 @@ const mapStateToProps = ({ archive }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onMoveElement: (element, parentId) =>
-      dispatch(actionCreators.moveElement(element, parentId)),
     setModal: (modal) => dispatch(actionCreators.setModal(modal)),
     showModal: (show) => dispatch(actionCreators.showModal(show)),
     setView: (view) => dispatch(actionCreators.setContentView(view)),

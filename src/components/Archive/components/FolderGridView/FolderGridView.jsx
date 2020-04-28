@@ -1,10 +1,11 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
+import config from "./../../../../services/configService";
 import { generateKey } from "./../../../../utils/componentUtils";
 import { join } from "./../../../../utils/arrayUtils";
+import { substring } from "../../../../utils/stringUtils";
 import style from "./FolderGridView.module.css";
-import config from "./../../../../services/configService";
 
 const { maxChars, placeholder } = config.archive.views.grid;
 
@@ -14,10 +15,7 @@ function FolderGridView({ elements, onSelectElement }) {
       <div className="d-flex flex-wrap">
         {elements.map((element) => {
           const { name, _id, type } = element;
-          let text =
-            name.length > maxChars
-              ? name.substr(0, maxChars - placeholder.length) + placeholder
-              : name;
+          let text = substring(name, maxChars, placeholder);
 
           return (
             <Card
