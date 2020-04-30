@@ -12,14 +12,17 @@ function BreadcrumbBar({ selectedElement, elements }) {
 
   return (
     <div
-      className={join(["section-content bg-light", style["breadcrumb-bar"]])}
+      className={join([
+        "section-content bg-light unselectable",
+        style["breadcrumb-bar"],
+      ])}
     >
       <Breadcrumb className={style.breadcrumb}>
         {path.map(({ _id, name }, idx) => (
           <Breadcrumb.Item
             key={_id}
             linkAs={Link}
-            linkProps={{ to: `/${_id}` }}
+            linkProps={{ to: `/archive/${_id}` }}
             active={path.length - 1 === idx}
           >
             {name}
