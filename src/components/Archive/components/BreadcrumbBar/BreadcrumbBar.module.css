@@ -23,3 +23,9 @@
   color: inherit;
   font-weight: 300;
 }
+
+@media (max-width: 992px) {
+  .breadcrumb ol {
+    padding-left: 0.4rem;
+  }
+}
