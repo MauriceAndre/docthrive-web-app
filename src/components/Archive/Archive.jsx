@@ -10,11 +10,33 @@ import BreadcrumbBar from "./components/BreadcrumbBar";
 import { join } from "./../../utils/arrayUtils";
 import style from "./Archive.module.css";
 
-const Archive = ({ initElementTypes, initLabels }) => {
+let preSelectedElementId = null;
+
+const Archive = ({
+  initElementTypes,
+  initLabels,
+  setSelectedElement,
+  selectedElement,
+  match,
+}) => {
   useEffect(() => {
     initElementTypes();
     initLabels();
   }, [initElementTypes, initLabels]);
+
+  let id;
+  if (preSelectedElementId === selectedElement._id) {
+    id = match.params.id;
+  } else {
+    id = selectedElement._id;
+    preSelectedElementId = id;
+  }
+
+  useEffect(() => {
+    if (id && preSelectedElementId !== id) {
+      setSelectedElement(id);
+    }
+  }, [id, setSelectedElement]);
 
   return (
     <Container fluid className={join(["section-content", style.archive])}>
@@ -55,11 +77,20 @@ const Archive = ({ initElementTypes, initLabels }) => {
     </Container>
   );
 };
+
+const mapStateToProps = ({ archive }) => {
+  return {
+    selectedElement: archive.selectedElement,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     initElementTypes: () => dispatch(actionCreators.getElementTypes()),
     initLabels: () => dispatch(actionCreators.getLabels()),
+    setSelectedElement: (id) =>
+      dispatch(actionCreators.setSelectedElementById(id)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Archive);
+export default connect(mapStateToProps, mapDispatchToProps)(Archive);

@@ -29,6 +29,7 @@
 .drag-accept {
   border-color: var(--success) !important;
   border-width: 1.5px !important;
+  border-style: solid !important;
   width: 100%;
 }
 

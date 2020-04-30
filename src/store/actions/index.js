@@ -9,6 +9,7 @@ export {
   uploadDocuments,
   getChildren,
   setSelectedElement,
+  setSelectedElementById,
   storeSelectedElement,
   getWorkVersion,
   setElementTypes,

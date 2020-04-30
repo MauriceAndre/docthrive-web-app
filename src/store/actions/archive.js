@@ -95,6 +95,11 @@ export const setSelectedElement = (element) => {
   };
 };
 
+export const setSelectedElementById = (id) => {
+  const element = elementUtils.findById(id) || elementUtils.getRootElement();
+  return setSelectedElement(element);
+};
+
 export const storeSelectedElement = (element) => {
   return async (dispatch) => {
     dispatch(setSelectedElement(element));

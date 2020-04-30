@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 import * as elementUtils from "./../../utils/elementUtils";
 import { updateObject } from "./../../utils/objectUtils";
 import config from "./../../services/configService";
+import history from "./../../components/Routes/history";
 
 const initialState = {
   elements: [],
@@ -31,6 +32,7 @@ const updateElement = (state, { id, element }) => {
 };
 
 const setSelectedElement = (state, { selectedElement }) => {
+  history.push(`/archive/${selectedElement._id}`);
   return updateObject(state, { selectedElement });
 };
 

@@ -84,6 +84,7 @@ export function getRootElement() {
 }
 
 export function findById(id, elements) {
+  elements = elements || store.getState().archive.elements;
   return elements.find((element) => element._id === id);
 }
 
