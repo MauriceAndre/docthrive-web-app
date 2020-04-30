@@ -45,19 +45,19 @@ const Toolbar = ({
         a.download = `${name}.${extension}`;
         a.click();
       },
-      isDisabled: () => isFolder(selectedElement),
+      isHidden: isFolder(selectedElement),
     },
     {
       text: "Print",
       icon: "print",
       handleClick: () => {},
-      isDisabled: () => isFolder(selectedElement),
+      isHidden: isFolder(selectedElement),
     },
     {
       text: t("newFolder"),
       icon: "folder-plus",
       handleClick: () => setModal(createFolder(showModal, selectedElement._id)),
-      isDisabled: () => isDocument(selectedElement),
+      isHidden: isDocument(selectedElement),
     },
     {
       text: t("view.text"),
@@ -72,7 +72,7 @@ const Toolbar = ({
       },
       classes: "ml-auto",
       handleClick: (view) => setView(view),
-      isDisabled: () => isDocument(selectedElement),
+      isDisabled: isDocument(selectedElement),
     },
   ];
 
@@ -110,7 +110,7 @@ const Toolbar = ({
         key={generateKey(text, icon, true)}
         className={join(["mx-2", classes])}
       >
-        <Dropdown.Toggle variant="light" disabled={isDisabled()}>
+        <Dropdown.Toggle variant="light" disabled={isDisabled}>
           <Icon name={icon} />
           <span className="d-none d-md-inline"> {text}</span>
         </Dropdown.Toggle>
@@ -137,6 +137,8 @@ const Toolbar = ({
     <div className={join(["section-content bg-light", style.toolbar])}>
       <div className="section align-items-center justify-content-start">
         {tools.map((tool) => {
+          if (tool.isHidden) return null;
+
           switch (tool.type) {
             case "dropdown":
               return renderDropdown(tool);
