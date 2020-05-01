@@ -1,9 +1,12 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { connectRouter, routerMiddleware } from "connected-react-router";
 import archiveReducer from "./reducers/archive";
 import appReducer from "./reducers/app";
+import history from "./../components/Routes/history";
 
 const rootReducer = combineReducers({
+  router: connectRouter(history),
   archive: archiveReducer,
   app: appReducer,
 });
@@ -11,7 +14,7 @@ const rootReducer = combineReducers({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk))
+  composeEnhancers(applyMiddleware(thunk, routerMiddleware(history)))
 );
 
 export default store;
