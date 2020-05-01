@@ -7,6 +7,7 @@ import config from "./../../services/configService";
 import { updateObject } from "./../../utils/objectUtils";
 import * as elementUtils from "./../../utils/elementUtils";
 import { funcIteration } from "../../utils/arrayUtils";
+import * as historyUtils from "./../../utils/historyUtils";
 
 const availableParents = [];
 
@@ -89,6 +90,7 @@ export const getChildren = (parentId) => {
 };
 
 export const setSelectedElement = (element) => {
+  historyUtils.addArchiveElement(element._id);
   return {
     type: actionTypes.SET_SELECTED_ELEMENT,
     selectedElement: element,

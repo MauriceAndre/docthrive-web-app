@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionCreators from "./../../../../store/actions/index";
 import { Breadcrumb } from "react-bootstrap";
+import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
 import { getPath } from "./../../../../utils/elementUtils";
+import { getArchiveElementPath } from "./../../../../utils/historyUtils";
 import style from "./BreadcrumbBar.module.css";
 import "./BreadcrumbBar.css";
-import Icon from "./../../../common/Icon/Icon";
 
 function BreadcrumbBar({ selectedElement, elements, setSelectedElement }) {
   const path = getPath(selectedElement, elements);
@@ -34,7 +35,7 @@ function BreadcrumbBar({ selectedElement, elements, setSelectedElement }) {
           <Breadcrumb.Item
             key={_id}
             linkAs={Link}
-            linkProps={{ to: `/archive/${_id}` }}
+            linkProps={{ to: getArchiveElementPath(_id) }}
             active={path.length - 1 === idx}
           >
             {name}

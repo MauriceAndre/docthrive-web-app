@@ -15,7 +15,7 @@ let preSelectedElementId = null;
 const Archive = ({
   initElementTypes,
   initLabels,
-  setSelectedElement,
+  onSelectElement,
   selectedElement,
   match,
 }) => {
@@ -34,9 +34,9 @@ const Archive = ({
 
   useEffect(() => {
     if (id && preSelectedElementId !== id) {
-      setSelectedElement(id);
+      onSelectElement(id);
     }
-  }, [id, setSelectedElement]);
+  }, [id, onSelectElement]);
 
   return (
     <Container fluid className={join(["section-content", style.archive])}>
@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     initElementTypes: () => dispatch(actionCreators.getElementTypes()),
     initLabels: () => dispatch(actionCreators.getLabels()),
-    setSelectedElement: (id) =>
+    onSelectElement: (id) =>
       dispatch(actionCreators.setSelectedElementById(id)),
   };
 };
