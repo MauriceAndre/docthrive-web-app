@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 import * as elementUtils from "./../../utils/elementUtils";
 import { updateObject } from "./../../utils/objectUtils";
 import config from "./../../services/configService";
-import history from "./../../components/Routes/history";
+import * as titleUtils from "../../utils/titleUtils";
 
 const initialState = {
   elements: [],
@@ -32,7 +32,7 @@ const updateElement = (state, { id, element }) => {
 };
 
 const setSelectedElement = (state, { selectedElement }) => {
-  history.push(`/archive/${selectedElement._id}`);
+  titleUtils.setArchiveElement(selectedElement);
   return updateObject(state, { selectedElement });
 };
 
