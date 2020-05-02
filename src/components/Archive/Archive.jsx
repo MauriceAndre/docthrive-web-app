@@ -55,13 +55,22 @@ const Archive = ({
             <Col className={join(["section-wrapper", style.toolbar])}>
               <Toolbar />
             </Col>
-            <Col className={join(["section-wrapper", style["breadcrumb-bar"]])}>
-              <BreadcrumbBar />
-            </Col>
             <Col className="section-wrapper section-fill">
               <Row className="section-content section">
                 <Col xs={12} md={8} className="section-wrapper">
-                  <MainContent />
+                  <Row className="section-content section section-column">
+                    <Col
+                      className={join([
+                        "section-wrapper",
+                        style["breadcrumb-bar"],
+                      ])}
+                    >
+                      <BreadcrumbBar />
+                    </Col>
+                    <Col className="section-wrapper">
+                      <MainContent />
+                    </Col>
+                  </Row>
                 </Col>
                 <Col
                   md={4}
