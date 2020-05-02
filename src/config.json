@@ -15,7 +15,10 @@
       "folder": 258,
       "document": 1
     },
-    "contentView": { "key": "list", "icon": "list" }
+    "contentView": { "key": "list", "icon": "list" },
+    "metaSidebar": {
+      "tabKey": "details"
+    }
   },
   "archive": {
     "rootElement": {

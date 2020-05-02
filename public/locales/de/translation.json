@@ -1,4 +1,26 @@
 {
+  "elementActions": {
+    "CREATE": {
+      "title": "Erstellt",
+      "text": "Sie haben das Element erstellt."
+    },
+    "RENAME": {
+      "title": "Umbennant",
+      "text": "Sie haben das Element von <% strong {{name.before}} %> zu <% strong {{name.after}} %> umbenannt."
+    },
+    "EDIT_META": {
+      "title": "Details bearbeitet",
+      "text": "Sie haben die Details des Elements bearbeitet."
+    },
+    "MOVE": {
+      "title": "Verschoben",
+      "text": "Sie haben das Element von <% strong {{from.path}} %> nach <% strong {{to.path}} %> verschoben."
+    },
+    "DELETE": {
+      "title": "Gelöscht",
+      "text": "Sie haben das Element gelöscht."
+    }
+  },
   "mainNavbar": {
     "newDocDropdown": {
       "template": "Vorlage",
@@ -43,13 +65,13 @@
     "type": "Typ",
     "labels": "Etiketts",
     "createdAt": "Erstellt am",
-    "updatedAt": "Geändert am"
+    "updatedAt": "Geändert am",
+    "edit": "bearbeiten",
+    "save": "speichern"
   },
   "metaSidebar": {
     "details": "Details",
-    "history": "Verlauf",
-    "edit": "bearbeiten",
-    "save": "speichern"
+    "activities": "Aktivitäten"
   },
   "documentContent": {
     "fullscreen": "Vollbild"
@@ -113,5 +135,8 @@
   },
   "dropzone": {
     "desc": "Drag & Drop hier oder klicke um Dateien auszuwählen"
+  },
+  "elementActivity": {
+    "noActivities": "Keine Aktivitäten gefunden"
   }
 }

@@ -10,6 +10,10 @@ export const isArray = function (arr) {
   return Array.isArray(arr);
 };
 
+export const isEmpty = function (arr) {
+  return arr.length === 0;
+};
+
 export const isStringArray = function (arr) {
   if (isArray(arr)) {
     return arr.lenth > 0 ? isString(arr[0]) : false;

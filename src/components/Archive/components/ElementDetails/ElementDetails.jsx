@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withTranslation } from "react-i18next";
+import FloatingButton from "./../../../common/FloatingButton";
 import { Container, Col, Row, Form } from "react-bootstrap";
 import { initT, t } from "../../../../utils/intl";
 import { format } from "../../../../utils/elementUtils";
@@ -15,7 +15,7 @@ class ElementDetails extends Component {
 
   renderEdit({ label, value, type, render }) {
     return (
-      <Form onSubmit={this.props.onSubmit}>
+      <Form onSubmit={this.props.onEditClick}>
         <Form.Row className="my-1">
           <Col xs={12} md={5}>
             <span className="text-muted">{label}</span>
@@ -49,7 +49,7 @@ class ElementDetails extends Component {
   }
 
   render() {
-    const { selectedElement, edit } = this.props;
+    const { selectedElement, edit, onEditClick } = this.props;
     initT(this.props.t, "elementDetails");
 
     const element = format(selectedElement);
@@ -66,6 +66,14 @@ class ElementDetails extends Component {
             this.renderDefault(props)
           );
         })}
+        <FloatingButton
+          text={(edit && t("save")) || t("edit")}
+          variant={(edit && "success") || ""}
+          icon={(edit && "check") || "pen"}
+          bottom
+          right
+          onClick={onEditClick}
+        />
       </Container>
     );
   }
@@ -77,10 +85,4 @@ ElementDetails.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ archive }) => {
-  return {
-    selectedElement: archive.selectedElement,
-  };
-};
-
-export default withTranslation()(connect(mapStateToProps)(ElementDetails));
+export default withTranslation()(ElementDetails);

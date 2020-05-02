@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Tabs, Tab, Container, Row, Col } from "react-bootstrap";
 import ElementDetails from "./../ElementDetails";
-import ElementHistory from "./../ElementHistory/ElementHistory";
-import FloatingButton from "./../../../common/FloatingButton";
+import ElementActivity from "./../ElementActivity";
 import { initT, useT, t } from "../../../../utils/intl";
+import config from "./../../../../services/configService";
 import "./MetaSidebar.css";
-// import style from "./MetaSidebar.module.css";
+
+const defaultTabKey = config.default.metaSidebar.tabKey;
 
 function MetaSidebar({ selectedElement }) {
-  const defaultTabKey = "details";
   initT(useT(), "metaSidebar");
   const [tabKey, setTabKey] = useState(defaultTabKey);
   const [editing, setEditing] = useState(false);
@@ -18,6 +18,34 @@ function MetaSidebar({ selectedElement }) {
     setTabKey(defaultTabKey);
     setEditing(!editing);
   };
+
+  const tabs = [
+    {
+      eventKey: "details",
+      content: {
+        component: ElementDetails,
+        props: {
+          edit: editing,
+          selectedElement,
+          onEditClick: handleEditClick,
+        },
+      },
+      title: t("details"),
+      className: "section-content",
+    },
+    {
+      eventKey: "activity",
+      content: {
+        component: ElementActivity,
+        props: {
+          selectedElement,
+        },
+      },
+      title: t("activities"),
+      disabled: editing,
+      className: "section-content",
+    },
+  ];
 
   return (
     <Container className="meta-sidebar section-content">
@@ -35,30 +63,17 @@ function MetaSidebar({ selectedElement }) {
               id="meta-tab"
               onSelect={(k) => setTabKey(k)}
             >
-              <Tab
-                eventKey="details"
-                title={t("details")}
-                className="section-content"
-              >
-                <ElementDetails edit={editing} onSubmit={handleEditClick} />
-              </Tab>
-              <Tab
-                eventKey="history"
-                title={t("history")}
-                disabled={editing}
-                className="section-content"
-              >
-                <ElementHistory />
-              </Tab>
+              {tabs.map(({ eventKey, content, ...tabProps }) => {
+                const { component: Component, props } = content;
+                const isTabSelected = tabKey === eventKey;
+
+                return (
+                  <Tab key={eventKey} eventKey={eventKey} {...tabProps}>
+                    {<Component isTabSelected={isTabSelected} {...props} />}
+                  </Tab>
+                );
+              })}
             </Tabs>
-            <FloatingButton
-              text={(editing && t("save")) || t("edit")}
-              variant={(editing && "success") || ""}
-              icon={(editing && "check") || "pen"}
-              bottom
-              right
-              onClick={handleEditClick}
-            />
           </div>
         </Col>
       </Row>
