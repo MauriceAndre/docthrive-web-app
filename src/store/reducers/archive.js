@@ -30,7 +30,10 @@ const updateElement = (state, { id, element }) => {
   const elements = elementUtils.replaceById(id, element, state.elements);
   const props = { elements };
 
-  if (id === state.selectedElement._id) props.selectedElement = element;
+  if (id === state.selectedElement._id) {
+    props.selectedElement = element;
+    titleUtils.setArchiveElement(element);
+  }
 
   return updateObject(state, props);
 };
