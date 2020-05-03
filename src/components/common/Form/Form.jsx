@@ -11,22 +11,49 @@ class Form extends Component {
   };
 
   static Container = BootstrapForm;
+  static Row = BootstrapForm.Row;
   static Group = BootstrapForm.Group;
-  static Input = ({ name, label, scope, ...rest }) => {
-    const { data, errors } = scope.state;
+  static _Input = ({ name, label, scope, ...rest }) => {
+    const { data } = scope.state;
+
+    return (
+      <BootstrapForm.Control
+        name={name}
+        value={data[name]}
+        placeholder={label}
+        onChange={scope.handleChange}
+        autoComplete="off"
+        {...rest}
+      />
+    );
+  };
+  static Input = (props) => {
+    const { name, scope } = props;
+    const { errors } = scope.state;
     const error = errors[name];
+    const Input = this._Input;
+
+    return (
+      <div>
+        <Input {...props} />
+        {error && (
+          <BootstrapForm.Text className="text-danger">
+            {error}
+          </BootstrapForm.Text>
+        )}
+      </div>
+    );
+  };
+  static InputGroup = (props) => {
+    const { name, scope, label } = props;
+    const { errors } = scope.state;
+    const error = errors[name];
+    const Input = this._Input;
 
     return (
       <BootstrapForm.Group controlId={name}>
         <BootstrapForm.Label>{label}</BootstrapForm.Label>
-        <BootstrapForm.Control
-          name={name}
-          value={data[name]}
-          placeholder={label}
-          onChange={scope.handleChange}
-          autoComplete="off"
-          {...rest}
-        />
+        <Input {...props} />
         {error && (
           <BootstrapForm.Text className="text-danger">
             {error}
@@ -35,20 +62,46 @@ class Form extends Component {
       </BootstrapForm.Group>
     );
   };
-  static LabelSelect = ({ name, label, scope, ...rest }) => {
-    const { data, errors } = scope.state;
+  static _LabelSelect = ({ name, label, scope, ...rest }) => {
+    const { data } = scope.state;
+
+    return (
+      <LabelsSelectComp
+        onChange={(option) =>
+          scope.handleChange({ currentTarget: { name, value: option } })
+        }
+        selectedOption={data[name]}
+        {...rest}
+      />
+    );
+  };
+  static LabelSelect = (props) => {
+    const { name, scope } = props;
+    const { errors } = scope.state;
     const error = errors[name];
+    const LabelSelect = this._LabelSelect;
+
+    return (
+      <div>
+        <LabelSelect {...props} />
+        {error && (
+          <BootstrapForm.Text className="text-danger">
+            {error}
+          </BootstrapForm.Text>
+        )}
+      </div>
+    );
+  };
+  static LabelSelectGroup = (props) => {
+    const { name, scope, label } = props;
+    const { errors } = scope.state;
+    const error = errors[name];
+    const LabelSelect = this._LabelSelect;
 
     return (
       <BootstrapForm.Group controlId={name}>
         <BootstrapForm.Label>{label}</BootstrapForm.Label>
-        <LabelsSelectComp
-          onChange={(option) =>
-            scope.handleChange({ currentTarget: { name, value: option } })
-          }
-          selectedOption={data[name]}
-          {...rest}
-        />
+        <LabelSelect {...props} />
         {error && (
           <BootstrapForm.Text className="text-danger">
             {error}
@@ -80,9 +133,10 @@ class Form extends Component {
 
     const errors = this.validate();
     this.setState({ errors: errors || {}, wasValidated: true });
-    if (errors) return;
+    if (errors) return false;
 
     this.doSubmit();
+    return true;
   };
 
   handleChange = ({ currentTarget: input }) => {

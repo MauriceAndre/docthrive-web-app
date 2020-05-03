@@ -30,8 +30,8 @@ class ElementForm extends Form {
 
     return (
       <Form.Container>
-        <Form.Input name="name" label={t("name")} scope={this} />
-        <Form.LabelSelect
+        <Form.InputGroup name="name" label={t("name")} scope={this} />
+        <Form.LabelSelectGroup
           name="labels"
           label={t("labels")}
           multi

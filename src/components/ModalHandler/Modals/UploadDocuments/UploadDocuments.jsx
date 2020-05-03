@@ -72,7 +72,7 @@ class UploadDocuments extends Form {
           <Col xs={12} lg={6}>
             <Row>
               <Col>
-                <Form.LabelSelect
+                <Form.LabelSelectGroup
                   name="labels"
                   label={t("labels")}
                   multi

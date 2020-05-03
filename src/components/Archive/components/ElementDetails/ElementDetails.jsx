@@ -1,89 +1,70 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withTranslation } from "react-i18next";
+import * as actionCreators from "./../../../../store/actions/index";
+import { Container } from "react-bootstrap";
 import FloatingButton from "./../../../common/FloatingButton";
-import { Container, Col, Row, Form } from "react-bootstrap";
-import { initT, t } from "../../../../utils/intl";
-import { format } from "../../../../utils/elementUtils";
-import { generateKey } from "./../../../../utils/componentUtils";
+import { initT, t, useT } from "../../../../utils/intl";
+import { updateObject } from "./../../../../utils/objectUtils";
+import { format, isRoot } from "../../../../utils/elementUtils";
+import DetailsForm from "./DetailsForm";
+import store from "./../../../../store/store";
 
-class ElementDetails extends Component {
-  inputProps = {
-    createdAt: { type: "date", readOnly: true },
-    updatedAt: { type: "date", readOnly: true },
+const ElementDetails = ({
+  selectedElement,
+  edit,
+  onEditClick,
+  updateElement,
+}) => {
+  initT(useT(), "elementDetails");
+
+  const [onSubmit, setOnSubmit] = useState();
+
+  const doSubmit = (data) => {
+    const element = updateObject(
+      store.getState().archive.selectedElement,
+      data
+    );
+    updateElement(element);
   };
 
-  renderEdit({ label, value, type, render }) {
-    return (
-      <Form onSubmit={this.props.onEditClick}>
-        <Form.Row className="my-1">
-          <Col xs={12} md={5}>
-            <span className="text-muted">{label}</span>
-          </Col>
-          <Col xs={12} md={7}>
-            {(render && render({ value, label })) || (
-              <Form.Control
-                size="sm"
-                type={type || "text"}
-                placeholder={label}
-                value={value}
-              />
-            )}
-          </Col>
-        </Form.Row>
-      </Form>
-    );
-  }
+  const handleInitForm = (onSubmitFnc) => {
+    setOnSubmit(() => (e) => onSubmitFnc(e));
+    return doSubmit;
+  };
 
-  renderDefault({ label, value }) {
-    return (
-      <Row key={generateKey(label, value)} className="my-1">
-        <Col xs={12} md={5}>
-          <span className="text-muted">{label}</span>
-        </Col>
-        <Col xs={12} md={7}>
-          <span>{value}</span>
-        </Col>
-      </Row>
-    );
-  }
+  const element = format(selectedElement, { ignoreEmptyValue: edit });
 
-  render() {
-    const { selectedElement, edit, onEditClick } = this.props;
-    initT(this.props.t, "elementDetails");
+  if (edit) element.labels = selectedElement.labels;
 
-    const element = format(selectedElement);
-
-    return (
-      <Container className="p-3 section-content overflow-auto">
-        {Object.keys(element).map((key) => {
-          const props = { ...this.inputProps[key] };
-          props.label = t(key);
-          props.value = element[key];
-
-          return (
-            (edit && !props.readOnly && this.renderEdit(props)) ||
-            this.renderDefault(props)
-          );
-        })}
+  return (
+    <Container className="p-3 section-content overflow-auto">
+      <DetailsForm element={element} edit={edit} onInitForm={handleInitForm} />
+      {!isRoot(selectedElement) && (
         <FloatingButton
           text={(edit && t("save")) || t("edit")}
           variant={(edit && "success") || ""}
           icon={(edit && "check") || "pen"}
           bottom
           right
-          onClick={onEditClick}
+          onClick={(e) => {
+            if (edit) {
+              const isSubmited = onSubmit(e);
+
+              if (!isSubmited) return;
+            }
+            onEditClick();
+          }}
         />
-      </Container>
-    );
-  }
-}
+      )}
+    </Container>
+  );
+};
 
 ElementDetails.propTypes = {
   selectedElement: PropTypes.object.isRequired,
   edit: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ archive }) => {
@@ -92,4 +73,11 @@ const mapStateToProps = ({ archive }) => {
   };
 };
 
-export default withTranslation()(connect(mapStateToProps)(ElementDetails));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateElement: (element) =>
+      dispatch(actionCreators.updateElement(element._id, element)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ElementDetails);

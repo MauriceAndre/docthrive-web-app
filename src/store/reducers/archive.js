@@ -28,7 +28,11 @@ const addElements = (state, { elements, populate }) => {
 
 const updateElement = (state, { id, element }) => {
   const elements = elementUtils.replaceById(id, element, state.elements);
-  return updateObject(state, { elements });
+  const props = { elements };
+
+  if (id === state.selectedElement._id) props.selectedElement = element;
+
+  return updateObject(state, props);
 };
 
 const setSelectedElement = (state, { selectedElement }) => {

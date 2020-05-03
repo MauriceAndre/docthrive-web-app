@@ -21,7 +21,9 @@ function FolderListView({ elements, onSelectElement }) {
       </thead>
       <tbody>
         {elements.map((element) => {
-          const { name, createdAt, labels, _id } = format(element, true);
+          const { name, createdAt, labels, _id } = format(element, {
+            allKeys: true,
+          });
           const type = element.type;
 
           return (

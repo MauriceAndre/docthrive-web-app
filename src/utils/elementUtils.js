@@ -54,6 +54,12 @@ export function isDocument(element) {
   return element.type._id <= 256;
 }
 
+export function isRoot(element) {
+  element = element || {};
+
+  return getRootElement()._id === element._id;
+}
+
 export function getPath(element, elements) {
   if (objectUtils.isEmpty(element)) return [];
 
@@ -133,9 +139,10 @@ const formatPattern = [
   },
 ];
 
-export function format(element, allKeys, pattern) {
+export function format(element, options = {}) {
+  let { pattern } = options;
   pattern = pattern || formatPattern;
-  return objectUtils.format(element, pattern, allKeys);
+  return objectUtils.format(element, pattern, options);
 }
 
 export function populate(element, dataset) {

@@ -13,11 +13,13 @@ export function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
-export function format(obj, pattern, allKeys) {
+export function format(obj, pattern, options) {
+  const { allKeys } = options;
+
   const formatObj = allKeys ? { ...obj } : {};
 
   for (let item of pattern) {
-    const value = formatKey(obj, item);
+    const value = formatKey(obj, item, options);
 
     formatObj[item.key] = value;
   }
@@ -25,13 +27,15 @@ export function format(obj, pattern, allKeys) {
   return formatObj;
 }
 
-export function formatKey(obj, pattern) {
+export function formatKey(obj, pattern, options) {
+  let { ignoreEmptyValue } = options;
+
   const { key, format, emptyValue } = pattern;
   let value = obj[key];
 
   if (format) value = format(value);
 
-  if (emptyValue && !value) value = emptyValue;
+  if (!ignoreEmptyValue && emptyValue && !value) value = emptyValue;
 
   return value;
 }
