@@ -108,7 +108,10 @@ export function replaceById(id, element, elements) {
 
 const formatPattern = [
   { key: "name" },
-  { key: "type", format: (type) => type.name },
+  {
+    key: "type",
+    format: (type) => t(`elementTypes.${type.name}`, { useNamespace: false }),
+  },
   {
     key: "labels",
     format: (labels) =>

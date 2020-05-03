@@ -21,6 +21,11 @@
       "text": "Sie haben das Element gelöscht."
     }
   },
+  "elementTypes": {
+    "file": "Dokument",
+    "root": "Archiv",
+    "folder": "Ordner"
+  },
   "mainNavbar": {
     "newDocDropdown": {
       "template": "Vorlage",
