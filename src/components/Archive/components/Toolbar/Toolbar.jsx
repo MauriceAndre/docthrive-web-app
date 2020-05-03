@@ -5,7 +5,7 @@ import { t, initT, useT } from "../../../../utils/intl";
 import { Button, Dropdown } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
-import { isFolder, isDocument } from "./../../../../utils/elementUtils";
+import { isFolder, isDocument, isRoot } from "./../../../../utils/elementUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
 import {
   moveElement,
@@ -30,11 +30,13 @@ const Toolbar = ({
       text: t("move"),
       icon: "arrow-right",
       handleClick: () => setModal(moveElement(showModal, selectedElement)),
+      isDisabled: isRoot(selectedElement),
     },
     {
       text: t("copy"),
       icon: "copy",
       handleClick: () => setModal(copyElement(showModal, selectedElement)),
+      isDisabled: isRoot(selectedElement),
     },
     {
       text: "Download",
@@ -89,7 +91,7 @@ const Toolbar = ({
         variant="light"
         className={join(["mx-2", classes])}
         onClick={() => handleClick(selectedElement, workVersion)}
-        disabled={isDisabled && isDisabled()}
+        disabled={isDisabled}
       >
         <Icon name={icon} />
         <span className="d-none d-md-inline"> {text}</span>
