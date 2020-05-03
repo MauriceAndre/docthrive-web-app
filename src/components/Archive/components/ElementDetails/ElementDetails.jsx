@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import FloatingButton from "./../../../common/FloatingButton";
 import { Container, Col, Row, Form } from "react-bootstrap";
@@ -85,4 +86,10 @@ ElementDetails.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(ElementDetails);
+const mapStateToProps = ({ archive }) => {
+  return {
+    docVersion: archive.workVersion,
+  };
+};
+
+export default withTranslation()(connect(mapStateToProps)(ElementDetails));

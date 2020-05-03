@@ -8,7 +8,7 @@ const docVersions = [
     createdAt: Date.now(),
     url:
       "https://file-examples.com/wp-content/uploads/2017/08/file_example_PPT_500kB.ppt",
-    version: "1.0",
+    version: "2.0",
   },
   {
     _id: "2",
@@ -19,7 +19,7 @@ const docVersions = [
     createdAt: Date.now(),
     url:
       "https://file-examples.com/wp-content/uploads/2017/02/file_example_XLS_100.xls",
-    version: "1.0",
+    version: "10.0",
   },
   {
     _id: "3",
@@ -30,7 +30,7 @@ const docVersions = [
     createdAt: Date.now(),
     url:
       "https://file-examples.com/wp-content/uploads/2017/02/file-sample_500kB.docx",
-    version: "1.0",
+    version: "3.0",
   },
 ];
 

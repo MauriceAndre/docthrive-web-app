@@ -117,6 +117,11 @@ const formatPattern = [
     emptyValue: "-",
   },
   {
+    key: "docVersion",
+    format: (docVersion) => docVersion && docVersion.version,
+    emptyValue: "-",
+  },
+  {
     key: "createdAt",
     format: formatToDate,
     type: "date",

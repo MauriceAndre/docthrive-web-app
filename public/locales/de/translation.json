@@ -64,6 +64,7 @@
     "name": "Bezeichnung",
     "type": "Typ",
     "labels": "Etiketts",
+    "docVersion": "Version",
     "createdAt": "Erstellt am",
     "updatedAt": "Geändert am",
     "edit": "bearbeiten",

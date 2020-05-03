@@ -41,7 +41,26 @@ const setElementTypes = (state, { elementTypes }) => {
 };
 
 const setWorkVersion = (state, { workVersion }) => {
-  return updateObject(state, { workVersion });
+  const props = { workVersion };
+
+  if (workVersion) {
+    // add docVersion to element and update element in elements
+    let element = elementUtils.findById(workVersion.elementId, state.elements);
+    element = updateObject(element, { docVersion: workVersion });
+    const elements = elementUtils.replaceById(
+      element._id,
+      element,
+      state.elements
+    );
+
+    props.elements = elements;
+
+    // update selectedElement
+    if (state.selectedElement._id === element._id)
+      props.selectedElement = element;
+  }
+
+  return updateObject(state, props);
 };
 
 const setLabels = (state, { labels }) => {

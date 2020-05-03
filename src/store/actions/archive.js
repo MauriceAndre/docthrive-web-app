@@ -105,8 +105,11 @@ export const setSelectedElementById = (id) => {
 export const storeSelectedElement = (element) => {
   return async (dispatch) => {
     dispatch(setSelectedElement(element));
-    const func = getWorkVersion(element._id);
-    await func(dispatch);
+
+    if (elementUtils.isDocument(element)) {
+      const func = getWorkVersion(element._id);
+      await func(dispatch);
+    }
   };
 };
 
