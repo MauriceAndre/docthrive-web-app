@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as actionCreators from "./../../../../store/actions/index";
+import store from "./../../../../store";
 import { Container } from "react-bootstrap";
 import FloatingButton from "./../../../common/FloatingButton";
+import DetailsForm from "./DetailsForm";
 import { initT, t, useT } from "../../../../utils/intl";
 import { updateObject } from "./../../../../utils/objectUtils";
 import { format, isRoot } from "../../../../utils/elementUtils";
-import DetailsForm from "./DetailsForm";
-import store from "./../../../../store/store";
+import * as feedback from "./../../../../utils/feedback";
 
 const ElementDetails = ({
   selectedElement,
@@ -26,6 +27,12 @@ const ElementDetails = ({
       data
     );
     updateElement(element);
+    feedback.action(
+      t("elementDetails.feedback.succ", {
+        useNamespace: false,
+      }),
+      feedback.TYPE.SUCCESS
+    );
   };
 
   const handleInitForm = (onSubmitFnc) => {
