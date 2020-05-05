@@ -61,3 +61,25 @@ export const mapping = function (object, keys) {
 
   return obj;
 };
+
+export const getProps = function (obj, keys) {
+  const props = {};
+
+  if (!keys) return { ...obj };
+
+  for (let key of keys) {
+    props[key] = obj[key];
+  }
+
+  return props;
+};
+
+export const propsToArray = function (obj) {
+  const arr = [];
+
+  for (let key in obj) {
+    arr.push(obj[key]);
+  }
+
+  return arr;
+};

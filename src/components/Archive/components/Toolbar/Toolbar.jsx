@@ -13,6 +13,7 @@ import {
   copyElement,
   deleteElement,
   createFolder,
+  renameElement,
 } from "../../../ModalHandler/actions/index";
 import style from "./Toolbar.module.css";
 import "./Toolbar.css";
@@ -46,6 +47,12 @@ const Toolbar = ({
         className: "fas fa-trash-alt",
       },
       handleClick: () => setModal(deleteElement(showModal, selectedElement)),
+      isDisabled: isRoot(selectedElement),
+    },
+    {
+      text: t("rename"),
+      icon: "pen",
+      handleClick: () => setModal(renameElement(showModal, selectedElement)),
       isDisabled: isRoot(selectedElement),
     },
     {

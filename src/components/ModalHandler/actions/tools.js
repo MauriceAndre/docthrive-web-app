@@ -2,10 +2,13 @@ import React, { Fragment } from "react";
 import store from "./../../../store";
 import * as actionCreators from "./../../../store/actions/index";
 import { Button } from "react-bootstrap";
-import MoveElement from "../Modals/MoveElement/MoveElement";
-import CopyElement from "./../Modals/CopyElement/CopyElement";
-import CreateFolder from "./../Modals/CreateFolder/CreateFolder";
-import UploadDocuments from "./../Modals/UploadDocuments/UploadDocuments";
+import {
+  MoveElement,
+  CopyElement,
+  CreateFolder,
+  UploadDocuments,
+  RenameElement,
+} from "./../Modals/index";
 import { t, initT } from "../../../utils/intl";
 import { updateObject } from "./../../../utils/objectUtils";
 import { formatString } from "../../../utils/templateUtils";
@@ -121,7 +124,6 @@ export const deleteElement = (showModal, element) => {
       feedback.TYPE.SUCCESS
     );
   };
-
   const onClose = () => {
     showModal(false);
   };
@@ -142,6 +144,60 @@ export const deleteElement = (showModal, element) => {
         </Button>
         <Button variant="primary" onClick={doSubmit} className="ml-auto">
           {t("delete")}
+        </Button>
+      </Fragment>
+    ),
+    options: {
+      size: "md",
+    },
+  };
+};
+
+export const renameElement = (showModal, element) => {
+  let onSubmit;
+  initT(null, "renameElement");
+
+  const doSubmit = (data) => {
+    element = updateObject(element, data);
+    store.dispatch(actionCreators.updateElement(element._id, element));
+    showModal(false);
+    feedback.action(
+      t("renameElement.feedback.succ", { data: element, useNamespace: false }),
+      feedback.TYPE.SUCCESS
+    );
+  };
+
+  const handleInitForm = (onSubmitFnc) => {
+    onSubmit = onSubmitFnc;
+    return doSubmit;
+  };
+
+  const onClose = () => {
+    showModal(false);
+  };
+
+  return {
+    title: t("title"),
+    show: true,
+    onClose,
+    body: (
+      <RenameElement
+        keys={["name"]}
+        element={element}
+        onInitForm={handleInitForm}
+      />
+    ),
+    footer: (
+      <Fragment>
+        <Button variant="secondary" onClick={onClose}>
+          {t("cancel")}
+        </Button>
+        <Button
+          variant="primary"
+          onClick={(e) => onSubmit(e)}
+          className="ml-auto"
+        >
+          {t("rename")}
         </Button>
       </Fragment>
     ),
@@ -194,7 +250,7 @@ export const createFolder = (showModal, destElementId) => {
       </Fragment>
     ),
     options: {
-      size: "lg",
+      size: "md",
     },
   };
 };

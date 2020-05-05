@@ -26,6 +26,10 @@
     "root": "Archiv",
     "folder": "Ordner"
   },
+  "element": {
+    "name": "Bezeichnung",
+    "labels": "Etiketts"
+  },
   "mainNavbar": {
     "newDocDropdown": {
       "template": "Vorlage",
@@ -90,6 +94,7 @@
     "copy": "Kopieren",
     "delete": "Löschen",
     "newFolder": "Neuer Ordner",
+    "rename": "Umbennen",
     "view": {
       "text": "Ansicht",
       "options": {
@@ -125,6 +130,14 @@
     "create": "erstellen",
     "feedback": {
       "succ": "Neuer Ordner \"{{name}}\" erstellt"
+    }
+  },
+  "renameElement": {
+    "title": "Element umbennen",
+    "cancel": "abbrechen",
+    "rename": "umbennen",
+    "feedback": {
+      "succ": "Element \"{{name}}\" umbennant"
     }
   },
   "elementForm": {

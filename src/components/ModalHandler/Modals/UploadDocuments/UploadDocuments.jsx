@@ -1,5 +1,4 @@
 import React from "react";
-import Joi from "joi-browser";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
 import { Row, Col } from "react-bootstrap";
@@ -10,6 +9,7 @@ import Dropzone from "./../../../common/Dropzone";
 import { updateObject } from "./../../../../utils/objectUtils";
 import { t, initT } from "../../../../utils/intl";
 import style from "./UploadDocuments.module.css";
+import { getElementSchema } from "./../../../../utils/validationUtils";
 
 class UploadDocuments extends Form {
   state = {
@@ -21,9 +21,7 @@ class UploadDocuments extends Form {
     files: [],
   };
 
-  schema = {
-    labels: Joi.array().label("Labels"),
-  };
+  schema = getElementSchema(["labels"]);
 
   componentDidMount() {
     const { onInitForm, files } = this.props;

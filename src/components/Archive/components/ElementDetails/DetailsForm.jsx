@@ -1,12 +1,8 @@
 import React from "react";
-import Joi from "joi-browser";
 import { Col } from "react-bootstrap";
 import Form from "../../../common/Form";
 import { t, initT } from "../../../../utils/intl";
-import config from "./../../../../services/configService";
-
-// config
-const elValid = config.validation.element;
+import { getElementSchema } from "./../../../../utils/validationUtils";
 
 class DetailsForm extends Form {
   state = {
@@ -17,14 +13,7 @@ class DetailsForm extends Form {
     errors: {},
   };
 
-  schema = {
-    name: Joi.string()
-      .min(elValid.name.min)
-      .max(elValid.name.max)
-      .required()
-      .label("Name"),
-    labels: Joi.array().label("Labels"),
-  };
+  schema = getElementSchema();
 
   inputProps = {
     type: { readOnly: true },
