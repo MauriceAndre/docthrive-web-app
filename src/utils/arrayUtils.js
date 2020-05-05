@@ -21,6 +21,13 @@ export const isStringArray = function (arr) {
   return false;
 };
 
+export const remove = function (arr, { first, last }) {
+  if (first) arr.shift();
+  if (last) arr.pop();
+
+  return arr;
+};
+
 export const toArray = function (value) {
   if (value) {
     return isArray(value) ? value : [value];

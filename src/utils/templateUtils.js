@@ -1,10 +1,12 @@
 import React from "react";
 import Handlebars from "handlebars";
 import { indexOf } from "./stringUtils";
+import { remove } from "./arrayUtils";
 
 const seperator = {
   start: "<%",
   end: "%>",
+  param: " ",
 };
 
 export const template = function (source, data) {
@@ -15,7 +17,7 @@ export const template = function (source, data) {
 
 export const formatString = function (str) {
   let content = [];
-  const { start, end } = seperator;
+  const { start, end, param: paramSep } = seperator;
 
   if (str.includes(start) && str.includes(end)) {
     const startIdxs = indexOf(str, start);
@@ -29,8 +31,10 @@ export const formatString = function (str) {
         const endIdx = endIdxs[i];
 
         const pattern = str.substring(startIdx, endIdx);
-        const params = pattern.split(" ");
-        const [, tag, value] = params;
+        let params = pattern.split(paramSep);
+        params = remove(params, { first: true, last: true });
+        let [tag, ...value] = params;
+        value = value.join(paramSep);
 
         content.push(str.substring(lastIdx, startIdx));
         content.push(React.createElement(tag, { key: i }, value));
