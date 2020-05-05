@@ -5,6 +5,7 @@ export {
   updateElement,
   moveElement,
   copyElement,
+  deleteElement,
   addAvailableParent,
   uploadDocuments,
   getChildren,

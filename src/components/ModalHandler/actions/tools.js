@@ -8,6 +8,7 @@ import CreateFolder from "./../Modals/CreateFolder/CreateFolder";
 import UploadDocuments from "./../Modals/UploadDocuments/UploadDocuments";
 import { t, initT } from "../../../utils/intl";
 import { updateObject } from "./../../../utils/objectUtils";
+import { formatString } from "../../../utils/templateUtils";
 import * as feedback from "./../../../utils/feedback";
 
 export const moveElement = (showModal, srcElement) => {
@@ -105,6 +106,47 @@ export const copyElement = (showModal, srcElement) => {
     ),
     options: {
       size: "lg",
+    },
+  };
+};
+
+export const deleteElement = (showModal, element) => {
+  initT(null, "deleteElement");
+
+  const doSubmit = () => {
+    store.dispatch(actionCreators.deleteElement(element));
+    showModal(false);
+    feedback.action(
+      t("deleteElement.feedback.succ", { data: element, useNamespace: false }),
+      feedback.TYPE.SUCCESS
+    );
+  };
+
+  const onClose = () => {
+    showModal(false);
+  };
+
+  return {
+    title: t("title"),
+    show: true,
+    onClose,
+    body: (
+      <p className="text-center" style={{ fontSize: "1.1rem" }}>
+        {formatString(t("description", { data: element }))}
+      </p>
+    ),
+    footer: (
+      <Fragment>
+        <Button variant="secondary" onClick={onClose}>
+          {t("cancel")}
+        </Button>
+        <Button variant="primary" onClick={doSubmit} className="ml-auto">
+          {t("delete")}
+        </Button>
+      </Fragment>
+    ),
+    options: {
+      size: "md",
     },
   };
 };

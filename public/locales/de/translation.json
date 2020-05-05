@@ -88,6 +88,7 @@
   "toolbar": {
     "move": "Verschieben",
     "copy": "Kopieren",
+    "delete": "Löschen",
     "newFolder": "Neuer Ordner",
     "view": {
       "text": "Ansicht",
@@ -103,6 +104,13 @@
     "cancel": "abbrechen",
     "move": "verschieben",
     "feedback": { "succ": "Element \"{{name}}\" verschoben" }
+  },
+  "deleteElement": {
+    "title": "Element löschen",
+    "cancel": "Nein",
+    "delete": "Ja",
+    "description": "Möchten Sie das Element <% strong {{name}} %> löschen?",
+    "feedback": { "succ": "Element \"{{name}}\" gelöscht" }
   },
   "copyElement": {
     "description": "Bitte wählen sie das Ziel aus",

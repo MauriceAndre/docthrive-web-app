@@ -51,7 +51,7 @@ export const moveElement = (element, parentId) => {
   return async (dispatch) => {
     element = updateObject(element, { parentId });
     dispatch(updateElement(element._id, element));
-    // await server call
+    // TODO: await server call
   };
 };
 
@@ -59,7 +59,22 @@ export const copyElement = (element, newParentId) => {
   return async (dispatch) => {
     const newElement = elementUtils.copyElement(element, newParentId);
     dispatch(addElements([newElement], false));
-    // await server call
+    // TODO: await server call
+  };
+};
+
+export const storeDeletedElement = (element) => {
+  return {
+    type: actionTypes.DELETE_ELEMENT,
+    element,
+  };
+};
+
+export const deleteElement = (element) => {
+  return async (dispatch) => {
+    element = updateObject(element, { deleted: true });
+    dispatch(storeDeletedElement(element));
+    // TODO: await server call
   };
 };
 

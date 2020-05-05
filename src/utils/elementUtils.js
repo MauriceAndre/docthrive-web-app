@@ -8,7 +8,25 @@ import config from "./../services/configService";
 import store from "./../store";
 
 export function generateId() {
-  return Date.now().toString() + Math.floor(Math.random() * 1000);
+  const identifier = "temp";
+  const timeStamp = Date.now().toString();
+  const uniqueNo = Math.floor(Math.random() * 1000);
+
+  return [identifier, timeStamp, uniqueNo].join("_");
+}
+
+export function getArchiveState() {
+  return store.getState().archive;
+}
+
+export function getElements() {
+  return getArchiveState().elements;
+}
+
+export function isSelectedElement(id, selectedElement) {
+  selectedElement = selectedElement || getArchiveState().selectedElement || {};
+
+  return selectedElement._id === id;
 }
 
 export function createElement(data) {
@@ -90,8 +108,10 @@ export function getRootElement() {
 }
 
 export function findById(id, elements) {
-  elements = elements || store.getState().archive.elements;
-  return elements.find((element) => element._id === id);
+  elements = elements || getElements();
+  const element = elements.find((element) => element._id === id) || {};
+
+  return element;
 }
 
 export function findByParentId(parentId, elements) {
@@ -103,6 +123,13 @@ export function replaceById(id, element, elements) {
   var index = _.findIndex(elements, { _id: id });
 
   elements.splice(index, 1, element);
+  return elements;
+}
+
+export function removeById(id, elements) {
+  elements = elements || getElements();
+  elements = elements.filter((element) => element._id !== id);
+
   return elements;
 }
 

@@ -5,7 +5,8 @@ import config from "./../../services/configService";
 import * as titleUtils from "../../utils/titleUtils";
 
 const initialState = {
-  elements: [],
+  elements: [elementUtils.getRootElement()],
+  deletedElements: [],
   selectedElement: {},
   workVersion: null,
   elementTypes: [],
@@ -34,6 +35,17 @@ const updateElement = (state, { id, element }) => {
     props.selectedElement = element;
     titleUtils.setArchiveElement(element);
   }
+
+  return updateObject(state, props);
+};
+
+const deleteElement = (state, { element }) => {
+  const elements = elementUtils.removeById(element._id, state.elements);
+  const deletedElements = [...state.deletedElements, element];
+  const props = { elements, deletedElements };
+
+  if (elementUtils.isSelectedElement(element._id, state.selectedElement))
+    props.selectedElement = elementUtils.findById(element.parentId, elements);
 
   return updateObject(state, props);
 };
@@ -84,6 +96,8 @@ const reducer = (state = initialState, action) => {
       return addElements(state, action);
     case actionTypes.UPDATE_ELEMENT:
       return updateElement(state, action);
+    case actionTypes.DELETE_ELEMENT:
+      return deleteElement(state, action);
     case actionTypes.SET_SELECTED_ELEMENT:
       return setSelectedElement(state, action);
     case actionTypes.SET_ELEMENT_TYPES:

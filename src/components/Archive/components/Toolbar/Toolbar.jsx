@@ -6,10 +6,12 @@ import { Button, Dropdown } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
 import { isFolder, isDocument, isRoot } from "./../../../../utils/elementUtils";
+import { isString } from "./../../../../utils/stringUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
 import {
   moveElement,
   copyElement,
+  deleteElement,
   createFolder,
 } from "../../../ModalHandler/actions/index";
 import style from "./Toolbar.module.css";
@@ -36,6 +38,14 @@ const Toolbar = ({
       text: t("copy"),
       icon: "copy",
       handleClick: () => setModal(copyElement(showModal, selectedElement)),
+      isDisabled: isRoot(selectedElement),
+    },
+    {
+      text: t("delete"),
+      icon: {
+        className: "fas fa-trash-alt",
+      },
+      handleClick: () => setModal(deleteElement(showModal, selectedElement)),
       isDisabled: isRoot(selectedElement),
     },
     {
@@ -85,6 +95,8 @@ const Toolbar = ({
     handleClick,
     isDisabled,
   }) {
+    const iconProps = isString(icon) ? { name: icon } : icon;
+
     return (
       <Button
         key={generateKey(text, icon, true)}
@@ -93,7 +105,7 @@ const Toolbar = ({
         onClick={() => handleClick(selectedElement, workVersion)}
         disabled={isDisabled}
       >
-        <Icon name={icon} />
+        <Icon {...iconProps} />
         <span className="d-none d-md-inline"> {text}</span>
       </Button>
     );
