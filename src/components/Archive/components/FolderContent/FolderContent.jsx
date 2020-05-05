@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
-import { findByParentId } from "../../../../utils/elementUtils";
+import { findByParentId, sort } from "../../../../utils/elementUtils";
 import FolderListView from "../FolderListView";
 import FolderGridView from "../FolderGridView";
 
@@ -16,6 +16,7 @@ const FolderContent = ({
 
   getChildren(_id);
   elements = findByParentId(_id, elements);
+  elements = sort(elements);
 
   const getView = function () {
     const props = {

@@ -99,6 +99,10 @@ export function getPath(element, elements) {
   return path;
 }
 
+export function sort(elements) {
+  return _.sortBy(elements, ["type._id", "name"]);
+}
+
 export function getRootElement() {
   let root = config.archive.rootElement;
 

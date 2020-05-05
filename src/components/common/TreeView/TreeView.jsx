@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Root from "./components/Root/Root";
 import { join } from "./../../../utils/arrayUtils";
+import { sort } from "../../../utils/elementUtils";
 import style from "./TreeView.module.css";
 
 const TreeView = ({
@@ -11,6 +12,8 @@ const TreeView = ({
   elements,
   onlyFolders,
 }) => {
+  elements = sort(elements);
+
   const props = {
     selectedId,
     onSelect,
