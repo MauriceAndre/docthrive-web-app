@@ -6,7 +6,7 @@ import { format } from "../../../../utils/elementUtils";
 import { generateKey } from "../../../../utils/componentUtils";
 import style from "./FolderList.module.css";
 
-function FolderListView({ elements, onSelectElement }) {
+function FolderListView({ elements, onSelectElement, onContextMenu }) {
   initT(useT(), "folderListView");
 
   return (
@@ -27,7 +27,11 @@ function FolderListView({ elements, onSelectElement }) {
           const type = element.type;
 
           return (
-            <tr key={_id} onDoubleClick={() => onSelectElement(element)}>
+            <tr
+              key={_id}
+              onDoubleClick={() => onSelectElement(element)}
+              onContextMenu={(e) => onContextMenu(e, element)}
+            >
               <td key={generateKey(_id, "type")} className="w-1 align-middle">
                 <Icon key={generateKey(_id, "type_icon")} name={type.icon} />
               </td>

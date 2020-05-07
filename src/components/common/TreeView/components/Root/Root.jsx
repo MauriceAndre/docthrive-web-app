@@ -9,7 +9,7 @@ import { renderChild } from "./../../utility";
 import style from "./../../TreeView.module.css";
 
 const Root = (props) => {
-  const { selectedId, onSelect, elements, getChildren } = props;
+  const { selectedId, onSelect, elements, getChildren, onContextMenu } = props;
   const rootElement = getRootElement();
   const { _id, name } = rootElement;
 
@@ -25,6 +25,7 @@ const Root = (props) => {
     <li key={_id} className={style.root}>
       <div
         onClick={() => onSelect(rootElement)}
+        onContextMenu={(e) => onContextMenu(e, rootElement)}
         className={join([
           style["archive-icon"],
           _id === selectedId && style.selected,
@@ -43,6 +44,7 @@ Root.propTypes = {
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,
   onlyFolders: PropTypes.bool,
+  onContextMenu: PropTypes.func,
 };
 
 export default Root;

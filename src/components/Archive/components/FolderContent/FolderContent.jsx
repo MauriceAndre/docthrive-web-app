@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as contextMenuActions from "./../../../ContextMenuHandler/actions/index";
+import { onContextMenu } from "./../../../ContextMenuHandler/utility";
 import * as actionCreators from "../../../../store/actions/index";
 import { findByParentId, sort } from "../../../../utils/elementUtils";
 import FolderListView from "../FolderListView";
@@ -18,10 +20,14 @@ const FolderContent = ({
   elements = findByParentId(_id, elements);
   elements = sort(elements);
 
+  const handleContextMenu = (e, el) =>
+    onContextMenu(e, contextMenuActions.elementItem(el));
+
   const getView = function () {
     const props = {
       elements,
       onSelectElement,
+      onContextMenu: handleContextMenu,
     };
 
     switch (view.key) {
@@ -33,7 +39,15 @@ const FolderContent = ({
     }
   };
 
-  return <div className="section overflow-auto">{getView()}</div>;
+  return (
+    <div className="section section-column overflow-auto">
+      <div className="section-wrapper section-fill">{getView()}</div>
+      <div
+        className="section-wrapper"
+        onContextMenu={(e) => handleContextMenu(e, element)}
+      ></div>
+    </div>
+  );
 };
 
 const mapStateToProps = ({ archive }) => {

@@ -20,7 +20,13 @@ class Folder extends Component {
 
   render() {
     const { expanded } = this.state;
-    const { element, selectedId, onSelect, elements } = this.props;
+    const {
+      element,
+      selectedId,
+      onSelect,
+      elements,
+      onContextMenu,
+    } = this.props;
     const { _id, name } = element;
 
     const children = findByParentId(_id, elements);
@@ -29,6 +35,7 @@ class Folder extends Component {
       <li className={join([style.folder, expanded && style.show])}>
         <div
           onDoubleClick={() => this.handleExpand()}
+          onContextMenu={(e) => onContextMenu(e, element)}
           className={join([
             style["folder-content"],
             "d-flex",
@@ -55,10 +62,12 @@ class Folder extends Component {
 }
 
 Folder.propTypes = {
+  element: PropTypes.object.isRequired,
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,
+  onContextMenu: PropTypes.func,
 };
 
 export default Folder;

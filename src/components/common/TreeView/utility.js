@@ -10,12 +10,14 @@ export function renderChild(element, scope) {
     onSelect,
     elements,
     onlyFolders,
+    onContextMenu,
   } = scope.props;
   let result;
   const props = {
     element,
     selectedId,
     onSelect,
+    onContextMenu,
   };
 
   if (isFolder(element)) {

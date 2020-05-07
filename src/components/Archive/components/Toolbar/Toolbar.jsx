@@ -1,107 +1,40 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "./../../../../store/actions/index";
+import { getTools } from "./../../tools";
 import { t, initT, useT } from "../../../../utils/intl";
 import { Button, Dropdown } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
-import { isFolder, isDocument, isRoot } from "./../../../../utils/elementUtils";
+import { isDocument } from "./../../../../utils/elementUtils";
 import { isString } from "./../../../../utils/stringUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
-import {
-  moveElement,
-  copyElement,
-  deleteElement,
-  createFolder,
-  renameElement,
-} from "../../../ModalHandler/actions/index";
 import style from "./Toolbar.module.css";
 import "./Toolbar.css";
 
-const Toolbar = ({
-  selectedElement,
-  workVersion,
-  setModal,
-  showModal,
-  setView,
-  activeView,
-}) => {
+const Toolbar = ({ selectedElement, workVersion, setView, activeView }) => {
   initT(useT(), "toolbar");
 
-  const tools = [
-    {
-      text: t("move"),
-      icon: "arrow-right",
-      handleClick: () => setModal(moveElement(showModal, selectedElement)),
-      isDisabled: isRoot(selectedElement),
-    },
-    {
-      text: t("copy"),
-      icon: "copy",
-      handleClick: () => setModal(copyElement(showModal, selectedElement)),
-      isDisabled: isRoot(selectedElement),
-    },
-    {
-      text: t("delete"),
-      icon: {
-        className: "fas fa-trash-alt",
-      },
-      handleClick: () => setModal(deleteElement(showModal, selectedElement)),
-      isDisabled: isRoot(selectedElement),
-    },
-    {
-      text: t("rename"),
-      icon: "pen",
-      handleClick: () => setModal(renameElement(showModal, selectedElement)),
-      isDisabled: isRoot(selectedElement),
-    },
-    {
-      text: "Download",
-      icon: "file-download",
-      handleClick: ({ name }, { url, extension }) => {
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = `${name}.${extension}`;
-        a.click();
-      },
-      isHidden: isFolder(selectedElement),
-    },
-    {
-      text: "Print",
-      icon: "print",
-      handleClick: () => {},
-      isHidden: isFolder(selectedElement),
-    },
-    {
-      text: t("newFolder"),
-      icon: "folder-plus",
-      handleClick: () => setModal(createFolder(showModal, selectedElement._id)),
-      isHidden: isDocument(selectedElement),
-    },
-    {
-      text: t("view.text"),
-      icon: activeView.icon,
-      type: "dropdown",
-      options: {
-        activeItem: activeView.key,
-        items: [
-          { key: "list", text: t("view.options.list"), icon: "list" },
-          { key: "grid", text: t("view.options.grid"), icon: "th" },
-        ],
-      },
-      classes: "ml-auto",
-      handleClick: (view) => setView(view),
-      isDisabled: isDocument(selectedElement),
-    },
-  ];
+  const tools = getTools(selectedElement);
 
-  const renderButton = function ({
-    text,
-    icon,
-    classes,
-    handleClick,
-    isDisabled,
-  }) {
+  const view = {
+    text: t("view.text"),
+    icon: activeView.icon,
+    type: "dropdown",
+    options: {
+      activeItem: activeView.key,
+      items: [
+        { key: "list", text: t("view.options.list"), icon: "list" },
+        { key: "grid", text: t("view.options.grid"), icon: "th" },
+      ],
+    },
+    classes: "ml-auto",
+    onClick: (view) => setView(view),
+    isDisabled: isDocument(selectedElement),
+  };
+  tools.push(view);
+
+  const renderButton = function ({ text, icon, classes, onClick, isDisabled }) {
     const iconProps = isString(icon) ? { name: icon } : icon;
 
     return (
@@ -109,7 +42,7 @@ const Toolbar = ({
         key={generateKey(text, icon, true)}
         variant="light"
         className={join(["mx-2", classes])}
-        onClick={() => handleClick(selectedElement, workVersion)}
+        onClick={() => onClick(selectedElement, workVersion)}
         disabled={isDisabled}
       >
         <Icon {...iconProps} />
@@ -122,7 +55,7 @@ const Toolbar = ({
     text,
     icon,
     classes,
-    handleClick,
+    onClick,
     isDisabled,
     options,
   }) {
@@ -143,7 +76,7 @@ const Toolbar = ({
                 key={key}
                 eventKey={key}
                 active={options.activeItem === key}
-                onSelect={() => handleClick(item)}
+                onSelect={() => onClick(item)}
               >
                 <Icon name={icon} text={text} />
               </Dropdown.Item>
@@ -182,8 +115,6 @@ const mapStateToProps = ({ archive }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setModal: (modal) => dispatch(actionCreators.setModal(modal)),
-    showModal: (show) => dispatch(actionCreators.showModal(show)),
     setView: (view) => dispatch(actionCreators.setContentView(view)),
   };
 };

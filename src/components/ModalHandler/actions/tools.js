@@ -14,7 +14,9 @@ import { updateObject } from "./../../../utils/objectUtils";
 import { formatString } from "../../../utils/templateUtils";
 import * as feedback from "./../../../utils/feedback";
 
-export const moveElement = (showModal, srcElement) => {
+const showModal = (show) => store.dispatch(actionCreators.showModal(show));
+
+export const moveElement = (srcElement) => {
   let destElement = null;
   initT(null, "moveElement");
 
@@ -54,7 +56,7 @@ export const moveElement = (showModal, srcElement) => {
   };
 };
 
-export const copyElement = (showModal, srcElement) => {
+export const copyElement = (srcElement) => {
   let destElement, onSubmit;
 
   initT(null, "copyElement");
@@ -113,7 +115,7 @@ export const copyElement = (showModal, srcElement) => {
   };
 };
 
-export const deleteElement = (showModal, element) => {
+export const deleteElement = (element) => {
   initT(null, "deleteElement");
 
   const doSubmit = () => {
@@ -153,7 +155,7 @@ export const deleteElement = (showModal, element) => {
   };
 };
 
-export const renameElement = (showModal, element) => {
+export const renameElement = (element) => {
   let onSubmit;
   initT(null, "renameElement");
 
@@ -207,7 +209,7 @@ export const renameElement = (showModal, element) => {
   };
 };
 
-export const createFolder = (showModal, destElementId) => {
+export const createFolder = (destElementId) => {
   let onSubmit;
   initT(null, "createFolder");
 
@@ -255,7 +257,7 @@ export const createFolder = (showModal, destElementId) => {
   };
 };
 
-export const uploadDocuments = (showModal, files) => {
+export const uploadDocuments = (files) => {
   let onSubmit;
   initT(null, "uploadDocuments");
 

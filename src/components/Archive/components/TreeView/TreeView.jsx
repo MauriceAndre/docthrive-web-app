@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as contextMenuActions from "./../../../ContextMenuHandler/actions/index";
+import { onContextMenu } from "./../../../ContextMenuHandler/utility";
 import * as actionCreators from "../../../../store/actions/index";
 import Tree from "../../../common/TreeView";
 
@@ -13,12 +15,16 @@ const TreeView = ({
     getChildren(parentId);
   };
 
+  const handleContextMenu = (e, element) =>
+    onContextMenu(e, contextMenuActions.elementItem(element));
+
   return (
     <Tree
       selectedId={selectedElement._id}
       onSelect={onSelectElement}
       getChildren={handleGetChildren}
       elements={elements}
+      onContextMenu={handleContextMenu}
     />
   );
 };

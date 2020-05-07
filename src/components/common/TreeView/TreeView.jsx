@@ -11,7 +11,10 @@ const TreeView = ({
   getChildren,
   elements,
   onlyFolders,
+  onContextMenu,
 }) => {
+  onContextMenu = onContextMenu || (() => {});
+
   elements = sort(elements);
 
   const props = {
@@ -20,6 +23,7 @@ const TreeView = ({
     getChildren,
     elements,
     onlyFolders,
+    onContextMenu,
   };
 
   return (
@@ -37,6 +41,7 @@ TreeView.propTypes = {
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,
   onlyFolders: PropTypes.bool,
+  onContextMenu: PropTypes.func,
 };
 
 export default TreeView;
