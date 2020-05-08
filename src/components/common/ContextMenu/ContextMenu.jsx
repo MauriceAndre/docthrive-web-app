@@ -5,7 +5,7 @@ import Icon from "./../Icon";
 import { isString } from "./../../../utils/stringUtils";
 import style from "./ContextMenu.module.css";
 
-function ContextMenu({ items, x, y }) {
+function ContextMenu({ title, items, x, y }) {
   var myStyle = {
     top: `${y}px`,
     left: `${x + 5}px`,
@@ -13,6 +13,11 @@ function ContextMenu({ items, x, y }) {
 
   return (
     <ListGroup style={myStyle} className={style["context-menu"]}>
+      {title && (
+        <ListGroup.Item key="header" disabled className={style.header}>
+          {title}
+        </ListGroup.Item>
+      )}
       {items.map(({ key, content, icon, text, isDisabled, onClick }) => {
         const iconProps = isString(icon) ? { name: icon } : { ...icon };
 
@@ -32,6 +37,7 @@ function ContextMenu({ items, x, y }) {
 }
 
 ContextMenu.propTypes = {
+  title: PropTypes.string,
   items: PropTypes.array.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,

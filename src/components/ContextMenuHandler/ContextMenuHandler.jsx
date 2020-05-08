@@ -5,17 +5,15 @@ import ContextMenu from "./../common/ContextMenu";
 
 function ContextMenuHandler({ contextMenu }) {
   contextMenu = contextMenu || {};
-  const { x, y, items } = contextMenu;
   const props = {
-    items,
-    x,
-    y,
+    ...contextMenu,
   };
 
   return contextMenu.show ? <ContextMenu {...props} /> : null;
 }
 
 ContextMenuHandler.propTypes = {
+  title: PropTypes.string,
   items: PropTypes.array,
   x: PropTypes.number,
   y: PropTypes.number,

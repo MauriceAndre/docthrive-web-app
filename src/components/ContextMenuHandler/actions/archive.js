@@ -1,5 +1,8 @@
 import { getVisibleTools } from "./../../Archive/tools";
 
 export const elementItem = (element) => {
-  return getVisibleTools(element);
+  const items = getVisibleTools(element);
+  const title = element.name;
+
+  return { items, title };
 };
