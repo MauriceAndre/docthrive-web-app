@@ -3,6 +3,7 @@ import Form from "./../Form";
 import { initT, t } from "../../../utils/intl";
 import { getElementSchema } from "./../../../utils/validationUtils";
 import { getProps, propsToArray } from "./../../../utils/objectUtils";
+import { isEmpty, funcIteration } from "./../../../utils/arrayUtils";
 
 class ElementForm extends Form {
   state = {
@@ -17,6 +18,15 @@ class ElementForm extends Form {
     labels: [],
   };
 
+  constructor(props) {
+    super(props);
+    this.firstInput = React.createRef();
+  }
+
+  componentDidMount() {
+    this.firstInput.current.focus();
+  }
+
   componentWillMount() {
     const { keys } = this.props;
     const data = getProps(this.dataProps, keys);
@@ -29,27 +39,35 @@ class ElementForm extends Form {
     initT(null, "elementForm");
 
     let components = {
-      name: (
-        <Form.InputGroup
-          key="name"
-          name="name"
-          label={t("name")}
-          scope={this}
-        />
-      ),
-      labels: (
-        <Form.LabelSelectGroup
-          key="labels"
-          name="labels"
-          label={t("labels")}
-          multi
-          scope={this}
-        />
-      ),
+      name: {
+        tag: Form.InputGroup,
+        props: {
+          key: "name",
+          name: "name",
+          label: t("name"),
+          scope: this,
+        },
+      },
+      labels: {
+        tag: Form.LabelSelectGroup,
+        props: {
+          key: "labels",
+          name: "labels",
+          label: t("labels"),
+          multi: true,
+          scope: this,
+        },
+      },
     };
-    components = getProps(components, keys);
+    components = propsToArray(getProps(components, keys));
 
-    return <Form.Container>{propsToArray(components)}</Form.Container>;
+    if (!isEmpty(components)) components[0].props.reference = this.firstInput;
+
+    components = funcIteration(components, [
+      ({ tag, props }) => React.createElement(tag, props),
+    ]);
+
+    return <Form.Container>{components}</Form.Container>;
   }
 }
 

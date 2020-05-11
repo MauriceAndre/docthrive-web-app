@@ -3,6 +3,7 @@ import { mapping } from "./../../../../utils/objectUtils";
 
 class CopyElementForm extends ElementForm {
   componentDidMount() {
+    super.componentDidMount();
     const { srcElement, onInitForm } = this.props;
 
     const doSubmit = onInitForm(this.handleSubmit);

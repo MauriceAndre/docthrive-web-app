@@ -13,7 +13,7 @@ class Form extends Component {
   static Container = BootstrapForm;
   static Row = BootstrapForm.Row;
   static Group = BootstrapForm.Group;
-  static _Input = ({ name, label, scope, ...rest }) => {
+  static _Input = ({ name, label, scope, reference, ...rest }) => {
     const { data } = scope.state;
 
     return (
@@ -23,6 +23,7 @@ class Form extends Component {
         placeholder={label}
         onChange={scope.handleChange}
         autoComplete="off"
+        ref={reference}
         {...rest}
       />
     );
