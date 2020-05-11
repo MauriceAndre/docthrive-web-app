@@ -5,7 +5,7 @@ import * as actionCreators from "./../../../../store/actions/index";
 import { Breadcrumb } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
-import { getPath } from "./../../../../utils/elementUtils";
+import { getPath, isRoot } from "./../../../../utils/elementUtils";
 import { getArchiveElementPath } from "./../../../../utils/historyUtils";
 import style from "./BreadcrumbBar.module.css";
 import "./BreadcrumbBar.css";
@@ -14,6 +14,7 @@ function BreadcrumbBar({ selectedElement, elements, setSelectedElement }) {
   const path = getPath(selectedElement, elements);
 
   const handleLevelUp = () => {
+    if (isRoot(selectedElement)) return;
     setSelectedElement(selectedElement.parentId);
   };
 
