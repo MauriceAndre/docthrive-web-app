@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "./../../store/actions/index";
 import { Container, Row, Col } from "react-bootstrap";
@@ -8,35 +8,55 @@ import ViewSidebar from "./components/ViewSidebar";
 import MetaSidebar from "./components/MetaSidebar";
 import BreadcrumbBar from "./components/BreadcrumbBar";
 import { join } from "./../../utils/arrayUtils";
+import { getRootId } from "../../utils/elementUtils";
 import style from "./Archive.module.css";
-
-let preSelectedElementId = null;
 
 const Archive = ({
   initElementTypes,
   initLabels,
   onSelectElement,
+  loadFirstLevel,
   selectedElement,
   match,
 }) => {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const preSelectedElementId = useRef();
+  const id = useRef();
+  const skipSetElement = useRef(false);
+  const matchId = match.params.id;
+
+  if (
+    preSelectedElementId.current !== matchId &&
+    selectedElement._id !== matchId
+  ) {
+    id.current = matchId;
+    skipSetElement.current = false;
+  } else if (selectedElement._id !== matchId || id.current !== matchId) {
+    id.current = matchId;
+    preSelectedElementId.current = id.current;
+    skipSetElement.current = true;
+  }
+
+  // init archive
   useEffect(() => {
     initElementTypes();
     initLabels();
-  }, [initElementTypes, initLabels]);
+    loadFirstLevel().then(() => setIsInitialized(true));
+  }, [initElementTypes, initLabels, loadFirstLevel]);
 
-  let id;
-  if (preSelectedElementId === selectedElement._id) {
-    id = match.params.id;
-  } else {
-    id = selectedElement._id;
-    preSelectedElementId = id;
-  }
-
+  // set default selected element
   useEffect(() => {
-    if (id && preSelectedElementId !== id) {
-      onSelectElement(id);
+    if (isInitialized && !id.current) id.current = getRootId();
+  }, [isInitialized]);
+
+  // set element
+  useEffect(() => {
+    if (isInitialized && !skipSetElement.current) {
+      onSelectElement(id.current);
+      preSelectedElementId.current = id.current;
     }
-  }, [id, onSelectElement]);
+    // eslint-disable-next-line
+  }, [id.current, isInitialized, onSelectElement]);
 
   return (
     <Container fluid className={join(["section-content", style.archive])}>
@@ -99,6 +119,7 @@ const mapDispatchToProps = (dispatch) => {
     initLabels: () => dispatch(actionCreators.getLabels()),
     onSelectElement: (id) =>
       dispatch(actionCreators.setSelectedElementById(id)),
+    loadFirstLevel: () => dispatch(actionCreators.getChildren(getRootId())),
   };
 };
 
