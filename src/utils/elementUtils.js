@@ -81,17 +81,19 @@ export function isRoot(element) {
 export function getPath(element, elements) {
   if (objectUtils.isEmpty(element)) return [];
 
+  const rootElement = getRootElement();
+  if (isRoot(element)) element = rootElement;
+
   const path = [element];
   let { parentId } = element;
 
   while (parentId) {
-    if (parentId === config.archive.rootElement._id) {
-      element = getRootElement();
-      parentId = undefined;
+    if (parentId === rootElement._id) {
+      element = rootElement;
     } else {
       element = findById(parentId, elements);
-      parentId = element.parentId;
     }
+    parentId = element.parentId;
 
     path.unshift(element);
   }
@@ -109,6 +111,10 @@ export function getRootElement() {
   return objectUtils.updateObject(root, {
     name: t("treeView." + root.name, { useNamespace: false }),
   });
+}
+
+export function getRootId() {
+  return config.archive.rootElement._id;
 }
 
 export function findById(id, elements) {

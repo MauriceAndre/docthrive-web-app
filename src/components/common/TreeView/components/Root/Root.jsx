@@ -14,7 +14,6 @@ const Root = (props) => {
   const { _id, name } = rootElement;
 
   useEffect(() => {
-    onSelect(rootElement);
     getChildren(rootElement._id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
