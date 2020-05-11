@@ -11,7 +11,7 @@
   display: flex !important;
   align-items: center;
   justify-content: center;
-  background-color: lightgray !important;
+  background-color: rgb(245, 245, 245) !important;
   color: rgb(83, 83, 83) !important;
   overflow: hidden;
   white-space: nowrap;
