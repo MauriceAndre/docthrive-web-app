@@ -19,5 +19,12 @@ export {
   getLabels,
   setContentView,
 } from "./archive";
-export { setModal, showModal, setContextMenu, showContextMenu } from "./app";
+export {
+  setModal,
+  showModal,
+  setContextMenu,
+  showContextMenu,
+  setSidebar,
+  showSidebar,
+} from "./app";
 export {} from "./user";

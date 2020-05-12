@@ -27,3 +27,17 @@ export const showContextMenu = (show) => {
     show,
   };
 };
+
+export const setSidebar = (sidebar) => {
+  return {
+    type: actionTypes.SET_SIDEBAR,
+    sidebar,
+  };
+};
+
+export const showSidebar = (show) => {
+  return {
+    type: actionTypes.SHOW_SIDEBAR,
+    show,
+  };
+};

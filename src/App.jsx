@@ -6,6 +6,7 @@ import Routes from "./components/Routes";
 import MainNavbar from "./components/MainNavbar/MainNavbar";
 import ModalHandler from "./components/ModalHandler";
 import ContextMenuHandler from "./components/ContextMenuHandler";
+import SidebarHandler from "./components/SidebarHandler";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,6 +20,7 @@ const App = ({ showContextMenu }) => {
       <MainNavbar />
       <main className="section-wrapper section-fill">
         <Routes />
+        <SidebarHandler />
       </main>
       <ModalHandler />
       <ContextMenuHandler />

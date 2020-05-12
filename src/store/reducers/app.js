@@ -4,6 +4,7 @@ import { updateObject } from "./../../utils/objectUtils";
 const initialState = {
   modal: {},
   contextMenu: {},
+  sidebar: {},
 };
 
 const setModal = (state, { modal }) => {
@@ -24,6 +25,15 @@ const showContextMenu = (state, { show }) => {
   return updateObject(state, { contextMenu });
 };
 
+const setSidebar = (state, { sidebar }) => {
+  return updateObject(state, { sidebar });
+};
+
+const showSidebar = (state, { show }) => {
+  const sidebar = updateObject(state.sidebar, { show });
+  return updateObject(state, { sidebar });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_MODAL:
@@ -34,6 +44,10 @@ const reducer = (state = initialState, action) => {
       return setContextMenu(state, action);
     case actionTypes.SHOW_CONTEXT_MENU:
       return showContextMenu(state, action);
+    case actionTypes.SET_SIDEBAR:
+      return setSidebar(state, action);
+    case actionTypes.SHOW_SIDEBAR:
+      return showSidebar(state, action);
     default:
       break;
   }

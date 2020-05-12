@@ -7,10 +7,13 @@ import {
   createFolder,
   renameElement,
 } from "./../../components/ModalHandler/actions/index";
+import { elementMeta } from "./../../components/SidebarHandler/actions/index";
 import { isFolder, isDocument, isRoot } from "./../../utils/elementUtils";
 import { t, initT } from "./../../utils/intl";
 
 const setModal = (modal) => store.dispatch(actionCreators.setModal(modal));
+const setSidebar = (sidebar) =>
+  store.dispatch(actionCreators.setSidebar(sidebar));
 
 export const getTools = (element) => {
   initT(null, "toolbar");
@@ -70,6 +73,14 @@ export const getTools = (element) => {
       text: t("newFolder"),
       icon: "folder-plus",
       onClick: () => setModal(createFolder(element._id)),
+      isHidden: isDocument(element),
+    },
+    {
+      key: "showMeta",
+      text: t("showMeta"),
+      icon: "info-circle",
+      classes: "d-md-none",
+      onClick: () => setSidebar(elementMeta()),
       isHidden: isDocument(element),
     },
   ];
