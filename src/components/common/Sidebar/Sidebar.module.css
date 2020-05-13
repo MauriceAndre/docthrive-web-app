@@ -6,6 +6,18 @@
   width: 25%;
 }
 
+@media (max-width: 960px) {
+  .sidebar {
+    width: 40%;
+  }
+}
+
+@media (max-width: 720px) {
+  .sidebar {
+    width: 60%;
+  }
+}
+
 @media (max-width: 540px) {
   .sidebar {
     width: 85%;
