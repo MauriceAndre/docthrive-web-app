@@ -28,7 +28,10 @@ const Toolbar = ({ selectedElement, workVersion, setView, activeView }) => {
         { key: "grid", text: t("view.options.grid"), icon: "th" },
       ],
     },
-    classes: "ml-auto",
+    classes: join([
+      "ml-auto",
+      isDocument(selectedElement) && "d-none d-md-block",
+    ]),
     onClick: (view) => setView(view),
     isDisabled: isDocument(selectedElement),
   };

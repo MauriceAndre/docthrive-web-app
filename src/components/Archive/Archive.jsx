@@ -11,6 +11,9 @@ import { join } from "./../../utils/arrayUtils";
 import { getRootId, getRootElement } from "../../utils/elementUtils";
 import style from "./Archive.module.css";
 
+let preSelectedElementId;
+let id;
+
 const Archive = ({
   initElementTypes,
   initLabels,
@@ -21,20 +24,16 @@ const Archive = ({
   match,
 }) => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const preSelectedElementId = useRef();
-  const id = useRef();
   const skipSetElement = useRef(false);
-  const matchId = match.params.id;
+  let matchId = match.params.id;
+  matchId = matchId === "undefined" ? getRootId() : matchId;
 
-  if (
-    preSelectedElementId.current !== matchId &&
-    selectedElement._id !== matchId
-  ) {
-    id.current = matchId;
+  if (preSelectedElementId !== matchId && selectedElement._id !== matchId) {
+    id = matchId;
     skipSetElement.current = false;
-  } else if (selectedElement._id !== matchId || id.current !== matchId) {
-    id.current = matchId;
-    preSelectedElementId.current = id.current;
+  } else if (selectedElement._id !== matchId || id !== matchId) {
+    id = matchId;
+    preSelectedElementId = id;
     skipSetElement.current = true;
   }
 
@@ -48,17 +47,17 @@ const Archive = ({
 
   // set default selected element
   useEffect(() => {
-    if (isInitialized && !id.current) id.current = getRootId();
+    if (isInitialized && !id) id = getRootId();
   }, [isInitialized]);
 
   // set element
   useEffect(() => {
     if (isInitialized && !skipSetElement.current) {
-      onSelectElement(id.current);
-      preSelectedElementId.current = id.current;
+      onSelectElement(id);
+      preSelectedElementId = id;
     }
     // eslint-disable-next-line
-  }, [id.current, isInitialized, onSelectElement]);
+  }, [id, isInitialized, onSelectElement]);
 
   return (
     <Container fluid className={join(["section-content", style.archive])}>
