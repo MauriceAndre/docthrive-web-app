@@ -1,5 +1,6 @@
 export {
   addElements,
+  addElement,
   createElement,
   createFolder,
   updateElement,

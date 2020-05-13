@@ -5,7 +5,7 @@ import config from "./../../services/configService";
 import * as titleUtils from "../../utils/titleUtils";
 
 const initialState = {
-  elements: [elementUtils.getRootElement()],
+  elements: [],
   deletedElements: [],
   selectedElement: {},
   workVersion: null,

@@ -23,10 +23,14 @@ export const addElements = (elements, populate) => {
   };
 };
 
+export const addElement = (element, populate) => {
+  return addElements([element], populate);
+};
+
 export const createElement = (data) => {
   return async (dispatch) => {
     const element = elementUtils.createElement(data);
-    dispatch(addElements([element], false));
+    dispatch(addElement(element, false));
     await elementService.saveElement(element);
   };
 };
@@ -58,7 +62,7 @@ export const moveElement = (element, parentId) => {
 export const copyElement = (element, newParentId) => {
   return async (dispatch) => {
     const newElement = elementUtils.copyElement(element, newParentId);
-    dispatch(addElements([newElement], false));
+    dispatch(addElement(newElement, false));
     // TODO: await server call
   };
 };

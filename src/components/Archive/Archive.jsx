@@ -8,12 +8,13 @@ import ViewSidebar from "./components/ViewSidebar";
 import MetaSidebar from "./components/MetaSidebar";
 import BreadcrumbBar from "./components/BreadcrumbBar";
 import { join } from "./../../utils/arrayUtils";
-import { getRootId } from "../../utils/elementUtils";
+import { getRootId, getRootElement } from "../../utils/elementUtils";
 import style from "./Archive.module.css";
 
 const Archive = ({
   initElementTypes,
   initLabels,
+  addRootElement,
   onSelectElement,
   loadFirstLevel,
   selectedElement,
@@ -41,8 +42,9 @@ const Archive = ({
   useEffect(() => {
     initElementTypes();
     initLabels();
+    addRootElement();
     loadFirstLevel().then(() => setIsInitialized(true));
-  }, [initElementTypes, initLabels, loadFirstLevel]);
+  }, [initElementTypes, initLabels, loadFirstLevel, addRootElement]);
 
   // set default selected element
   useEffect(() => {
@@ -96,7 +98,7 @@ const Archive = ({
                   md={4}
                   className="d-none d-md-block bg-light section-wrapper"
                 >
-                  <MetaSidebar />
+                  <MetaSidebar element={selectedElement} />
                 </Col>
               </Row>
             </Col>
@@ -120,6 +122,7 @@ const mapDispatchToProps = (dispatch) => {
     onSelectElement: (id) =>
       dispatch(actionCreators.setSelectedElementById(id)),
     loadFirstLevel: () => dispatch(actionCreators.getChildren(getRootId())),
+    addRootElement: () => dispatch(actionCreators.addElement(getRootElement())),
   };
 };
 
