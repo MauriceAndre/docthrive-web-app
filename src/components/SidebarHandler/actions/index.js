@@ -6,9 +6,9 @@ import MetaSidebar from "./../../Archive/components/MetaSidebar";
 
 const showSidebar = (show) => store.dispatch(actionCreators.showSidebar(show));
 
-export const elementMeta = () => {
+export const elementMeta = (element) => {
   return {
-    body: <MetaSidebar />,
+    body: <MetaSidebar element={element} />,
     onClose: () => showSidebar(false),
     close: true,
     show: true,

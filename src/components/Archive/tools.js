@@ -80,7 +80,7 @@ export const getTools = (element) => {
       text: t("showMeta"),
       icon: "info-circle",
       classes: "d-md-none",
-      onClick: () => setSidebar(elementMeta()),
+      onClick: () => setSidebar(elementMeta(element)),
       isHidden: isDocument(element),
     },
   ];

@@ -8,16 +8,16 @@ import { isEmpty } from "./../../../../utils/arrayUtils";
 import { getElementActivities } from "../../../../services/elementActivityService";
 import style from "./ElementActivity.module.css";
 
-const ElementActivity = ({ selectedElement, isTabSelected }) => {
+const ElementActivity = ({ element, isTabSelected }) => {
   initT(useT(), "elementActivity");
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     const getActivites = async () =>
-      setActivities(await getElementActivities(selectedElement._id));
+      setActivities(await getElementActivities(element._id));
 
     if (isTabSelected) getActivites();
-  }, [selectedElement, isTabSelected]);
+  }, [element, isTabSelected]);
 
   return (
     <Section className="overflow-auto p-2">

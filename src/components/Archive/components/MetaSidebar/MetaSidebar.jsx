@@ -1,22 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
+import * as actionCreators from "./../../../../store/actions/index";
 import { Tabs, Tab, Container, Row, Col } from "react-bootstrap";
 import ElementDetails from "./../ElementDetails";
 import ElementActivity from "./../ElementActivity";
 import { initT, useT, t } from "../../../../utils/intl";
+import { updateObject } from "./../../../../utils/objectUtils";
+import * as feedback from "./../../../../utils/feedback";
 import config from "./../../../../services/configService";
 import "./MetaSidebar.css";
 
 const defaultTabKey = config.default.metaSidebar.tabKey;
 
-function MetaSidebar({ selectedElement }) {
+function MetaSidebar({ element, updateElement }) {
   initT(useT(), "metaSidebar");
   const [tabKey, setTabKey] = useState(defaultTabKey);
   const [editing, setEditing] = useState(false);
+  const [currElement, setCurrElement] = useState(element);
+  const refElement = useRef(element);
+
+  useEffect(() => {
+    refElement.current = element;
+    setCurrElement(element);
+  }, [element]);
 
   const handleEditClick = () => {
     setTabKey(defaultTabKey);
     setEditing(!editing);
+  };
+
+  const doSubmit = (data) => {
+    const uElement = updateObject(refElement.current, data);
+    updateElement(uElement);
+    setCurrElement(uElement);
+    feedback.action(
+      t("elementDetails.feedback.succ", {
+        useNamespace: false,
+      }),
+      feedback.TYPE.SUCCESS
+    );
   };
 
   const tabs = [
@@ -26,8 +48,9 @@ function MetaSidebar({ selectedElement }) {
         component: ElementDetails,
         props: {
           edit: editing,
-          selectedElement,
+          element: currElement,
           onEditClick: handleEditClick,
+          doSubmit,
         },
       },
       title: t("details"),
@@ -38,7 +61,7 @@ function MetaSidebar({ selectedElement }) {
       content: {
         component: ElementActivity,
         props: {
-          selectedElement,
+          element: currElement,
         },
       },
       title: t("activities"),
@@ -52,7 +75,7 @@ function MetaSidebar({ selectedElement }) {
       <Row className="section section-column">
         <Col className="section-wrapper" style={{ maxHeight: "16%" }}>
           <div className="meta-header section-content p-3">
-            <h2 className="font-weight-light">{selectedElement.name}</h2>
+            <h2 className="font-weight-light">{currElement.name}</h2>
           </div>
         </Col>
         <Col className="section-wrapper section-fill">
@@ -81,10 +104,11 @@ function MetaSidebar({ selectedElement }) {
   );
 }
 
-const mapStateToProps = ({ archive }) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    selectedElement: archive.selectedElement,
+    updateElement: (element) =>
+      dispatch(actionCreators.updateElement(element._id, element)),
   };
 };
 
-export default connect(mapStateToProps)(MetaSidebar);
+export default connect(null, mapDispatchToProps)(MetaSidebar);
