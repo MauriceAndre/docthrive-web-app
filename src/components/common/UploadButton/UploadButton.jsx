@@ -7,12 +7,12 @@ import { initT, useT, t } from "../../../utils/intl";
 import { uploadDocuments } from "../../ModalHandler/actions";
 import style from "./UploadButton.module.css";
 
-function UploadButton({ setModal, showModal }) {
+function UploadButton({ setModal }) {
   initT(useT(), "uploadButton");
 
   const onDrop = (files) => {
     console.log(files);
-    setModal(uploadDocuments(showModal, files));
+    setModal(uploadDocuments(files));
   };
 
   const {
@@ -57,7 +57,6 @@ function UploadButton({ setModal, showModal }) {
 const mapDispatchToProps = (dispatch) => {
   return {
     setModal: (modal) => dispatch(actionCreators.setModal(modal)),
-    showModal: (show) => dispatch(actionCreators.showModal(show)),
   };
 };
 
