@@ -18,6 +18,10 @@
     "contentView": { "key": "list", "icon": "list" },
     "metaSidebar": {
       "tabKey": "details"
+    },
+    "viewSidebar": {
+      "view": "tree",
+      "viewsKey": "views"
     }
   },
   "archive": {
