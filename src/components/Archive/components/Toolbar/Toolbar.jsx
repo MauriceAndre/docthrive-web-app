@@ -86,7 +86,7 @@ const Toolbar = ({
       <Button
         key={generateKey(text, icon, true)}
         variant="light"
-        className={join(["mx-2", classes])}
+        className={join(["mx-1", classes])}
         onClick={() => onClick(selectedElement, workVersion)}
         disabled={isDisabled}
       >
@@ -107,7 +107,7 @@ const Toolbar = ({
     return (
       <Dropdown
         key={generateKey(text, icon, true)}
-        className={join(["mx-2", classes])}
+        className={join(["mx-1", classes])}
       >
         <Dropdown.Toggle variant="light" disabled={isDisabled}>
           <Icon name={icon} />
