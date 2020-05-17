@@ -19,6 +19,7 @@ export {
   setLabels,
   getLabels,
   setContentView,
+  setContentSorting,
 } from "./archive";
 export {
   setModal,

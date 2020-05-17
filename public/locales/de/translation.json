@@ -23,6 +23,8 @@
   },
   "elementTypes": {
     "file": "Dokument",
+    "pdf": "PDF",
+    "word": "Word",
     "root": "Archiv",
     "folder": "Ordner"
   },
@@ -96,6 +98,16 @@
     "newFolder": "Neuer Ordner",
     "rename": "Umbennen",
     "showMeta": "Zeige Info",
+    "sort": {
+      "text": "Sortieren",
+      "options": {
+        "type": "Typ",
+        "name": "Bezeichnung",
+        "date": "Datum",
+        "asc": "Aufsteigend",
+        "desc": "Absteigend"
+      }
+    },
     "view": {
       "text": "Ansicht",
       "options": {
@@ -143,7 +155,8 @@
   },
   "elementForm": {
     "name": "Bezeichung",
-    "labels": "Etiketts"
+    "labels": "Etiketts",
+    "parentId": "Ziel"
   },
   "folderListView": {
     "type": "Typ",
@@ -159,6 +172,7 @@
     "cancel": "abbrechen",
     "upload": "hochladen",
     "labels": "Etiketts",
+    "parentId": "Ziel",
     "selectedFilesDesc": "Sie haben {{count}} dokumente ausgewählt",
     "feedback": {
       "succ": "{{count}} Dokumente hochgeladen"

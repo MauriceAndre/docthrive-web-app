@@ -9,33 +9,75 @@ import { join } from "./../../../../utils/arrayUtils";
 import { isDocument } from "./../../../../utils/elementUtils";
 import { isString } from "./../../../../utils/stringUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
+import { updateObject } from "./../../../../utils/objectUtils";
 import style from "./Toolbar.module.css";
 import "./Toolbar.css";
 
-const Toolbar = ({ selectedElement, workVersion, setView, activeView }) => {
+const Toolbar = ({
+  selectedElement,
+  workVersion,
+  setView,
+  activeView,
+  setSorting,
+  activeSorting,
+}) => {
   initT(useT(), "toolbar");
 
-  const tools = getTools(selectedElement);
+  let tools = getTools(selectedElement);
 
-  const view = {
-    text: t("view.text"),
-    icon: activeView.icon,
-    type: "dropdown",
-    options: {
-      activeItem: activeView.key,
-      items: [
-        { key: "list", text: t("view.options.list"), icon: "list" },
-        { key: "grid", text: t("view.options.grid"), icon: "th" },
-      ],
+  const moreTools = [
+    {
+      text: t("sort.text"),
+      icon: activeSorting.order.icon,
+      type: "dropdown",
+      options: {
+        activeItems: [activeSorting.key, activeSorting.order.key],
+        items: [
+          { key: "type._id", text: t("sort.options.type") },
+          { key: "name", text: t("sort.options.name") },
+          { key: "createdAt", text: t("sort.options.date") },
+          { component: Dropdown.Divider },
+          {
+            key: "asc",
+            text: t("sort.options.asc"),
+            icon: "sort-amount-up-alt",
+            isOrder: true,
+          },
+          {
+            key: "desc",
+            text: t("sort.options.desc"),
+            icon: "sort-amount-down-alt",
+            isOrder: true,
+          },
+        ],
+      },
+      classes: join([
+        "ml-auto",
+        isDocument(selectedElement) && "d-none d-md-block",
+      ]),
+      onClick: (item) => {
+        const order = item.isOrder ? { order: item } : { key: item.key };
+        setSorting(updateObject(activeSorting, order));
+      },
+      isDisabled: isDocument(selectedElement),
     },
-    classes: join([
-      "ml-auto",
-      isDocument(selectedElement) && "d-none d-md-block",
-    ]),
-    onClick: (view) => setView(view),
-    isDisabled: isDocument(selectedElement),
-  };
-  tools.push(view);
+    {
+      text: t("view.text"),
+      icon: activeView.icon,
+      type: "dropdown",
+      options: {
+        activeItems: [activeView.key],
+        items: [
+          { key: "list", text: t("view.options.list"), icon: "list" },
+          { key: "grid", text: t("view.options.grid"), icon: "th" },
+        ],
+      },
+      classes: isDocument(selectedElement) && "d-none d-md-block",
+      onClick: (view) => setView(view),
+      isDisabled: isDocument(selectedElement),
+    },
+  ];
+  tools = [...tools, ...moreTools];
 
   const renderButton = function ({ text, icon, classes, onClick, isDisabled }) {
     const iconProps = isString(icon) ? { name: icon } : icon;
@@ -74,16 +116,25 @@ const Toolbar = ({ selectedElement, workVersion, setView, activeView }) => {
         <Dropdown.Menu>
           {options.items.map((item) => {
             const { key, text, icon } = item;
-            return (
-              <Dropdown.Item
-                key={key}
-                eventKey={key}
-                active={options.activeItem === key}
-                onSelect={() => onClick(item)}
-              >
-                <Icon name={icon} text={text} />
-              </Dropdown.Item>
-            );
+            let component = item.component;
+
+            if (component) {
+              const Component = component;
+              component = <Component />;
+            } else {
+              component = (
+                <Dropdown.Item
+                  key={key}
+                  eventKey={key}
+                  active={options.activeItems.includes(key)}
+                  onSelect={() => onClick(item)}
+                >
+                  <Icon name={icon} text={text} />
+                </Dropdown.Item>
+              );
+            }
+
+            return component;
           })}
         </Dropdown.Menu>
       </Dropdown>
@@ -113,12 +164,15 @@ const mapStateToProps = ({ archive }) => {
     workVersion: archive.workVersion,
     selectedElement: archive.selectedElement,
     activeView: archive.contentView,
+    activeSorting: archive.contentSorting,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setView: (view) => dispatch(actionCreators.setContentView(view)),
+    setSorting: (sorting) =>
+      dispatch(actionCreators.setContentSorting(sorting)),
   };
 };
 

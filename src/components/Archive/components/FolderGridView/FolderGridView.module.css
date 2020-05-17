@@ -10,9 +10,11 @@
 
 .body {
   position: relative;
+  overflow: hidden;
 }
 
 .text {
   position: absolute;
   top: 25%;
+  white-space: nowrap;
 }

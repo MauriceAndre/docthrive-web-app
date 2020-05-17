@@ -13,7 +13,7 @@ function FolderListView({ elements, onSelectElement, onContextMenu }) {
     <Table size="sm" striped hover responsive className={style.table}>
       <thead className={style.header}>
         <tr>
-          <th>{t("type")}</th>
+          <th className="text-center">{t("type")}</th>
           <th>{t("name")}</th>
           <th>{t("date")}</th>
           <th>{t("labels")}</th>
@@ -32,16 +32,16 @@ function FolderListView({ elements, onSelectElement, onContextMenu }) {
               onDoubleClick={() => onSelectElement(element)}
               onContextMenu={(e) => onContextMenu(e, element)}
             >
-              <td key={generateKey(_id, "type")} className="w-1 align-middle">
+              <td key={generateKey(_id, "type")} className="w-1 text-center">
                 <Icon key={generateKey(_id, "type_icon")} name={type.icon} />
               </td>
-              <td key={generateKey(_id, "name")} className="w-5 align-middle">
+              <td key={generateKey(_id, "name")} className="w-5">
                 {name}
               </td>
-              <td key={generateKey(_id, "date")} className="w-2 align-middle">
+              <td key={generateKey(_id, "date")} className="w-2">
                 {createdAt}
               </td>
-              <td key={generateKey(_id, "labels")} className="w-4 align-middle">
+              <td key={generateKey(_id, "labels")} className="w-4">
                 {labels}
               </td>
             </tr>

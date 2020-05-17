@@ -17,20 +17,21 @@ import * as feedback from "./../../../utils/feedback";
 const showModal = (show) => store.dispatch(actionCreators.showModal(show));
 
 export const moveElement = (srcElement) => {
-  let destElement = null;
+  let onSubmit;
   initT(null, "moveElement");
 
-  const handleDestElement = (element) => {
-    destElement = element;
-  };
-
-  const doSubmit = () => {
-    store.dispatch(actionCreators.moveElement(srcElement, destElement._id));
+  const doSubmit = (data) => {
+    store.dispatch(actionCreators.moveElement(srcElement, data.parentId));
     showModal(false);
     feedback.action(
       t("moveElement.feedback.succ", { data: srcElement, useNamespace: false }),
       feedback.TYPE.SUCCESS
     );
+  };
+
+  const handleInitForm = (onSubmitFnc) => {
+    onSubmit = onSubmitFnc;
+    return doSubmit;
   };
 
   const onClose = () => {
@@ -41,13 +42,17 @@ export const moveElement = (srcElement) => {
     title: t("title"),
     show: true,
     onClose,
-    body: <MoveElement onSelectElement={handleDestElement} />,
+    body: <MoveElement onInitForm={handleInitForm} keys={["parentId"]} />,
     footer: (
       <Fragment>
         <Button variant="secondary" onClick={onClose}>
           {t("cancel")}
         </Button>
-        <Button variant="primary" onClick={doSubmit} className="ml-auto">
+        <Button
+          variant="primary"
+          onClick={(e) => onSubmit(e)}
+          className="ml-auto"
+        >
           {t("move")}
         </Button>
       </Fragment>
@@ -57,17 +62,13 @@ export const moveElement = (srcElement) => {
 };
 
 export const copyElement = (srcElement) => {
-  let destElement, onSubmit;
+  let onSubmit;
 
   initT(null, "copyElement");
 
-  const handleDestElement = (element) => {
-    destElement = element;
-  };
-
   const doSubmit = (data) => {
     const element = updateObject(srcElement, data);
-    store.dispatch(actionCreators.copyElement(element, destElement._id));
+    store.dispatch(actionCreators.copyElement(element, data.parentId));
     showModal(false);
     feedback.action(
       t("copyElement.feedback.succ", { data, useNamespace: false }),
@@ -88,13 +89,7 @@ export const copyElement = (srcElement) => {
     title: t("title"),
     show: true,
     onClose,
-    body: (
-      <CopyElement
-        srcElement={srcElement}
-        onSelectElement={handleDestElement}
-        onInitForm={handleInitForm}
-      />
-    ),
+    body: <CopyElement srcElement={srcElement} onInitForm={handleInitForm} />,
     footer: (
       <Fragment>
         <Button variant="secondary" onClick={onClose}>
@@ -236,7 +231,9 @@ export const createFolder = (destElementId) => {
     title: t("title"),
     show: true,
     onClose,
-    body: <CreateFolder onInitForm={handleInitForm} />,
+    body: (
+      <CreateFolder onInitForm={handleInitForm} keys={["name", "labels"]} />
+    ),
     footer: (
       <Fragment>
         <Button variant="secondary" onClick={onClose}>

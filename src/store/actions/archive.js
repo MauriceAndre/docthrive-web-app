@@ -180,3 +180,9 @@ export const setContentView = (view) => {
     view,
   };
 };
+export const setContentSorting = (sorting) => {
+  return {
+    type: actionTypes.SET_CONTENT_SORTING,
+    sorting,
+  };
+};

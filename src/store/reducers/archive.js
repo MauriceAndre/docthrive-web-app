@@ -12,6 +12,7 @@ const initialState = {
   elementTypes: [],
   labels: [],
   contentView: config.default.contentView,
+  contentSorting: config.default.contentSorting,
 };
 
 const addElements = (state, { elements, populate }) => {
@@ -90,6 +91,10 @@ const setContentView = (state, { view }) => {
   return updateObject(state, { contentView: view });
 };
 
+const setContentSorting = (state, { sorting }) => {
+  return updateObject(state, { contentSorting: sorting });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_ELEMENTS:
@@ -108,6 +113,8 @@ const reducer = (state = initialState, action) => {
       return setLabels(state, action);
     case actionTypes.SET_CONTENT_VIEW:
       return setContentView(state, action);
+    case actionTypes.SET_CONTENT_SORTING:
+      return setContentSorting(state, action);
     default:
       break;
   }

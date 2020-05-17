@@ -13,12 +13,18 @@ const FolderContent = ({
   element,
   getChildren,
   view,
+  sorting,
 }) => {
   const { _id } = element;
 
   getChildren(_id);
   elements = findByParentId(_id, elements);
-  elements = sort(elements);
+
+  // sorting
+  const { key: sortKey, order } = sorting;
+  const sortKeys = [sortKey];
+  const sortOrder = [order.key];
+  elements = sort(elements, sortKeys, sortOrder);
 
   const handleContextMenu = (e, el) =>
     onContextMenu(e, contextMenuActions.elementItem(el));
@@ -54,6 +60,7 @@ const mapStateToProps = ({ archive }) => {
   return {
     elements: archive.elements,
     view: archive.contentView,
+    sorting: archive.contentSorting,
   };
 };
 

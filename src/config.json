@@ -16,6 +16,13 @@
       "document": 1
     },
     "contentView": { "key": "list", "icon": "list" },
+    "contentSorting": {
+      "key": "name",
+      "order": {
+        "key": "asc",
+        "icon": "sort-amount-up-alt"
+      }
+    },
     "metaSidebar": {
       "tabKey": "details"
     },
