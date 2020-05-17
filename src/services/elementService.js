@@ -29,7 +29,7 @@ const elements = [
   {
     _id: "22",
     name: "Invoice Icelandair 2019",
-    type: 1,
+    type: 2,
     parentId: "21",
     labels: ["2", "6"],
     createdAt: Date.now(),
@@ -38,7 +38,7 @@ const elements = [
   {
     _id: "26",
     name: "Contract Impark 2019",
-    type: 1,
+    type: 3,
     parentId: "25",
     labels: ["1", "5"],
     createdAt: Date.now(),
@@ -47,7 +47,7 @@ const elements = [
   {
     _id: "28",
     name: "Letter Canada 2019",
-    type: 1,
+    type: 2,
     parentId: "25",
     labels: ["4"],
     createdAt: Date.now(),

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Badge } from "react-bootstrap";
+import Icon from "./../../../Icon";
 import { join } from "./../../../../../utils/arrayUtils";
 import { findByParentId } from "../../../../../utils/elementUtils";
+import { findExpand } from "../../../../../utils/elementTypeUtils";
 import { renderChild } from "./../../utility";
 import style from "./../../TreeView.module.css";
 
@@ -27,7 +30,9 @@ class Folder extends Component {
       elements,
       onContextMenu,
     } = this.props;
-    const { _id, name } = element;
+    const { _id, name, badge } = element;
+    const type = expanded ? findExpand(element.type.name) : element.type;
+    const isSelected = selectedId === _id;
 
     const children = findByParentId(_id, elements);
 
@@ -37,9 +42,9 @@ class Folder extends Component {
           onDoubleClick={() => this.handleExpand()}
           onContextMenu={(e) => onContextMenu(e, element)}
           className={join([
-            style["folder-content"],
+            style["folder-li"],
             "d-flex",
-            selectedId === _id && style.selected,
+            isSelected && style.selected,
           ])}
         >
           <span
@@ -47,10 +52,22 @@ class Folder extends Component {
             onClick={() => this.handleExpand()}
           />
           <div
-            className={style["folder-icon"]}
+            className={join([
+              "d-flex align-items-center",
+              style["folder-content"],
+            ])}
             onClick={() => onSelect(element)}
           >
-            {name}
+            <Icon
+              name={type ? type.icon : element.type.icon}
+              text={name}
+              className={style["folder-icon"]}
+            />
+            {badge && (
+              <Badge variant="primary" className={style["folder-badge"]}>
+                {badge}
+              </Badge>
+            )}
           </div>
         </div>
         {children && (

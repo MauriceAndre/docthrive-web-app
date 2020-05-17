@@ -7,11 +7,13 @@ import {
 } from "../../../../../utils/elementUtils";
 import { renderChild } from "./../../utility";
 import style from "./../../TreeView.module.css";
+import Icon from "./../../../Icon/Icon";
 
 const Root = (props) => {
   const { selectedId, onSelect, elements, getChildren, onContextMenu } = props;
-  const rootElement = getRootElement();
-  const { _id, name } = rootElement;
+  const rootElement = props.rootElement || getRootElement();
+  const { _id, name, type } = rootElement;
+  const isSelected = _id === selectedId;
 
   useEffect(() => {
     getChildren(rootElement._id);
@@ -25,12 +27,9 @@ const Root = (props) => {
       <div
         onClick={() => onSelect(rootElement)}
         onContextMenu={(e) => onContextMenu(e, rootElement)}
-        className={join([
-          style["archive-icon"],
-          _id === selectedId && style.selected,
-        ])}
+        className={join([style["root-li"], isSelected && style.selected])}
       >
-        {name}
+        <Icon name={type.icon} text={name} />
       </div>
       <ul>{children.map((child) => renderChild(child, { props }))}</ul>
     </li>
@@ -40,6 +39,7 @@ const Root = (props) => {
 Root.propTypes = {
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
+  rootElement: PropTypes.object,
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,
   onlyFolders: PropTypes.bool,

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import TreeView from "./../TreeView";
+import LabelView from "./../LabelView";
 import { initT, t, useT } from "../../../../utils/intl";
 
 export default function (defaultView) {
@@ -13,7 +14,9 @@ export default function (defaultView) {
         key: "labels",
         text: t("views.labels"),
         icon: "tags",
-        content: {},
+        content: {
+          component: LabelView,
+        },
       },
       {
         key: "tree",

@@ -6,6 +6,7 @@ import * as objectUtils from "./objectUtils";
 import * as fileUtils from "./fileUtils";
 import config from "./../services/configService";
 import store from "./../store";
+import { getArchiveState } from "../store/utility";
 
 export function generateId() {
   const identifier = "temp";
@@ -13,10 +14,6 @@ export function generateId() {
   const uniqueNo = Math.floor(Math.random() * 1000);
 
   return [identifier, timeStamp, uniqueNo].join("_");
-}
-
-export function getArchiveState() {
-  return store.getState().archive;
 }
 
 export function getElements() {
@@ -101,8 +98,8 @@ export function getPath(element, elements) {
   return path;
 }
 
-export function sort(elements) {
-  return _.sortBy(elements, ["type._id", "name"]);
+export function sort(elements, keys, order) {
+  return _.orderBy(elements, keys, order);
 }
 
 export function getRootElement() {
