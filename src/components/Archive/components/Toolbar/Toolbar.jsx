@@ -1,83 +1,18 @@
 import React from "react";
+import useTools from "./useTools";
 import { connect } from "react-redux";
 import * as actionCreators from "./../../../../store/actions/index";
-import { getTools } from "./../../tools";
-import { t, initT, useT } from "../../../../utils/intl";
 import { Button, Dropdown } from "react-bootstrap";
 import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
-import { isDocument } from "./../../../../utils/elementUtils";
 import { isString } from "./../../../../utils/stringUtils";
 import { generateKey } from "./../../../../utils/componentUtils";
-import { updateObject } from "./../../../../utils/objectUtils";
 import style from "./Toolbar.module.css";
 import "./Toolbar.css";
 
-const Toolbar = ({
-  selectedElement,
-  workVersion,
-  setView,
-  activeView,
-  setSorting,
-  activeSorting,
-}) => {
-  initT(useT(), "toolbar");
-
-  let tools = getTools(selectedElement);
-
-  const moreTools = [
-    {
-      text: t("sort.text"),
-      icon: activeSorting.order.icon,
-      type: "dropdown",
-      options: {
-        activeItems: [activeSorting.key, activeSorting.order.key],
-        items: [
-          { key: "type._id", text: t("sort.options.type") },
-          { key: "name", text: t("sort.options.name") },
-          { key: "createdAt", text: t("sort.options.date") },
-          { component: Dropdown.Divider },
-          {
-            key: "asc",
-            text: t("sort.options.asc"),
-            icon: "sort-amount-up-alt",
-            isOrder: true,
-          },
-          {
-            key: "desc",
-            text: t("sort.options.desc"),
-            icon: "sort-amount-down-alt",
-            isOrder: true,
-          },
-        ],
-      },
-      classes: join([
-        "ml-auto",
-        isDocument(selectedElement) && "d-none d-md-block",
-      ]),
-      onClick: (item) => {
-        const order = item.isOrder ? { order: item } : { key: item.key };
-        setSorting(updateObject(activeSorting, order));
-      },
-      isDisabled: isDocument(selectedElement),
-    },
-    {
-      text: t("view.text"),
-      icon: activeView.icon,
-      type: "dropdown",
-      options: {
-        activeItems: [activeView.key],
-        items: [
-          { key: "list", text: t("view.options.list"), icon: "list" },
-          { key: "grid", text: t("view.options.grid"), icon: "th" },
-        ],
-      },
-      classes: isDocument(selectedElement) && "d-none d-md-block",
-      onClick: (view) => setView(view),
-      isDisabled: isDocument(selectedElement),
-    },
-  ];
-  tools = [...tools, ...moreTools];
+const Toolbar = (props) => {
+  const { selectedElement, workVersion } = props;
+  const tools = useTools(props);
 
   const renderButton = function ({ text, icon, classes, onClick, isDisabled }) {
     const iconProps = isString(icon) ? { name: icon } : icon;
