@@ -11,11 +11,10 @@ class ElementForm extends Form {
     errors: {},
   };
 
-  schema = getElementSchema();
-
   dataProps = {
     name: "",
     labels: [],
+    parentId: null,
   };
 
   constructor(props) {
@@ -24,18 +23,19 @@ class ElementForm extends Form {
   }
 
   componentDidMount() {
-    this.firstInput.current.focus();
+    // this.firstInput.current.focus();
   }
 
   componentWillMount() {
     const { keys } = this.props;
     const data = getProps(this.dataProps, keys);
+    this.schema = getElementSchema(keys);
 
     this.state.data = data;
   }
 
   render() {
-    const { keys } = this.props;
+    const { keys, getChildren, elements } = this.props;
     initT(null, "elementForm");
 
     let components = {
@@ -55,6 +55,18 @@ class ElementForm extends Form {
           name: "labels",
           label: t("labels"),
           multi: true,
+          scope: this,
+        },
+      },
+      parentId: {
+        tag: Form.TreeSelectGroup,
+        props: {
+          key: "parentId",
+          name: "parentId",
+          label: t("parentId"),
+          getChildren,
+          elements: elements,
+          onlyFolders: true,
           scope: this,
         },
       },

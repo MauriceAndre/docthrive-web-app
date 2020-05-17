@@ -4,45 +4,34 @@ import * as actionCreators from "../../../../store/actions/index";
 import { Row, Col } from "react-bootstrap";
 import Form from "../../../common/Form";
 import List from "./../../../common/List";
-import TreeView from "../../../common/TreeView";
 import Dropzone from "./../../../common/Dropzone";
-import { updateObject } from "./../../../../utils/objectUtils";
 import { t, initT } from "../../../../utils/intl";
-import style from "./UploadDocuments.module.css";
 import { getElementSchema } from "./../../../../utils/validationUtils";
+import style from "./UploadDocuments.module.css";
 
 class UploadDocuments extends Form {
   state = {
     data: {
       labels: [],
+      parentId: null,
     },
     errors: {},
-    selectedElement: {},
     files: [],
   };
 
-  schema = getElementSchema(["labels"]);
+  schema = getElementSchema(["labels", "parentId"]);
 
   componentDidMount() {
     const { onInitForm, files } = this.props;
 
     const doSubmit = onInitForm(this.handleSubmit);
     this.doSubmit = () => {
-      let { data, selectedElement, files } = this.state;
-      data = updateObject(data, { parentId: selectedElement._id });
+      let { data, files } = this.state;
       return doSubmit(data, files);
     };
 
     this.setState({ files });
   }
-
-  handleSelect = (selectedElement) => {
-    this.setState({ selectedElement });
-  };
-
-  handleGetChildren = (parentId) => {
-    this.props.getChildren(parentId);
-  };
 
   handleFileDrop = (files) => {
     const mergeFiles = [...this.state.files];
@@ -60,8 +49,8 @@ class UploadDocuments extends Form {
   };
 
   render() {
-    const { elements } = this.props;
-    const { selectedElement, files } = this.state;
+    const { elements, getChildren } = this.props;
+    const { files } = this.state;
     initT(null, "uploadDocuments");
 
     return (
@@ -80,12 +69,13 @@ class UploadDocuments extends Form {
             </Row>
             <Row>
               <Col>
-                <TreeView
-                  selectedId={selectedElement._id}
-                  onSelect={this.handleSelect}
-                  getChildren={this.handleGetChildren}
+                <Form.TreeSelectGroup
+                  name="parentId"
+                  label={t("parentId")}
+                  getChildren={getChildren}
                   elements={elements}
                   onlyFolders={true}
+                  scope={this}
                 />
               </Col>
             </Row>
@@ -119,7 +109,7 @@ const mapStateToProps = ({ archive }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getChildren: (...params) => dispatch(actionCreators.getChildren(...params)),
+    getChildren: (parentId) => dispatch(actionCreators.getChildren(parentId)),
   };
 };
 

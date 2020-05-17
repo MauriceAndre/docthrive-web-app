@@ -13,7 +13,7 @@ class DetailsForm extends Form {
     errors: {},
   };
 
-  schema = getElementSchema();
+  schema = getElementSchema(["name", "labels"]);
 
   inputProps = {
     type: { readOnly: true },

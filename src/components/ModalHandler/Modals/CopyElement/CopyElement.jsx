@@ -1,50 +1,80 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
-import { Row, Col, Container } from "react-bootstrap";
-import TreeView from "../../../common/TreeView";
-import CopyElementForm from "./CopyElementForm";
-import { initT, useT, t } from "../../../../utils/intl";
+import { Row, Col } from "react-bootstrap";
+import Form from "../../../common/Form";
+import { getElementSchema } from "./../../../../utils/validationUtils";
+import { initT, t } from "../../../../utils/intl";
+import { mapping } from "../../../../utils/objectUtils";
 
-function CopyElement({
-  elements,
-  getChildren,
-  onSelectElement,
-  srcElement,
-  onInitForm,
-}) {
-  const [selectedElement, setSelectedElement] = useState({});
-
-  initT(useT(), "copyElement");
-
-  const handleSelect = (element) => {
-    onSelectElement(element);
-    setSelectedElement(element);
+class CopyElement extends Form {
+  state = {
+    data: {
+      name: "",
+      labels: [],
+      parentId: null,
+    },
+    errors: {},
   };
 
-  const handleGetChildren = (parentId) => {
-    getChildren(parentId);
-  };
+  schema = getElementSchema(["name", "labels", "parentId"]);
 
-  return (
-    <Container>
-      <Row className="d-flex justify-content-center">
-        <Col xs={12} md={6}>
-          <CopyElementForm srcElement={srcElement} onInitForm={onInitForm} />
-        </Col>
-        <Col xs={12} md={6}>
-          <div className="mb-2">{t("description")}:</div>
-          <TreeView
-            selectedId={selectedElement._id}
-            onSelect={handleSelect}
-            getChildren={handleGetChildren}
-            elements={elements}
-            onlyFolders={true}
-          />
-        </Col>
-      </Row>
-    </Container>
-  );
+  componentDidMount() {
+    const { srcElement, onInitForm } = this.props;
+
+    const doSubmit = onInitForm(this.handleSubmit);
+    this.doSubmit = () => doSubmit(this.state.data);
+
+    this.setState({ data: this.mapToViewModel(srcElement) });
+  }
+
+  mapToViewModel(element) {
+    return mapping(element, ["name", "labels"]);
+  }
+
+  render() {
+    const { elements, getChildren } = this.props;
+    initT(null, "elementForm");
+
+    return (
+      <Form.Container>
+        <Row>
+          <Col xs={12} lg={6}>
+            <Row>
+              <Col>
+                <Form.InputGroup
+                  key="name"
+                  name="name"
+                  label={t("name")}
+                  scope={this}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.LabelSelectGroup
+                  name="labels"
+                  label={t("labels")}
+                  multi
+                  scope={this}
+                />
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={12} lg={6}>
+            <Form.TreeSelectGroup
+              name="parentId"
+              label={t("parentId")}
+              getChildren={getChildren}
+              elements={elements}
+              onlyFolders={true}
+              scope={this}
+            />
+          </Col>
+        </Row>
+      </Form.Container>
+    );
+  }
 }
 
 const mapStateToProps = ({ archive }) => {

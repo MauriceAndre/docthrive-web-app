@@ -1,115 +1,11 @@
-import React, { Component } from "react";
 import Joi from "joi-browser";
-import { Form as BootstrapForm } from "react-bootstrap";
-import LabelsSelectComp from "../LabelSelect";
+import FormComponents from "./FormComponents";
 
-class Form extends Component {
+class Form extends FormComponents {
   state = {
     data: {},
     errors: {},
     wasValidated: false,
-  };
-
-  static Container = BootstrapForm;
-  static Row = BootstrapForm.Row;
-  static Group = BootstrapForm.Group;
-  static _Input = ({ name, label, scope, reference, ...rest }) => {
-    const { data } = scope.state;
-
-    return (
-      <BootstrapForm.Control
-        name={name}
-        value={data[name]}
-        placeholder={label}
-        onChange={scope.handleChange}
-        autoComplete="off"
-        ref={reference}
-        {...rest}
-      />
-    );
-  };
-  static Input = (props) => {
-    const { name, scope } = props;
-    const { errors } = scope.state;
-    const error = errors[name];
-    const Input = this._Input;
-
-    return (
-      <div>
-        <Input {...props} />
-        {error && (
-          <BootstrapForm.Text className="text-danger">
-            {error}
-          </BootstrapForm.Text>
-        )}
-      </div>
-    );
-  };
-  static InputGroup = (props) => {
-    const { name, scope, label } = props;
-    const { errors } = scope.state;
-    const error = errors[name];
-    const Input = this._Input;
-
-    return (
-      <BootstrapForm.Group controlId={name}>
-        <BootstrapForm.Label>{label}</BootstrapForm.Label>
-        <Input {...props} />
-        {error && (
-          <BootstrapForm.Text className="text-danger">
-            {error}
-          </BootstrapForm.Text>
-        )}
-      </BootstrapForm.Group>
-    );
-  };
-  static _LabelSelect = ({ name, label, scope, ...rest }) => {
-    const { data } = scope.state;
-
-    return (
-      <LabelsSelectComp
-        onChange={(option) =>
-          scope.handleChange({ currentTarget: { name, value: option } })
-        }
-        selectedOption={data[name]}
-        {...rest}
-      />
-    );
-  };
-  static LabelSelect = (props) => {
-    const { name, scope } = props;
-    const { errors } = scope.state;
-    const error = errors[name];
-    const LabelSelect = this._LabelSelect;
-
-    return (
-      <div>
-        <LabelSelect {...props} />
-        {error && (
-          <BootstrapForm.Text className="text-danger">
-            {error}
-          </BootstrapForm.Text>
-        )}
-      </div>
-    );
-  };
-  static LabelSelectGroup = (props) => {
-    const { name, scope, label } = props;
-    const { errors } = scope.state;
-    const error = errors[name];
-    const LabelSelect = this._LabelSelect;
-
-    return (
-      <BootstrapForm.Group controlId={name}>
-        <BootstrapForm.Label>{label}</BootstrapForm.Label>
-        <LabelSelect {...props} />
-        {error && (
-          <BootstrapForm.Text className="text-danger">
-            {error}
-          </BootstrapForm.Text>
-        )}
-      </BootstrapForm.Group>
-    );
   };
 
   validate = () => {
@@ -132,11 +28,16 @@ class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = this.validate();
+    let errors = this.validate();
     this.setState({ errors: errors || {}, wasValidated: true });
     if (errors) return false;
 
-    this.doSubmit();
+    errors = this.doSubmit();
+    if (errors) {
+      this.setState({ errors });
+      return false;
+    }
+
     return true;
   };
 

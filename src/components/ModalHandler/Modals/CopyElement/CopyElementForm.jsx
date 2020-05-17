@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+import * as actionCreators from "../../../../store/actions/index";
 import ElementForm from "./../../../common/ElementForm";
 import { mapping } from "./../../../../utils/objectUtils";
 
@@ -21,4 +23,16 @@ class CopyElementForm extends ElementForm {
   }
 }
 
-export default CopyElementForm;
+const mapStateToProps = ({ archive }) => {
+  return {
+    elements: archive.elements,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getChildren: (parentId) => dispatch(actionCreators.getChildren(parentId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CopyElementForm);

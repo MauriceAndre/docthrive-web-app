@@ -12,6 +12,7 @@ const schemas = {
       .required()
       .label("Name"),
     labels: Joi.array().label("Labels"),
+    parentId: Joi.string().required().label("Destination"),
   },
 };
 

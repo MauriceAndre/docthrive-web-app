@@ -1,40 +1,19 @@
-import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../../store/actions/index";
-import { Container } from "react-bootstrap";
-import { initT, useT, t } from "../../../../utils/intl";
-import TreeView from "../../../common/TreeView";
+import ElementForm from "./../../../common/ElementForm";
 
-function MoveElement({ elements, getChildren, onSelectElement }) {
-  const [selectedElement, setSelectedElement] = useState({});
+class MoveElement extends ElementForm {
+  componentDidMount() {
+    super.componentDidMount();
+    const { onInitForm } = this.props;
 
-  initT(useT(), "moveElement");
+    const doSubmit = onInitForm(this.handleSubmit);
+    this.doSubmit = () => doSubmit(this.state.data);
+  }
 
-  const handleSelect = (element) => {
-    onSelectElement(element);
-    setSelectedElement(element);
-  };
-
-  const handleGetChildren = (parentId) => {
-    getChildren(parentId);
-  };
-
-  return (
-    <Container>
-      <div className="d-flex justify-content-center">
-        <div className="w-100">
-          <div className="mb-2">{t("description")}:</div>
-          <TreeView
-            selectedId={selectedElement._id}
-            onSelect={handleSelect}
-            getChildren={handleGetChildren}
-            elements={elements}
-            onlyFolders={true}
-          />
-        </div>
-      </div>
-    </Container>
-  );
+  render() {
+    return super.render();
+  }
 }
 
 const mapStateToProps = ({ archive }) => {
