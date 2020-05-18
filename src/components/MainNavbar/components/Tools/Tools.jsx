@@ -18,13 +18,13 @@ function Tools() {
         <UploadButton />
       </Col>
       <Col xs={2} md={3} lg={2} className="mb-2 my-md-0">
-        <Button variant="outline-dark" size="sm" type="submit">
+        <Button variant="outline-dark" size="sm" type="submit" disabled>
           <Icon name="bell" />
         </Button>
       </Col>
       <Col xs={2} md={3} lg={2} className="mb-2 my-md-0">
         <Dropdown alignRight>
-          <Dropdown.Toggle size="sm">
+          <Dropdown.Toggle size="sm" disabled>
             <Icon name="plus" />
           </Dropdown.Toggle>
           <Dropdown.Menu className="text-center">
