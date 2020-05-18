@@ -36,9 +36,7 @@ export const getTools = (element) => {
     {
       key: "delete",
       text: t("delete"),
-      icon: {
-        className: "fas fa-trash-alt",
-      },
+      icon: "trash-alt",
       onClick: () => setModal(deleteElement(element)),
       isDisabled: isRoot(element),
     },

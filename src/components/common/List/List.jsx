@@ -40,7 +40,7 @@ function List({ items, mapItem, onRemove, ...rest }) {
               <div
                 className={join(["position-absolute", style["delete-icon"]])}
               >
-                <Icon className="fas fa-trash-alt" />
+                <Icon name="trash-alt" />
               </div>
               <div
                 className={join(["rounded-right", style["delete-bg"]])}

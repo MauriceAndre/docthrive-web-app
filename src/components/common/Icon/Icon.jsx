@@ -1,14 +1,10 @@
 import React from "react";
-import FontAwesome from "react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 
 function Icon({ name, text, left, right, ...rest }) {
   let content = [
-    name ? (
-      <FontAwesome key={"icon"} name={name} {...rest} />
-    ) : (
-      <span {...rest}></span>
-    ),
+    <FontAwesomeIcon key="icon" icon={name} {...rest} />,
     " ",
     <span key={"text"}>{text}</span>,
   ];
