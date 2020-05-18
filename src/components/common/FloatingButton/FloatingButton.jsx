@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
+import FloatingGroupComp from "./FloatingGroup";
 import Icon from "./../Icon";
 import { join } from "./../../../utils/arrayUtils";
 import { generateKey } from "./../../../utils/componentUtils";
@@ -57,3 +58,5 @@ FloatingButton.propTypes = {
 };
 
 export default FloatingButton;
+
+export const FloatingGroup = FloatingGroupComp;
