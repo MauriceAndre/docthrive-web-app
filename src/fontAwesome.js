@@ -37,6 +37,7 @@ const rest = [
   solid.faCheck,
   solid.faExpandAlt,
   solid.faInfoCircle,
+  solid.faTimes,
 ];
 
 library.add(...elementTypes, ...tools, ...views, ...rest);

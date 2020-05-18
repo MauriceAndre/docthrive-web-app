@@ -80,6 +80,7 @@
     "updatedAt": "Geändert am",
     "edit": "bearbeiten",
     "save": "speichern",
+    "cancel": "abbrechen",
     "feedback": {
       "succ": "Details erfolgreich gespeichert"
     }

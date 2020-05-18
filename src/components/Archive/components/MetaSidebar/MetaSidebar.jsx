@@ -29,6 +29,8 @@ function MetaSidebar({ element, updateElement }) {
     setEditing(!editing);
   };
 
+  const handleCancelClick = () => setEditing(false);
+
   const doSubmit = (data) => {
     const uElement = updateObject(refElement.current, data);
     updateElement(uElement);
@@ -49,7 +51,8 @@ function MetaSidebar({ element, updateElement }) {
         props: {
           edit: editing,
           element: currElement,
-          onEditClick: handleEditClick,
+          onEdit: handleEditClick,
+          onCancel: handleCancelClick,
           doSubmit,
         },
       },

@@ -3,7 +3,11 @@ import { isObject } from "./objectUtils";
 import { isString } from "./stringUtils";
 
 export const join = function (arr) {
-  return _.compact(arr).join(" ");
+  return compact(arr).join(" ");
+};
+
+export const compact = function (arr) {
+  return _.compact(arr);
 };
 
 export const isArray = function (arr) {
