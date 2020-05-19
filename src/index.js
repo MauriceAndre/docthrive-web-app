@@ -7,8 +7,8 @@ import store from "./store";
 import "./i18n";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
+import "./main.scss";
 import "./index.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./fontAwesome";
 
 ReactDOM.render(
