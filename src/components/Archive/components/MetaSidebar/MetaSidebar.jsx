@@ -33,7 +33,7 @@ function MetaSidebar({ element, updateElement }) {
 
   const doSubmit = (data) => {
     const uElement = updateObject(refElement.current, data);
-    updateElement(uElement);
+    updateElement(uElement, refElement);
     setCurrElement(uElement);
     feedback.action(
       t("elementDetails.feedback.succ", {
@@ -109,8 +109,8 @@ function MetaSidebar({ element, updateElement }) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateElement: (element) =>
-      dispatch(actionCreators.updateElement(element._id, element)),
+    updateElement: (element, oldElement) =>
+      dispatch(actionCreators.updateElement(element._id, element, oldElement)),
   };
 };
 

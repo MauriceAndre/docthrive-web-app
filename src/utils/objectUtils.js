@@ -13,6 +13,14 @@ export function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
+export function isPromise(obj) {
+  return obj instanceof Promise;
+}
+
+export function isAsyncFunc(obj) {
+  return obj.constructor.name === "AsyncFunction";
+}
+
 export function format(obj, pattern, options) {
   const { allKeys } = options;
 

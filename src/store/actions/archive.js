@@ -8,6 +8,7 @@ import { updateObject } from "./../../utils/objectUtils";
 import * as elementUtils from "./../../utils/elementUtils";
 import { funcIteration } from "../../utils/arrayUtils";
 import * as historyUtils from "./../../utils/historyUtils";
+import { trycatch } from "./../../utils/errorHandler";
 
 const availableParents = [];
 
@@ -31,7 +32,16 @@ export const createElement = (data) => {
   return async (dispatch) => {
     const element = elementUtils.createElement(data);
     dispatch(addElement(element, false));
-    await elementService.saveElement(element);
+
+    // send request to server and update view
+    trycatch({
+      try: async () => {
+        const res = await elementService.createElement(element);
+        const resElement = res.data;
+        dispatch(updateElementInStore(element._id, resElement, true));
+      },
+      catch: () => dispatch(deleteElementInStore(element)),
+    });
   };
 };
 
@@ -43,18 +53,36 @@ export const createFolder = (data) => {
   return createElement(data);
 };
 
-export const updateElement = (id, element) => {
+export const updateElementInStore = (id, element, populate) => {
   return {
     type: actionTypes.UPDATE_ELEMENT,
     id,
     element,
+    populate,
+  };
+};
+
+export const updateElement = (id, element, oldElement) => {
+  return async (dispatch) => {
+    dispatch(updateElementInStore(id, element));
+
+    trycatch({
+      try: async () => {
+        const res = await elementService.updateElement(element);
+        const resElement = res.data;
+        dispatch(updateElementInStore(id, resElement, true));
+      },
+      catch: () => {
+        dispatch(updateElementInStore(id, oldElement));
+      },
+    });
   };
 };
 
 export const moveElement = (element, parentId) => {
   return async (dispatch) => {
     element = updateObject(element, { parentId });
-    dispatch(updateElement(element._id, element));
+    dispatch(updateElementInStore(element._id, element));
     // TODO: await server call
   };
 };
@@ -67,7 +95,7 @@ export const copyElement = (element, newParentId) => {
   };
 };
 
-export const storeDeletedElement = (element) => {
+export const deleteElementInStore = (element) => {
   return {
     type: actionTypes.DELETE_ELEMENT,
     element,
@@ -77,8 +105,17 @@ export const storeDeletedElement = (element) => {
 export const deleteElement = (element) => {
   return async (dispatch) => {
     element = updateObject(element, { deleted: true });
-    dispatch(storeDeletedElement(element));
-    // TODO: await server call
+    dispatch(deleteElementInStore(element));
+
+    trycatch({
+      try: async () => {
+        await elementService.deleteElement(element._id);
+      },
+      catch: () => {
+        element = updateObject(element, { deleted: false });
+        dispatch(addElement(element));
+      },
+    });
   };
 };
 
@@ -101,8 +138,13 @@ export const getChildren = (parentId) => {
   if (!availableParents.includes(parentId)) {
     addAvailableParent(parentId);
     return async (dispatch) => {
-      const children = await elementService.getChildren(parentId);
-      dispatch(addElements(children, true));
+      trycatch({
+        try: async () => {
+          const res = await elementService.getChildren(parentId);
+          const children = res.data;
+          dispatch(addElements(children, true));
+        },
+      });
     };
   }
   return { type: actionTypes.CANCEL };

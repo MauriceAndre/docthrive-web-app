@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { t } from "./intl";
-import { formatToDate } from "./dateUtils";
+import { formatToDateTime } from "./dateUtils";
 import { isArray, isStringArray } from "./arrayUtils";
 import * as objectUtils from "./objectUtils";
 import * as fileUtils from "./fileUtils";
@@ -166,12 +166,12 @@ const formatPattern = [
   },
   {
     key: "createdAt",
-    format: formatToDate,
+    format: formatToDateTime,
     type: "date",
   },
   {
     key: "updatedAt",
-    format: formatToDate,
+    format: formatToDateTime,
     type: "date",
   },
 ];

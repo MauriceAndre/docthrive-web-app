@@ -155,11 +155,13 @@ export const renameElement = (element) => {
   initT(null, "renameElement");
 
   const doSubmit = (data) => {
-    element = updateObject(element, data);
-    store.dispatch(actionCreators.updateElement(element._id, element));
+    const uElement = updateObject(element, data);
+    store.dispatch(
+      actionCreators.updateElement(uElement._id, uElement, element)
+    );
     showModal(false);
     feedback.action(
-      t("renameElement.feedback.succ", { data: element, useNamespace: false }),
+      t("renameElement.feedback.succ", { data: uElement, useNamespace: false }),
       feedback.TYPE.SUCCESS
     );
   };

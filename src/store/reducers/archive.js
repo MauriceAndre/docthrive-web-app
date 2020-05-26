@@ -15,20 +15,23 @@ const initialState = {
   contentSorting: config.default.contentSorting,
 };
 
-const addElements = (state, { elements, populate }) => {
+const populateElement = function (element, state) {
   const dataset = { labels: state.labels, type: state.elementTypes };
+  return elementUtils.populate(element, dataset);
+};
 
+const addElements = (state, { elements, populate }) => {
   if (populate) {
-    elements = elements.map((element) =>
-      elementUtils.populate(element, dataset)
-    );
+    elements = elements.map((element) => populateElement(element, state));
   }
 
   elements = [...state.elements, ...elements];
   return updateObject(state, { elements });
 };
 
-const updateElement = (state, { id, element }) => {
+const updateElement = (state, { id, element, populate }) => {
+  if (populate) element = populateElement(element, state);
+
   const elements = elementUtils.replaceById(id, element, state.elements);
   const props = { elements };
 

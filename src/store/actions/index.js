@@ -4,6 +4,7 @@ export {
   createElement,
   createFolder,
   updateElement,
+  updateElementInStore,
   moveElement,
   copyElement,
   deleteElement,
