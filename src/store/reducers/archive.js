@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as actionTypes from "../actions/actionTypes";
 import * as elementUtils from "./../../utils/elementUtils";
 import { updateObject } from "./../../utils/objectUtils";
@@ -21,11 +22,20 @@ const populateElement = function (element, state) {
 };
 
 const addElements = (state, { elements, populate }) => {
-  if (populate) {
-    elements = elements.map((element) => populateElement(element, state));
+  const stateElements = [...state.elements];
+  const newElements = populate ? [] : [...elements];
+
+  for (let element of elements) {
+    if (populate) {
+      newElements.push(populateElement(element, state));
+    }
+
+    // prevent duplicates
+    var index = _.findIndex(stateElements, { _id: element._id });
+    if (index > -1) stateElements.splice(index, 1);
   }
 
-  elements = [...state.elements, ...elements];
+  elements = [...stateElements, ...newElements];
   return updateObject(state, { elements });
 };
 

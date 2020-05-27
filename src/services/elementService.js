@@ -36,12 +36,6 @@ export async function getAllElements() {
   return await http.get(apiEndpoint);
 }
 
-// function findElement(id, children, child) {}
-
-export async function getElement(id) {
-  // return findElement(id, )
-}
-
 export async function getChildren(parentId) {
   return await http.get(apiEndpoint, {
     params: { parentId },
