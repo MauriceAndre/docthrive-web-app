@@ -80,18 +80,16 @@ export const updateElement = (id, element, oldElement) => {
 };
 
 export const moveElement = (element, parentId) => {
-  return async (dispatch) => {
-    element = updateObject(element, { parentId });
-    dispatch(updateElementInStore(element._id, element));
-    // TODO: await server call
+  return (dispatch) => {
+    const uElement = updateObject(element, { parentId });
+    dispatch(updateElement(element._id, uElement, element));
   };
 };
 
 export const copyElement = (element, newParentId) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     const newElement = elementUtils.copyElement(element, newParentId);
-    dispatch(addElement(newElement, false));
-    // TODO: await server call
+    dispatch(createElement(newElement));
   };
 };
 
