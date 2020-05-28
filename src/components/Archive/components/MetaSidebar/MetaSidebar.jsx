@@ -9,10 +9,11 @@ import { updateObject } from "./../../../../utils/objectUtils";
 import * as feedback from "./../../../../utils/feedback";
 import config from "./../../../../services/configService";
 import "./MetaSidebar.css";
+import { findById } from "../../../../utils/elementUtils";
 
 const defaultTabKey = config.default.metaSidebar.tabKey;
 
-function MetaSidebar({ element, updateElement }) {
+function MetaSidebar({ element, elements, updateElement }) {
   initT(useT(), "metaSidebar");
   const [tabKey, setTabKey] = useState(defaultTabKey);
   const [editing, setEditing] = useState(false);
@@ -20,9 +21,15 @@ function MetaSidebar({ element, updateElement }) {
   const refElement = useRef(element);
 
   useEffect(() => {
-    refElement.current = element;
-    setCurrElement(element);
-  }, [element]);
+    let tempElement = element;
+    const stateElement = findById(element._id, elements);
+    if (element !== stateElement) tempElement = stateElement;
+
+    if (refElement.current !== tempElement) {
+      refElement.current = tempElement;
+      setCurrElement(tempElement);
+    }
+  }, [element, elements]);
 
   const handleEditClick = () => {
     setTabKey(defaultTabKey);
@@ -33,7 +40,7 @@ function MetaSidebar({ element, updateElement }) {
 
   const doSubmit = (data) => {
     const uElement = updateObject(refElement.current, data);
-    updateElement(uElement, refElement);
+    updateElement(uElement, refElement.current);
     setCurrElement(uElement);
     feedback.action(
       t("elementDetails.feedback.succ", {
@@ -107,6 +114,12 @@ function MetaSidebar({ element, updateElement }) {
   );
 }
 
+const mapStateToProps = ({ archive }) => {
+  return {
+    elements: archive.elements,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     updateElement: (element, oldElement) =>
@@ -114,4 +127,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(MetaSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(MetaSidebar);

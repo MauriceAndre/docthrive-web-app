@@ -7,6 +7,7 @@ import Icon from "./../../../common/Icon";
 import { join } from "./../../../../utils/arrayUtils";
 import { getPath, isRoot } from "./../../../../utils/elementUtils";
 import { getArchiveElementPath } from "./../../../../utils/historyUtils";
+import { generateKey } from "./../../../../utils/componentUtils";
 import style from "./BreadcrumbBar.module.css";
 import "./BreadcrumbBar.css";
 
@@ -34,7 +35,7 @@ function BreadcrumbBar({ selectedElement, elements, setSelectedElement }) {
       <Breadcrumb className={style.breadcrumb}>
         {path.map(({ _id, name }, idx) => (
           <Breadcrumb.Item
-            key={_id}
+            key={generateKey(_id, "item", true)}
             linkAs={Link}
             linkProps={{ to: getArchiveElementPath(_id) }}
             active={path.length - 1 === idx}

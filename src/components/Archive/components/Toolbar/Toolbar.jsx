@@ -55,7 +55,7 @@ const Toolbar = (props) => {
 
             if (component) {
               const Component = component;
-              component = <Component />;
+              component = <Component key={key} />;
             } else {
               component = (
                 <Dropdown.Item

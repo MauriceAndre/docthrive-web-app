@@ -25,6 +25,7 @@ const ElementDetails = ({ element, edit, doSubmit, onEdit, onCancel }) => {
 
   let buttons = [
     <FloatingButton
+      key="submit"
       text={edit ? t("save") : t("edit")}
       variant={edit ? "success" : ""}
       icon={edit ? "check" : "pen"}
@@ -38,6 +39,7 @@ const ElementDetails = ({ element, edit, doSubmit, onEdit, onCancel }) => {
     />,
     edit && (
       <FloatingButton
+        key="cancel"
         text={t("cancel")}
         variant={"danger"}
         icon={"times"}
@@ -60,7 +62,7 @@ const ElementDetails = ({ element, edit, doSubmit, onEdit, onCancel }) => {
 };
 
 ElementDetails.propTypes = {
-  selectedElement: PropTypes.object.isRequired,
+  element: PropTypes.object.isRequired,
   edit: PropTypes.bool.isRequired,
   onEdit: PropTypes.func.isRequired,
 };

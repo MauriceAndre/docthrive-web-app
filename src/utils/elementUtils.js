@@ -168,11 +168,13 @@ const formatPattern = [
     key: "createdAt",
     format: formatToDateTime,
     type: "date",
+    emptyValue: "-",
   },
   {
     key: "updatedAt",
     format: formatToDateTime,
     type: "date",
+    emptyValue: "-",
   },
 ];
 

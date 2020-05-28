@@ -27,7 +27,7 @@ export default function ({
           { key: "type._id", text: t("sort.options.type") },
           { key: "name", text: t("sort.options.name") },
           { key: "createdAt", text: t("sort.options.date") },
-          { component: Dropdown.Divider },
+          { key: "divider", component: Dropdown.Divider },
           {
             key: "asc",
             text: t("sort.options.asc"),

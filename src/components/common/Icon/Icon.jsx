@@ -9,6 +9,8 @@ function Icon({ name, text, left, right, ...rest }) {
     <span key={"text"}>{text}</span>,
   ];
 
+  if (!name) content.splice(0, 2);
+
   if (text) {
     content = left ? content.reverse() : content;
   } else {

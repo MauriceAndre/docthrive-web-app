@@ -45,7 +45,7 @@ const updateElement = (state, { id, element, populate }) => {
   const elements = elementUtils.replaceById(id, element, state.elements);
   const props = { elements };
 
-  if (id === state.selectedElement._id) {
+  if (elementUtils.isSelectedElement(id, state.selectedElement)) {
     props.selectedElement = element;
     titleUtils.setArchiveElement(element);
   }
@@ -89,7 +89,7 @@ const setWorkVersion = (state, { workVersion }) => {
     props.elements = elements;
 
     // update selectedElement
-    if (state.selectedElement._id === element._id)
+    if (elementUtils.isSelectedElement(element._id, state.selectedElement))
       props.selectedElement = element;
   }
 
