@@ -38,12 +38,12 @@ export async function getAllElements() {
 
 export async function getChildren(parentId) {
   return await http.get(apiEndpoint, {
-    params: { parentId },
+    params: { parentId, deleted: false },
   });
 }
 
 export async function deleteElement(id) {
-  return await http.delete(elementUrl(id));
+  return await http.put(elementUrl(id), { deleted: true });
 }
 
 export default { getAllElements, getChildren };
