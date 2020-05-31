@@ -22,3 +22,12 @@ export const getElementSchema = function (keys) {
 
   return schema;
 };
+
+export const applyOptions = function (type, options) {
+  for (let key in options) {
+    const value = options[key];
+    type = type[key](value);
+  }
+
+  return type;
+};
