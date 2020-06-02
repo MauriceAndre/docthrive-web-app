@@ -41,7 +41,7 @@ export function formatKey(obj, pattern, options) {
   const { key, format, emptyValue } = pattern;
   let value = obj[key];
 
-  if (format) value = format(value);
+  if (format && value) value = format(value);
 
   if (!ignoreEmptyValue && emptyValue && !value) value = emptyValue;
 

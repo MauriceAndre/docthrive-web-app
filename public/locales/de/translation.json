@@ -28,6 +28,19 @@
     "root": "Archiv",
     "folder": "Ordner"
   },
+  "register": {
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "password": "Password",
+    "confPassword": "Password bestätigen",
+    "return": "Zurück",
+    "submit": "Registrieren",
+    "register": "Registrierung",
+    "feedback": {
+      "succ": "Erfolgreich registriert! :D"
+    }
+  },
   "element": {
     "name": "Bezeichnung",
     "labels": "Etiketts"

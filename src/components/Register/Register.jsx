@@ -1,5 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
+import { withTranslation } from "react-i18next";
+import { initT, t } from "../../utils/intl";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from "../common/Form";
 import { getProps } from "./../../utils/objectUtils";
@@ -43,7 +45,10 @@ class Register extends Form {
       trycatch({
         try: async () => {
           user = await createUser(user);
-          feedback.form("You are registred! :D", feedback.TYPE.SUCCESS);
+          feedback.form(
+            t("register.feedback.succ", { useNamespace: false }),
+            feedback.TYPE.SUCCESS
+          );
 
           this.props.history.replace("/");
         },
@@ -56,38 +61,44 @@ class Register extends Form {
   };
 
   render() {
+    initT(this.props.t, "register");
+
     return (
       <Container
         fluid
         className="h-100 position-absolute"
         style={{ overflowY: "auto" }}
       >
-        <h1 className="text-center my-3">Register</h1>
-        <Row className="d-flex justify-content-center">
+        <h1 className="text-center mt-3">{t("register")}</h1>
+        <Row className="d-flex justify-content-center my-3">
           <Col sm={9} md={7} lg={5}>
             <Form.Container onSubmit={this.handleSubmit}>
               <Form.InputGroup
                 name="firstName"
-                label="First Name"
+                label={t("firstName")}
                 scope={this}
               />
-              <Form.InputGroup name="lastName" label="Last Name" scope={this} />
-              <Form.InputGroup name="email" label="Email" scope={this} />
+              <Form.InputGroup
+                name="lastName"
+                label={t("lastName")}
+                scope={this}
+              />
+              <Form.InputGroup name="email" label={t("email")} scope={this} />
               <Form.InputGroup
                 name="password"
-                label="Password"
+                label={t("password")}
                 type="password"
                 scope={this}
               />
               <Form.InputGroup
                 name="confPassword"
-                label="Re-enter Password"
+                label={t("confPassword")}
                 type="password"
                 scope={this}
               />
               <div className="d-flex justify-content-between">
-                <Button>Go Back</Button>
-                <Button type="submit">Submit</Button>
+                <Button>{t("return")}</Button>
+                <Button type="submit">{t("submit")}</Button>
               </div>
             </Form.Container>
           </Col>
@@ -97,4 +108,4 @@ class Register extends Form {
   }
 }
 
-export default Register;
+export default withTranslation()(Register);
