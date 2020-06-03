@@ -5,6 +5,7 @@ import NotFound from "../NotFound/NotFound";
 import Archive from "../Archive/Archive";
 import Register from "./../Register";
 import Login from "./../Login";
+import Logout from "./../Logout";
 
 const Routes = () => {
   return (
@@ -14,6 +15,7 @@ const Routes = () => {
       <Route path="/archive" component={Archive} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
+      <Route path="/logout" component={Logout} />
       <Route path="/" exact component={Archive} />
       <Redirect to="/not-found" />
     </Switch>
