@@ -6,17 +6,18 @@ import Archive from "../Archive/Archive";
 import Register from "./../Register";
 import Login from "./../Login";
 import Logout from "./../Logout";
+import ProtectedRoute from "./../common/ProtectedRoute";
 
 const Routes = () => {
   return (
     <Switch>
-      <Route path="/not-found" component={NotFound} />
-      <Route path="/archive/:id" component={Archive} />
-      <Route path="/archive" component={Archive} />
+      <ProtectedRoute path="/archive/:id" component={Archive} />
+      <ProtectedRoute path="/archive" component={Archive} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
-      <Route path="/" exact component={Archive} />
+      <Route path="/not-found" component={NotFound} />
+      <Redirect path="/" exact to="/archive" />
       <Redirect to="/not-found" />
     </Switch>
   );

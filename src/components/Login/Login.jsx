@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import * as actionCreators from "./../../store/actions/index";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from "../common/Form";
-import * as feedback from "../../utils/feedback";
 import { trycatch } from "./../../utils/errorHandler";
 import { login } from "../../services/authService";
 
@@ -28,10 +27,9 @@ class Login extends Form {
     trycatch({
       try: async () => {
         await login(email, password);
-        feedback.form("👋 Welcome back!", feedback.TYPE.SUCCESS);
 
         this.props.updateUser();
-        this.props.history.replace("/");
+        window.location = "/";
       },
     });
   };
