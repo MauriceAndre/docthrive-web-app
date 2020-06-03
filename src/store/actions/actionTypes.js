@@ -18,3 +18,6 @@ export const SET_CONTEXT_MENU = "SET_CONTEXT_MENU";
 export const SHOW_CONTEXT_MENU = "SHOW_CONTEXT_MENU";
 export const SET_SIDEBAR = "SET_SIDEBAR";
 export const SHOW_SIDEBAR = "SHOW_SIDEBAR";
+
+// User
+export const SET_USER = "SET_USER";

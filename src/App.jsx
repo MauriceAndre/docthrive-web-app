@@ -10,7 +10,9 @@ import SidebarHandler from "./components/SidebarHandler";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const App = ({ showContextMenu }) => {
+const App = ({ showContextMenu, updateUser }) => {
+  updateUser();
+
   return (
     <div
       className="App section flex-column"
@@ -32,6 +34,7 @@ const App = ({ showContextMenu }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showContextMenu: (show) => dispatch(actionCreators.showContextMenu(show)),
+    updateUser: () => dispatch(actionCreators.updateUser()),
   };
 };
 

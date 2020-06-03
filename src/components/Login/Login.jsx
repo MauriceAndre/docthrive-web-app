@@ -1,5 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
+import { connect } from "react-redux";
+import * as actionCreators from "./../../store/actions/index";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from "../common/Form";
 import * as feedback from "../../utils/feedback";
@@ -28,6 +30,7 @@ class Login extends Form {
         await login(email, password);
         feedback.form("👋 Welcome back!", feedback.TYPE.SUCCESS);
 
+        this.props.updateUser();
         this.props.history.replace("/");
       },
     });
@@ -63,4 +66,10 @@ class Login extends Form {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: () => dispatch(actionCreators.updateUser()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

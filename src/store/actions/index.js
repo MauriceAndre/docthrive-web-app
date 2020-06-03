@@ -30,4 +30,4 @@ export {
   setSidebar,
   showSidebar,
 } from "./app";
-export {} from "./user";
+export { setUser, updateUser, logoutUser } from "./user";
