@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import * as actionCreators from "./store/actions/index";
 import "./App.css"; // don't move!
 import Routes from "./components/Routes";
-import MainNavbar from "./components/MainNavbar/MainNavbar";
 import ModalHandler from "./components/ModalHandler";
 import ContextMenuHandler from "./components/ContextMenuHandler";
 import SidebarHandler from "./components/SidebarHandler";
@@ -19,7 +18,6 @@ const App = ({ showContextMenu, updateUser }) => {
       onClick={() => showContextMenu(false)}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <MainNavbar />
       <main className="section-wrapper section-fill">
         <Routes />
         <SidebarHandler />

@@ -145,7 +145,7 @@ export const getChildren = (parentId) => {
       });
     };
   }
-  return { type: actionTypes.CANCEL };
+  return async () => {};
 };
 
 export const setSelectedElement = (element) => {

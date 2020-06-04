@@ -29,7 +29,7 @@ class Login extends Form {
         await login(email, password);
 
         this.props.updateUser();
-        window.location = "/";
+        window.location = "/archive";
       },
     });
   };
