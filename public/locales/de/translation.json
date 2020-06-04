@@ -41,6 +41,11 @@
       "succ": "Erfolgreich registriert! :D"
     }
   },
+  "login": {
+    "email": "E-Mail",
+    "password": "Password",
+    "submit": "Anmelden"
+  },
   "element": {
     "name": "Bezeichnung",
     "labels": "Etiketts"
