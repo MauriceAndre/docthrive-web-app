@@ -5,11 +5,14 @@ import Icon from "../../../common/Icon";
 import { format } from "../../../../utils/elementUtils";
 import { generateKey } from "../../../../utils/componentUtils";
 import style from "./FolderList.module.css";
+import DataTableLoader from "../../../common/CustomLoader/DataTableLoader";
 
-function FolderListView({ elements, onSelectElement, onContextMenu }) {
+function FolderListView({ elements, loading, onSelectElement, onContextMenu }) {
   initT(useT(), "folderListView");
 
-  return (
+  return loading ? (
+    <DataTableLoader className="pl-2" />
+  ) : (
     <Table size="sm" striped hover responsive className={style.table}>
       <thead className={style.header}>
         <tr>
