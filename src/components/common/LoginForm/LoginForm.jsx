@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import * as actionCreators from "./../../../store/actions/index";
 import { Button } from "react-bootstrap";
 import Form from "../Form";
-import { trycatch } from "./../../../utils/errorHandler";
+import Loader from "./../Loader";
+import { handleCatch } from "./../../../utils/errorHandler";
 import { login } from "../../../services/authService";
 
 class Login extends Form {
@@ -16,6 +17,7 @@ class Login extends Form {
       password: "",
     },
     errors: {},
+    loading: false,
   };
 
   schema = {
@@ -26,32 +28,42 @@ class Login extends Form {
   doSubmit = () => {
     const { email, password } = this.state.data;
 
-    trycatch({
-      try: async () => {
-        await login(email, password);
+    const exec = async () => {
+      this.setState({ loading: true });
+      await login(email, password);
 
-        this.props.updateUser();
-        window.location = "/archive";
-      },
+      this.props.updateUser();
+      window.location = "/archive";
+    };
+
+    exec().catch((ex) => {
+      handleCatch(ex);
+      this.setState({ loading: false });
     });
   };
 
   render() {
+    const { loading } = this.state;
+    const { className, title } = this.props;
     initT(this.props.t, "login");
 
     return (
-      <Form.Container onSubmit={this.handleSubmit}>
-        <Form.InputGroup name="email" label={t("email")} scope={this} />
-        <Form.InputGroup
-          name="password"
-          label={t("password")}
-          type="password"
-          scope={this}
-        />
-        <div className="d-flex justify-content-end">
-          <Button type="submit">{t("submit")}</Button>
-        </div>
-      </Form.Container>
+      <div className={className}>
+        {loading && <Loader />}
+        {title && <h1 className="text-center">{t("login")}</h1>}
+        <Form.Container onSubmit={this.handleSubmit}>
+          <Form.InputGroup name="email" label={t("email")} scope={this} />
+          <Form.InputGroup
+            name="password"
+            label={t("password")}
+            type="password"
+            scope={this}
+          />
+          <div className="d-flex justify-content-end">
+            <Button type="submit">{t("submit")}</Button>
+          </div>
+        </Form.Container>
+      </div>
     );
   }
 }

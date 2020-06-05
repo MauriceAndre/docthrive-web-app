@@ -42,6 +42,7 @@
     }
   },
   "login": {
+    "login": "Anmeldung",
     "email": "E-Mail",
     "password": "Password",
     "submit": "Anmelden"

@@ -4,9 +4,10 @@ import { withTranslation } from "react-i18next";
 import { initT, t } from "../../../utils/intl";
 import { Button } from "react-bootstrap";
 import Form from "../Form";
+import Loader from "./../Loader";
 import { getProps } from "./../../../utils/objectUtils";
 import { createUser } from "../../../services/userService";
-import { trycatch } from "./../../../utils/errorHandler";
+import { handleCatch } from "./../../../utils/errorHandler";
 import * as feedback from "../../../utils/feedback";
 import config from "./../../../services/configService";
 import { applyOptions } from "../../../utils/validationUtils";
@@ -23,6 +24,7 @@ class Register extends Form {
       confPassword: "",
     },
     errors: {},
+    loading: false,
   };
 
   schema = {
@@ -42,16 +44,20 @@ class Register extends Form {
 
     if (password === confPassword) {
       let user = getProps(data, ["firstName", "lastName", "email", "password"]);
-      trycatch({
-        try: async () => {
-          user = await createUser(user);
-          feedback.form(
-            t("register.feedback.succ", { useNamespace: false }),
-            feedback.TYPE.SUCCESS
-          );
 
-          this.props.history.replace("/");
-        },
+      const exec = async () => {
+        this.setState({ loading: true });
+        user = await createUser(user);
+        feedback.form(
+          t("register.feedback.succ", { useNamespace: false }),
+          feedback.TYPE.SUCCESS
+        );
+
+        this.props.history.replace("/");
+      };
+      exec().catch((ex) => {
+        handleCatch(ex);
+        this.setState({ loading: false });
       });
 
       return;
@@ -61,30 +67,40 @@ class Register extends Form {
   };
 
   render() {
+    const { loading } = this.state;
+    const { className, title } = this.props;
     initT(this.props.t, "register");
 
     return (
-      <Form.Container onSubmit={this.handleSubmit}>
-        <Form.InputGroup name="firstName" label={t("firstName")} scope={this} />
-        <Form.InputGroup name="lastName" label={t("lastName")} scope={this} />
-        <Form.InputGroup name="email" label={t("email")} scope={this} />
-        <Form.InputGroup
-          name="password"
-          label={t("password")}
-          type="password"
-          scope={this}
-        />
-        <Form.InputGroup
-          name="confPassword"
-          label={t("confPassword")}
-          type="password"
-          scope={this}
-        />
-        <div className="d-flex justify-content-end">
-          {/* <Button>{t("return")}</Button> */}
-          <Button type="submit">{t("submit")}</Button>
-        </div>
-      </Form.Container>
+      <div className={className}>
+        {loading && <Loader />}
+        {title && <h1 className="text-center">{t("register")}</h1>}
+        <Form.Container onSubmit={this.handleSubmit}>
+          <Form.InputGroup
+            name="firstName"
+            label={t("firstName")}
+            scope={this}
+          />
+          <Form.InputGroup name="lastName" label={t("lastName")} scope={this} />
+          <Form.InputGroup name="email" label={t("email")} scope={this} />
+          <Form.InputGroup
+            name="password"
+            label={t("password")}
+            type="password"
+            scope={this}
+          />
+          <Form.InputGroup
+            name="confPassword"
+            label={t("confPassword")}
+            type="password"
+            scope={this}
+          />
+          <div className="d-flex justify-content-end">
+            {/* <Button>{t("return")}</Button> */}
+            <Button type="submit">{t("submit")}</Button>
+          </div>
+        </Form.Container>
+      </div>
     );
   }
 }
