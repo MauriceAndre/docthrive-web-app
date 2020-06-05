@@ -8,7 +8,7 @@ import { updateObject } from "./../../utils/objectUtils";
 import * as elementUtils from "./../../utils/elementUtils";
 import { funcIteration } from "../../utils/arrayUtils";
 import * as historyUtils from "./../../utils/historyUtils";
-import { trycatch } from "./../../utils/errorHandler";
+import { handleCatch } from "./../../utils/errorHandler";
 
 const availableParents = [];
 
@@ -34,14 +34,14 @@ export const createElement = (data) => {
     dispatch(addElement(element, false));
 
     // send request to server and update view
-    trycatch({
-      try: async () => {
-        const res = await elementService.createElement(element);
-        const resElement = res.data;
-        dispatch(updateElementInStore(element._id, resElement, true));
-      },
-      catch: () => dispatch(deleteElementInStore(element)),
-    });
+    try {
+      const res = await elementService.createElement(element);
+      const resElement = res.data;
+      dispatch(updateElementInStore(element._id, resElement, true));
+    } catch (ex) {
+      handleCatch(ex);
+      dispatch(deleteElementInStore(element));
+    }
   };
 };
 
@@ -66,16 +66,14 @@ export const updateElement = (id, element, oldElement) => {
   return async (dispatch) => {
     dispatch(updateElementInStore(id, element));
 
-    trycatch({
-      try: async () => {
-        const res = await elementService.updateElement(element);
-        const resElement = res.data;
-        dispatch(updateElementInStore(id, resElement, true));
-      },
-      catch: () => {
-        dispatch(updateElementInStore(id, oldElement));
-      },
-    });
+    try {
+      const res = await elementService.updateElement(element);
+      const resElement = res.data;
+      dispatch(updateElementInStore(id, resElement, true));
+    } catch (ex) {
+      handleCatch(ex);
+      dispatch(updateElementInStore(id, oldElement));
+    }
   };
 };
 
@@ -105,15 +103,13 @@ export const deleteElement = (element) => {
     element = updateObject(element, { deleted: true });
     dispatch(deleteElementInStore(element));
 
-    trycatch({
-      try: async () => {
-        await elementService.deleteElement(element._id);
-      },
-      catch: () => {
-        element = updateObject(element, { deleted: false });
-        dispatch(addElement(element));
-      },
-    });
+    try {
+      await elementService.deleteElement(element._id);
+    } catch (ex) {
+      handleCatch(ex);
+      element = updateObject(element, { deleted: false });
+      dispatch(addElement(element));
+    }
   };
 };
 
@@ -136,13 +132,13 @@ export const getChildren = (parentId) => {
   if (!availableParents.includes(parentId)) {
     addAvailableParent(parentId);
     return async (dispatch) => {
-      trycatch({
-        try: async () => {
-          const res = await elementService.getChildren(parentId);
-          const children = res.data;
-          dispatch(addElements(children, true));
-        },
-      });
+      try {
+        const res = await elementService.getChildren(parentId);
+        const children = res.data;
+        dispatch(addElements(children, true));
+      } catch (ex) {
+        handleCatch(ex);
+      }
     };
   }
   return async () => {};
