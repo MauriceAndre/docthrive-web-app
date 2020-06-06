@@ -14,8 +14,10 @@ const FolderContent = ({
   getChildren,
   view,
   sorting,
+  loadingId,
 }) => {
   const { _id } = element;
+  const loading = loadingId === _id;
 
   getChildren(_id);
   elements = findByParentId(_id, elements);
@@ -32,6 +34,7 @@ const FolderContent = ({
   const getView = function () {
     const props = {
       elements,
+      loading,
       onSelectElement,
       onContextMenu: handleContextMenu,
     };
@@ -61,6 +64,7 @@ const mapStateToProps = ({ archive }) => {
     elements: archive.elements,
     view: archive.contentView,
     sorting: archive.contentSorting,
+    loadingId: archive.loading,
   };
 };
 

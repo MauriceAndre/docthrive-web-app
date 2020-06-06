@@ -10,6 +10,7 @@ export const DELETE_ELEMENT = "DELETE_ELEMENT";
 export const SET_LABELS = "SET_LABELS";
 export const SET_CONTENT_VIEW = "SET_CONTENT_VIEW";
 export const SET_CONTENT_SORTING = "SET_CONTENT_SORTING";
+export const SET_LOADING = "SET_LOADING";
 
 // App
 export const SET_MODAL = "SET_MODAL";

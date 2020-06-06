@@ -133,15 +133,24 @@ export const getChildren = (parentId) => {
     addAvailableParent(parentId);
     return async (dispatch) => {
       try {
+        dispatch(setLoading(parentId));
         const res = await elementService.getChildren(parentId);
         const children = res.data;
         dispatch(addElements(children, true));
       } catch (ex) {
         handleCatch(ex);
       }
+      dispatch(setLoading(null));
     };
   }
   return async () => {};
+};
+
+export const setLoading = (id) => {
+  return {
+    type: actionTypes.SET_LOADING,
+    id,
+  };
 };
 
 export const setSelectedElement = (element) => {

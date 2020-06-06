@@ -7,6 +7,7 @@ import * as titleUtils from "../../utils/titleUtils";
 
 const initialState = {
   elements: [],
+  loading: null,
   deletedElements: [],
   selectedElement: {},
   workVersion: null,
@@ -64,6 +65,10 @@ const deleteElement = (state, { element }) => {
   return updateObject(state, props);
 };
 
+const setLoading = (state, { id }) => {
+  return updateObject(state, { loading: id });
+};
+
 const setSelectedElement = (state, { selectedElement }) => {
   titleUtils.setArchiveElement(selectedElement);
   return updateObject(state, { selectedElement });
@@ -118,6 +123,8 @@ const reducer = (state = initialState, action) => {
       return deleteElement(state, action);
     case actionTypes.SET_SELECTED_ELEMENT:
       return setSelectedElement(state, action);
+    case actionTypes.SET_LOADING:
+      return setLoading(state, action);
     case actionTypes.SET_ELEMENT_TYPES:
       return setElementTypes(state, action);
     case actionTypes.SET_WORK_VERSION:

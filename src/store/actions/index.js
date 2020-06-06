@@ -11,6 +11,7 @@ export {
   addAvailableParent,
   uploadDocuments,
   getChildren,
+  setLoading,
   setSelectedElement,
   setSelectedElementById,
   storeSelectedElement,

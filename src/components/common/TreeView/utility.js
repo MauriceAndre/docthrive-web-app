@@ -11,6 +11,7 @@ export function renderChild(element, scope) {
     elements,
     onlyFolders,
     onContextMenu,
+    loadingId,
   } = scope.props;
   let result;
   const props = {
@@ -28,6 +29,7 @@ export function renderChild(element, scope) {
         getChildren={getChildren}
         elements={elements}
         onlyFolders={onlyFolders}
+        loadingId={loadingId}
         {...props}
       />
     );

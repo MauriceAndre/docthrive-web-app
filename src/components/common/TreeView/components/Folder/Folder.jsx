@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Badge } from "react-bootstrap";
+import { Badge, Spinner } from "react-bootstrap";
 import Icon from "./../../../Icon";
 import { join } from "./../../../../../utils/arrayUtils";
 import { findByParentId } from "../../../../../utils/elementUtils";
@@ -29,10 +29,12 @@ class Folder extends Component {
       onSelect,
       elements,
       onContextMenu,
+      loadingId,
     } = this.props;
     const { _id, name, badge } = element;
     const type = expanded ? findExpand(element.type.name) : element.type;
     const isSelected = selectedId === _id;
+    const loading = loadingId === _id;
 
     const children = findByParentId(_id, elements);
 
@@ -63,6 +65,14 @@ class Folder extends Component {
               text={name}
               className={style["folder-icon"]}
             />
+            {loading && (
+              <Spinner
+                className="ml-1"
+                animation="border"
+                variant="secondary"
+                size="sm"
+              />
+            )}
             {badge && (
               <Badge variant="primary" className={style["folder-badge"]}>
                 {badge}
@@ -82,6 +92,7 @@ Folder.propTypes = {
   element: PropTypes.object.isRequired,
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
+  loadingId: PropTypes.number,
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,
   onContextMenu: PropTypes.func,

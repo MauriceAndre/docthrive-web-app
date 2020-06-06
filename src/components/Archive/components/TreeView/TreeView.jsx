@@ -10,6 +10,7 @@ const TreeView = ({
   onSelectElement,
   elements,
   getChildren,
+  loadingId,
 }) => {
   const handleGetChildren = (parentId) => {
     getChildren(parentId);
@@ -21,9 +22,10 @@ const TreeView = ({
   return (
     <Tree
       selectedId={selectedElement._id}
+      elements={elements}
+      loadingId={loadingId}
       onSelect={onSelectElement}
       getChildren={handleGetChildren}
-      elements={elements}
       onContextMenu={handleContextMenu}
     />
   );
@@ -33,6 +35,7 @@ const mapStateToProps = ({ archive }) => {
   return {
     selectedElement: archive.selectedElement,
     elements: archive.elements,
+    loadingId: archive.loading,
   };
 };
 

@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { Spinner } from "react-bootstrap";
+import Icon from "./../../../Icon";
 import { join } from "../../../../../utils/arrayUtils";
 import {
   findByParentId,
@@ -7,13 +9,20 @@ import {
 } from "../../../../../utils/elementUtils";
 import { renderChild } from "./../../utility";
 import style from "./../../TreeView.module.css";
-import Icon from "./../../../Icon/Icon";
 
 const Root = (props) => {
-  const { selectedId, onSelect, elements, getChildren, onContextMenu } = props;
+  const {
+    selectedId,
+    onSelect,
+    elements,
+    loadingId,
+    getChildren,
+    onContextMenu,
+  } = props;
   const rootElement = props.rootElement || getRootElement();
   const { _id, name, type } = rootElement;
   const isSelected = _id === selectedId;
+  const loading = loadingId === _id;
 
   useEffect(() => {
     getChildren(rootElement._id);
@@ -30,6 +39,14 @@ const Root = (props) => {
         className={join([style["root-li"], isSelected && style.selected])}
       >
         <Icon name={type.icon} text={name} />
+        {loading && (
+          <Spinner
+            className="ml-1"
+            animation="border"
+            variant="secondary"
+            size="sm"
+          />
+        )}
       </div>
       <ul>{children.map((child) => renderChild(child, { props }))}</ul>
     </li>
