@@ -11,11 +11,13 @@ import style from "./FolderGridView.module.css";
 const { maxChars, placeholder } = config.archive.views.grid;
 
 function FolderGridView({ elements, loading, onSelectElement, onContextMenu }) {
+  const loaderColumns = window.innerWidth < 1300 ? 2 : 3;
+
   return (
     <div className="w-100">
       <div className="d-flex flex-wrap">
         {loading ? (
-          <DataGridLoader />
+          <DataGridLoader columns={loaderColumns} />
         ) : (
           elements.map((element) => {
             const { name, _id, type } = element;
@@ -24,7 +26,7 @@ function FolderGridView({ elements, loading, onSelectElement, onContextMenu }) {
             return (
               <Card
                 key={_id}
-                className={join(["m-1", style.card])}
+                className={style.card}
                 onDoubleClick={() => onSelectElement(element)}
                 onContextMenu={(e) => onContextMenu(e, element)}
               >

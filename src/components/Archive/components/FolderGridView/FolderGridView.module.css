@@ -1,7 +1,14 @@
 .card {
   height: 3rem;
-  width: 12rem;
+  width: 48%;
+  margin: 1%;
   cursor: pointer;
+}
+
+@media (min-width: 1300px) {
+  .card {
+    width: 31%;
+  }
 }
 
 .card:hover {
