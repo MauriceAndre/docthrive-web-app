@@ -13,8 +13,8 @@ function ProfileDropdown() {
         <Icon name="user-circle" size="2x" />
       </Dropdown.Toggle>
       <Dropdown.Menu className="text-center">
-        <Dropdown.Item>{t("profile")}</Dropdown.Item>
-        <Dropdown.Item>{t("settings")}</Dropdown.Item>
+        <Dropdown.Item disabled>{t("profile")}</Dropdown.Item>
+        <Dropdown.Item disabled>{t("settings")}</Dropdown.Item>
         <Dropdown.Item as={Link} to="/logout">
           {t("logout")}
         </Dropdown.Item>

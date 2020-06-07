@@ -11,12 +11,28 @@ function Route({
 }) {
   if (Header || Footer) {
     rest.render = (props) => {
+      Header = Header && (
+        <div className="section-wrapper section-fill">
+          <Header />
+        </div>
+      );
+      Component = render ? render(props) : <Component {...props} />;
+      Footer = Footer && (
+        <div className="section-wrapper">
+          <Footer />
+        </div>
+      );
+
       const components = compact([
-        Header && <Header />,
-        render ? render(props) : <Component {...props} />,
-        Footer && <Footer />,
+        Header,
+        <div className="section-wrapper">{Component}</div>,
+        Footer,
       ]);
-      return <React.Fragment>{components}</React.Fragment>;
+      return (
+        <React.Fragment>
+          <div className="section section-column">{components}</div>
+        </React.Fragment>
+      );
     };
   } else if (Component || render) {
     rest.component = Component;
