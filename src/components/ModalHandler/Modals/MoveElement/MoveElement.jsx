@@ -19,6 +19,7 @@ class MoveElement extends ElementForm {
 const mapStateToProps = ({ archive }) => {
   return {
     elements: archive.elements,
+    loadingId: archive.loading,
   };
 };
 

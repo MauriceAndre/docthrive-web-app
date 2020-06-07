@@ -33,7 +33,7 @@ class CopyElement extends Form {
   }
 
   render() {
-    const { elements, getChildren } = this.props;
+    const { elements, getChildren, loadingId } = this.props;
     initT(null, "elementForm");
 
     return (
@@ -67,6 +67,7 @@ class CopyElement extends Form {
               label={t("parentId")}
               getChildren={getChildren}
               elements={elements}
+              loadingId={loadingId}
               onlyFolders={true}
               scope={this}
             />
@@ -80,6 +81,7 @@ class CopyElement extends Form {
 const mapStateToProps = ({ archive }) => {
   return {
     elements: archive.elements,
+    loadingId: archive.loading,
   };
 };
 

@@ -35,7 +35,7 @@ class ElementForm extends Form {
   }
 
   render() {
-    const { keys, getChildren, elements } = this.props;
+    const { keys, getChildren, elements, loadingId } = this.props;
     initT(null, "elementForm");
 
     let components = {
@@ -65,7 +65,8 @@ class ElementForm extends Form {
           name: "parentId",
           label: t("parentId"),
           getChildren,
-          elements: elements,
+          loadingId,
+          elements,
           onlyFolders: true,
           scope: this,
         },

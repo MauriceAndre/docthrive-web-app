@@ -49,7 +49,7 @@ class UploadDocuments extends Form {
   };
 
   render() {
-    const { elements, getChildren } = this.props;
+    const { elements, getChildren, loadingId } = this.props;
     const { files } = this.state;
     initT(null, "uploadDocuments");
 
@@ -74,6 +74,7 @@ class UploadDocuments extends Form {
                   label={t("parentId")}
                   getChildren={getChildren}
                   elements={elements}
+                  loadingId={loadingId}
                   onlyFolders={true}
                   scope={this}
                 />
@@ -104,6 +105,7 @@ class UploadDocuments extends Form {
 const mapStateToProps = ({ archive }) => {
   return {
     elements: archive.elements,
+    loadingId: archive.loading,
   };
 };
 
