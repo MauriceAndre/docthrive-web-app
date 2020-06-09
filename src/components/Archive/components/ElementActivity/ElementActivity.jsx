@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import _ from "lodash";
 import { Card } from "react-bootstrap";
 import Section from "../../../common/Section";
 import { initT, useT, t } from "../../../../utils/intl";
 import { mapToViewModel } from "./../../../../utils/elementActivityUtils";
 import { formatString } from "../../../../utils/templateUtils";
 import { isEmpty } from "./../../../../utils/arrayUtils";
+import { handleCatch } from "./../../../../utils/errorHandler";
 import { getElementActivities } from "../../../../services/elementActivityService";
 import style from "./ElementActivity.module.css";
 
@@ -13,8 +15,16 @@ const ElementActivity = ({ element, isTabSelected }) => {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    const getActivites = async () =>
-      setActivities(await getElementActivities(element._id));
+    const getActivites = async () => {
+      try {
+        const res = await getElementActivities(element._id);
+        const activities = _.orderBy(res.data, ["createdAt"], ["desc"]);
+
+        setActivities(activities);
+      } catch (ex) {
+        handleCatch(ex);
+      }
+    };
 
     if (isTabSelected) getActivites();
   }, [element, isTabSelected]);
