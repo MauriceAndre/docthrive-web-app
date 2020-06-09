@@ -56,7 +56,7 @@ const Root = (props) => {
 Root.propTypes = {
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
-  loadingId: PropTypes.number,
+  loadingId: PropTypes.string,
   rootElement: PropTypes.object,
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,

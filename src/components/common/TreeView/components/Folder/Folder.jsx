@@ -92,7 +92,7 @@ Folder.propTypes = {
   element: PropTypes.object.isRequired,
   getChildren: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
-  loadingId: PropTypes.number,
+  loadingId: PropTypes.string,
   selectedId: PropTypes.string,
   onSelect: PropTypes.func,
   onContextMenu: PropTypes.func,
