@@ -9,7 +9,7 @@ import { updateObject } from "./../../../../utils/objectUtils";
 import * as feedback from "./../../../../utils/feedback";
 import config from "./../../../../services/configService";
 import "./MetaSidebar.css";
-import { findById } from "../../../../utils/elementUtils";
+import { findById, isRoot } from "../../../../utils/elementUtils";
 
 const defaultTabKey = config.default.metaSidebar.tabKey;
 
@@ -75,7 +75,7 @@ function MetaSidebar({ element, elements, updateElement }) {
         },
       },
       title: t("activities"),
-      disabled: editing,
+      disabled: editing || isRoot(currElement),
       className: "section-content",
     },
   ];
