@@ -12,9 +12,9 @@ export const mapToViewModel = ({ _id, action, createdAt }) => {
   };
 };
 
-export const formatAction = ({ name, params }) => {
+export const formatAction = ({ name, before, after }) => {
   const key = `elementActions.${name}`;
-  const options = { data: params };
+  const options = { data: { before, after } };
 
   initT(null, key);
 

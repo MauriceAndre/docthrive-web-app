@@ -6,7 +6,7 @@
     },
     "RENAME": {
       "title": "Umbennant",
-      "text": "Sie haben das Element von <% strong {{name.before}} %> zu <% strong {{name.after}} %> umbenannt."
+      "text": "Sie haben das Element von <% strong {{before.name}} %> zu <% strong {{after.name}} %> umbenannt."
     },
     "EDIT_META": {
       "title": "Details bearbeitet",
@@ -14,7 +14,7 @@
     },
     "MOVE": {
       "title": "Verschoben",
-      "text": "Sie haben das Element von <% strong {{from.path}} %> nach <% strong {{to.path}} %> verschoben."
+      "text": "Sie haben das Element von <% strong {{before.parentId}} %> nach <% strong {{after.parentId}} %> verschoben."
     },
     "DELETE": {
       "title": "Gelöscht",
