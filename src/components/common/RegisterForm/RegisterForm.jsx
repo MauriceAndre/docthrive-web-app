@@ -52,8 +52,6 @@ class Register extends Form {
           t("register.feedback.succ", { useNamespace: false }),
           feedback.TYPE.SUCCESS
         );
-
-        this.props.history.replace("/");
       };
       exec().catch((ex) => {
         handleCatch(ex);

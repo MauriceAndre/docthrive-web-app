@@ -1,17 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
+import Loader from "./../../../common/Loader";
 import FolderContent from "./../FolderContent";
 import DocumentContent from "./../DocumentContent";
-import { isFolder } from "./../../../../utils/elementUtils";
-
+import { isFolder, isDocument } from "./../../../../utils/elementUtils";
 const MainContent = ({ selectedElement }) => {
-  return (
-    <div className="section-content unselectable">
-      {(isFolder(selectedElement) && (
-        <FolderContent element={selectedElement} />
-      )) || <DocumentContent element={selectedElement} />}
-    </div>
-  );
+  let content = null;
+
+  if (isFolder(selectedElement)) {
+    content = <FolderContent element={selectedElement} />;
+  } else if (isDocument(selectedElement)) {
+    content = <DocumentContent element={selectedElement} />;
+  } else {
+    content = <Loader />;
+  }
+
+  return <div className="section-content unselectable">{content}</div>;
 };
 
 const mapStateToProps = ({ archive }) => {
