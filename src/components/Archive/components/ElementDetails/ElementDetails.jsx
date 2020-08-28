@@ -1,92 +1,76 @@
-import React, { Component } from "react";
-import { Container, Col, Row, Form } from "react-bootstrap";
-import { formatToDate } from "../../../../utils/dateUtils";
-import { initT, t } from "../../../../utils/intl";
-import { withTranslation } from "react-i18next";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Container } from "react-bootstrap";
+import FloatingButton, {
+  FloatingGroup,
+} from "./../../../common/FloatingButton";
+import DetailsForm from "./DetailsForm";
+import { initT, t, useT } from "../../../../utils/intl";
+import { compact } from "../../../../utils/arrayUtils";
+import { format, isRoot } from "../../../../utils/elementUtils";
 
-class ElementDetails extends Component {
-  meta = [
-    { label: "name", value: "name" },
-    { label: "type", value: "type" },
-    {
-      label: "labels",
-      value: "labels",
-      format: (labels) => labels && labels.join(", "),
-    },
-    {
-      label: "createdAt",
-      value: "createdAt",
-      format: formatToDate,
-      type: "date",
-    },
-    {
-      label: "updatedAt",
-      value: "updatedAt",
-      format: formatToDate,
-      type: "date",
-    },
+const ElementDetails = ({ element, edit, doSubmit, onEdit, onCancel }) => {
+  initT(useT(), "elementDetails");
+  const [onSubmit, setOnSubmit] = useState();
+
+  const handleInitForm = (onSubmitFnc) => {
+    setOnSubmit(() => (e) => onSubmitFnc(e));
+    return doSubmit;
+  };
+
+  const fElement = format(element, { ignoreEmptyValue: edit });
+
+  if (edit) fElement.labels = element.labels;
+
+  let buttons = [
+    <FloatingButton
+      key="submit"
+      text={edit ? t("save") : t("edit")}
+      variant={edit ? "success" : ""}
+      icon={edit ? "check" : "pen"}
+      onClick={(e) => {
+        if (edit) {
+          const isSubmited = onSubmit(e);
+          if (!isSubmited) return;
+        }
+        onEdit();
+      }}
+    />,
+    edit && (
+      <FloatingButton
+        key="cancel"
+        text={t("cancel")}
+        variant={"danger"}
+        icon={"times"}
+        onClick={() => onCancel()}
+      />
+    ),
   ];
+  buttons = compact(buttons);
 
-  renderEdit({ label, value, type, render }) {
-    return (
-      <Form onSubmit={this.props.onSubmit}>
-        <Form.Row className="my-1">
-          <Col xs={5}>
-            <span className="text-muted">{label}</span>
-          </Col>
-          <Col xs={7}>
-            {(render && render({ value, label })) || (
-              <Form.Control
-                size="sm"
-                type={type || "text"}
-                placeholder={label}
-                value={value}
-              />
-            )}
-          </Col>
-        </Form.Row>
-      </Form>
-    );
-  }
-
-  renderDefault({ label, value, format }) {
-    const placeholder = "-";
-
-    return (
-      <Row className="my-1">
-        <Col xs={5}>
-          <span className="text-muted">{label}</span>
-        </Col>
-        <Col xs={7}>
-          <span>{(format && format(value)) || value || placeholder}</span>
-        </Col>
-      </Row>
-    );
-  }
-
-  render() {
-    const { selectedElement, edit } = this.props;
-    initT(this.props.t, "elementDetails");
-
-    return (
-      <Container>
-        {this.meta.map((props) => {
-          props = { ...props };
-          props.label = t(props.label);
-          props.value = selectedElement[props.value];
-
-          return (edit && this.renderEdit(props)) || this.renderDefault(props);
-        })}
-      </Container>
-    );
-  }
-}
-
-ElementDetails.propTypes = {
-  selectedElement: PropTypes.object.isRequired,
-  edit: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  return (
+    <Container className="p-3 section-content overflow-auto">
+      <DetailsForm element={fElement} edit={edit} onInitForm={handleInitForm} />
+      {!isRoot(element) && (
+        <FloatingGroup bottom right>
+          {buttons}
+        </FloatingGroup>
+      )}
+    </Container>
+  );
 };
 
-export default withTranslation()(ElementDetails);
+ElementDetails.propTypes = {
+  element: PropTypes.object.isRequired,
+  edit: PropTypes.bool.isRequired,
+  onEdit: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({ archive }) => {
+  return {
+    docVersion: archive.workVersion,
+  };
+};
+
+export default connect(mapStateToProps)(ElementDetails);

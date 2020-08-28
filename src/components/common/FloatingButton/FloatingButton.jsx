@@ -1,9 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import FontAwesome from "react-fontawesome";
 import PropTypes from "prop-types";
-import style from "./FloatingButton.module.css";
+import FloatingGroupComp from "./FloatingGroup";
+import Icon from "./../Icon";
 import { join } from "./../../../utils/arrayUtils";
+import { generateKey } from "./../../../utils/componentUtils";
+import style from "./FloatingButton.module.css";
 
 const FloatingButton = ({
   text,
@@ -23,9 +25,14 @@ const FloatingButton = ({
     right && style["right"],
   ];
   const content = [
-    <span className={style["btn-text"]}>{text}</span>,
+    <span
+      key={generateKey("float_btn_text", icon, true)}
+      className={style["btn-text"]}
+    >
+      {text}
+    </span>,
     " ",
-    <FontAwesome name={icon} />,
+    <Icon key={generateKey("float_btn_icon", icon, true)} name={icon} />,
   ];
 
   return (
@@ -51,3 +58,5 @@ FloatingButton.propTypes = {
 };
 
 export default FloatingButton;
+
+export const FloatingGroup = FloatingGroupComp;

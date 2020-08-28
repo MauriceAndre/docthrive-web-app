@@ -1,0 +1,31 @@
+.breadcrumb ol {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0;
+}
+
+.breadcrumb li:before {
+  /* chevron-right icon */
+  font-family: "FontAwesome";
+  content: "\f054" !important;
+  font-weight: 100;
+}
+
+.breadcrumb li:first-of-type:before {
+  /* chevron-right icon */
+  content: "" !important;
+}
+
+.breadcrumb li > a,
+.breadcrumb li {
+  color: inherit;
+  font-weight: 300;
+}
+
+@media (max-width: 992px) {
+  .breadcrumb ol {
+    padding-left: 0.4rem;
+  }
+}

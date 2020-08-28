@@ -7,3 +7,7 @@
 .toolbar {
   flex: 0 0 var(--toolbar-h) !important;
 }
+
+.breadcrumb-bar {
+  flex: 0 0 var(--breadcrumb-bar-h) !important;
+}

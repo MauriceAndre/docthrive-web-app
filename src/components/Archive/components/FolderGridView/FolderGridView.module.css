@@ -1,0 +1,28 @@
+.card {
+  height: 3rem;
+  width: 48%;
+  margin: 1%;
+  cursor: pointer;
+}
+
+@media (min-width: 1300px) {
+  .card {
+    width: 32%;
+    margin: 0.5%;
+  }
+}
+
+.card:hover {
+  background-color: lightgray;
+}
+
+.body {
+  position: relative;
+  overflow: hidden;
+}
+
+.text {
+  position: absolute;
+  top: 25%;
+  white-space: nowrap;
+}

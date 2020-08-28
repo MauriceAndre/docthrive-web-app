@@ -5,11 +5,19 @@ export const parseToDateTime = function (date, time) {
 };
 
 export const formatToDate = function (date) {
-  return moment(new Date(date)).format("DD.MM.YYYY");
+  return format(date, "DD.MM.YYYY");
 };
 
 export const formatToTime = function (date) {
-  return moment(new Date(date)).format("HH:mm");
+  return format(date, "HH:mm");
+};
+
+export const formatToDateTime = function (date) {
+  return format(date, "DD.MM.YYYY HH:mm");
+};
+
+export const format = function (date, pattern) {
+  return date ? moment(new Date(date)).format(pattern) : null;
 };
 
 export default {

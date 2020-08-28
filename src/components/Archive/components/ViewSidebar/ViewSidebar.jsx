@@ -1,68 +1,95 @@
-import React, { Component } from "react";
+import React, { Fragment } from "react";
+import useViews from "./useViews";
 import { Accordion, Card, ListGroup, Container } from "react-bootstrap";
-import TreeView from "../../../common/TreeView";
-import { withTranslation } from "react-i18next";
-import { initT, t } from "../../../../utils/intl";
-import style from "./ViewSidebar.module.css";
+import Icon from "./../../../common/Icon";
+import { t } from "../../../../utils/intl";
 import { join } from "./../../../../utils/arrayUtils";
+import config from "./../../../../services/configService";
+import style from "./ViewSidebar.module.css";
 
-class ViewSidebar extends Component {
-  render() {
-    const { tree, selectedElement, onTreeSelect } = this.props;
-    initT(this.props.t, "archivSidebar");
+const viewSidebarConf = config.default.viewSidebar;
+const viewsKey = viewSidebarConf.viewsKey;
+const defaultView = viewSidebarConf.view;
+
+const ViewSidebar = (props) => {
+  const { views, view, setView, activeKey, setActiveKey } = useViews(
+    defaultView
+  );
+
+  const onToggle = (key) => setActiveKey(key);
+
+  const renderView = ({ icon, text, key, content }) => {
+    const Component = content.component;
 
     return (
-      <Container className="section-content p-3">
-        <Accordion
-          defaultActiveKey="archive"
-          className={join(["section section-column", style.accordion])}
+      <Fragment>
+        <Accordion.Toggle
+          as={Card.Header}
+          eventKey={key}
+          className="bg-dark text-white p-2"
+          onClick={() => onToggle(key)}
         >
-          <Card>
-            <Accordion.Toggle
-              as={Card.Header}
-              eventKey="views"
-              className="bg-dark text-white p-2"
-            >
-              {t("tabs.views")}
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="views">
-              <ListGroup variant="flush">
-                <ListGroup.Item action>{t("views.labels")}</ListGroup.Item>
-                <ListGroup.Item action>{t("views.tree")}</ListGroup.Item>
-                <ListGroup.Item action>{t("views.date")}</ListGroup.Item>
-              </ListGroup>
-            </Accordion.Collapse>
-          </Card>
-          <Card className="section-wrapper section-fill section section-column">
-            <Accordion.Toggle
-              as={Card.Header}
-              eventKey="archive"
-              className="bg-dark text-white p-2"
-            >
-              {t("views.tree")}
-            </Accordion.Toggle>
-            <Accordion.Collapse
-              eventKey="archive"
-              className="section-wrapper section-fill"
-            >
-              <Card.Body
-                className={[
-                  "overflow-auto section-content p-2",
-                  style["view-body"],
-                ]}
-              >
-                <TreeView
-                  tree={tree}
-                  selected={selectedElement}
-                  onSelect={onTreeSelect}
-                />
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
-      </Container>
+          <Icon name={icon} text={text} />
+        </Accordion.Toggle>
+        <Accordion.Collapse
+          eventKey={key}
+          className="section-wrapper section-fill"
+        >
+          <Card.Body
+            className={[
+              "overflow-auto section-content p-2",
+              style["view-body"],
+            ]}
+          >
+            {Component ? <Component /> : null}
+          </Card.Body>
+        </Accordion.Collapse>
+      </Fragment>
     );
-  }
-}
+  };
 
-export default withTranslation()(ViewSidebar);
+  return view ? (
+    <Container className="section-content p-3">
+      <Accordion
+        activeKey={activeKey}
+        defaultActiveKey={view.key}
+        className={join(["section section-column", style.accordion])}
+      >
+        <Card>
+          <Accordion.Toggle
+            as={Card.Header}
+            eventKey={viewsKey}
+            className="bg-dark text-white p-2"
+            onClick={() => onToggle(viewsKey)}
+          >
+            {t("tabs.views")}
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey={viewsKey}>
+            <ListGroup variant="flush">
+              {views.map((view) => {
+                const { key, icon, text } = view;
+                return (
+                  <ListGroup.Item
+                    key={key}
+                    action
+                    onClick={() => {
+                      setView(view);
+                      setActiveKey(key);
+                    }}
+                  >
+                    <Icon name={icon} text={text} />
+                  </ListGroup.Item>
+                );
+              })}
+            </ListGroup>
+          </Accordion.Collapse>
+        </Card>
+        <Card className="section-wrapper section-fill section section-column">
+          {renderView(view)}
+        </Card>
+      </Accordion>
+    </Container>
+  ) : null;
+};
+
+export default ViewSidebar;

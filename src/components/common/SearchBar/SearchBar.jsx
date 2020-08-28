@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, InputGroup, FormControl, Button } from "react-bootstrap";
-import FontAwesome from "react-fontawesome";
-import style from "./SearchBar.module.css";
+import Icon from "./../Icon/Icon";
 import { useT, initT, t } from "../../../utils/intl";
+import style from "./SearchBar.module.css";
 
 function SearchBar() {
   initT(useT(), "searchBar");
@@ -20,7 +20,7 @@ function SearchBar() {
             variant="light"
             className={["border-left-0 bg-white", style["search-btn"]]}
           >
-            <FontAwesome name="search" />
+            <Icon name="search" />
           </Button>
         </InputGroup.Append>
       </InputGroup>

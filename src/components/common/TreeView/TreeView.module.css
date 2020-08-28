@@ -2,15 +2,8 @@
 .tree-view {
   /* ---------- icons ---------- */
   --font-family-icons: "FontAwesome";
-  /* folder-icon */
-  --folder-close-icon: "\f07b";
-  --folder-open-icon: "\f07c";
-  /* file icon */
-  --file-default-icon: "\f15b";
-  --file-word-icon: "\f1c2";
   /* other */
   --caret-right-icon: "\f0da";
-  --archive-icon: "\f187";
 
   /* ----------- font ----------- */
   /* default */
@@ -27,8 +20,8 @@
   --selected-bg-color: gray;
   /* icons */
   --caret-color: black;
-  --file-color: cornflowerblue;
-  --folder-color: var(--default-color);
+  /* --document-color: cornflowerblue;
+  --folder-color: var(--default-color); */
 }
 
 /* The list style
@@ -53,9 +46,13 @@
 }
 
 /* archive */
-.archive-icon {
+.root-li {
   font-size: 1rem;
   font-weight: bold;
+}
+
+.root-li.selected {
+  font-weight: 600;
 }
 
 /* folder */
@@ -71,20 +68,28 @@
   display: block;
 }
 
+.folder-icon {
+  margin-right: 5px;
+}
+
+.folder-badge {
+  margin-left: 5px;
+}
+
 /* hover */
-.file-icon:hover,
-.folder-icon:hover,
-.archive-icon:hover {
+.document-li:hover,
+.folder-content:hover,
+.root-li:hover {
   color: var(--hover-color);
   background-color: var(--hover-bg-color);
 }
 
 /* selected */
-.file > .selected,
-.file > .selected:before,
-.folder-content.selected > .folder-icon,
-.folder-content.selected > .folder-icon:before,
-.archive-icon.selected {
+.document > .selected,
+.document > .selected:before,
+.folder-li.selected > .folder-content,
+.folder-li.selected > .folder-content,
+.root-li.selected {
   color: var(--selected-color);
   background-color: var(--selected-bg-color);
 }
@@ -92,23 +97,12 @@
 /* The icons
     -------------------------------------------------------------- */
 
-.archive-icon,
-.folder-icon,
-.file-icon {
+.root-li,
+.folder-content,
+.document-li {
   width: 100%;
-}
-
-.archive-icon:before,
-.folder-icon:before,
-.file-icon:before {
-  font-family: var(--font-family-icons);
   margin-right: 5px;
   padding-left: 5px;
-}
-
-/* archive */
-.archive-icon:before {
-  content: var(--archive-icon);
 }
 
 /* caret icon */
@@ -121,22 +115,6 @@
   color: var(--caret-color);
 }
 
-.folder.show > .folder-content .caret-icon:before {
+.folder.show > .folder-li .caret-icon:before {
   transform: rotate(45deg);
-}
-
-/* folder */
-.folder-icon:before {
-  content: var(--folder-close-icon);
-  color: var(--folder-color);
-}
-
-.folder.show > .folder-content .folder-icon:before {
-  content: var(--folder-open-icon);
-}
-
-/* file */
-.file-icon:before {
-  content: var(--file-default-icon);
-  color: var(--file-color);
 }

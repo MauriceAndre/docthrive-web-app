@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "DocThrive"
+  },
+  "validation": {
+    "element": {
+      "name": {
+        "min": 1,
+        "max": 50
+      }
+    },
+    "user": {
+      "firstName": {
+        "min": 3,
+        "max": 30,
+        "required": true
+      },
+      "lastName": {
+        "min": 3,
+        "max": 30,
+        "required": true
+      },
+      "email": {
+        "min": 3,
+        "max": 255,
+        "required": true
+      },
+      "password": {
+        "min": 3,
+        "max": 255,
+        "required": true
+      }
+    }
+  },
+  "default": {
+    "types": {
+      "folder": 258,
+      "document": 1
+    },
+    "contentView": { "key": "list", "icon": "list" },
+    "contentSorting": {
+      "key": "name",
+      "order": {
+        "key": "asc",
+        "icon": "sort-amount-up-alt"
+      }
+    },
+    "metaSidebar": {
+      "tabKey": "details"
+    },
+    "viewSidebar": {
+      "view": "tree",
+      "viewsKey": "views"
+    }
+  },
+  "archive": {
+    "rootElement": {
+      "_id": "1",
+      "name": "archive",
+      "type": {
+        "_id": 257,
+        "name": "root",
+        "icon": "archive"
+      }
+    },
+    "views": {
+      "grid": {
+        "maxChars": 22,
+        "placeholder": "..."
+      }
+    }
+  },
+  "components": {
+    "list": {
+      "maxChars": 40,
+      "placeholder": "..."
+    }
+  }
+}

@@ -1,8 +1,57 @@
 {
-  "mainNavbar": {
-    "uploadBtn": {
-      "label": "Hochladen"
+  "elementActions": {
+    "CREATE": {
+      "title": "Erstellt",
+      "text": "Sie haben das Element erstellt."
     },
+    "RENAME": {
+      "title": "Umbennant",
+      "text": "Sie haben das Element von <% strong {{before.name}} %> zu <% strong {{after.name}} %> umbenannt."
+    },
+    "EDIT_META": {
+      "title": "Details bearbeitet",
+      "text": "Sie haben die Details des Elements bearbeitet."
+    },
+    "MOVE": {
+      "title": "Verschoben",
+      "text": "Sie haben das Element von <% strong {{before.parentId}} %> nach <% strong {{after.parentId}} %> verschoben."
+    },
+    "DELETE": {
+      "title": "Gelöscht",
+      "text": "Sie haben das Element gelöscht."
+    }
+  },
+  "elementTypes": {
+    "file": "Dokument",
+    "pdf": "PDF",
+    "word": "Word",
+    "root": "Archiv",
+    "folder": "Ordner"
+  },
+  "register": {
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "password": "Password",
+    "confPassword": "Password bestätigen",
+    "return": "Zurück",
+    "submit": "Registrieren",
+    "register": "Registrierung",
+    "feedback": {
+      "succ": "Erfolgreich registriert! :D"
+    }
+  },
+  "login": {
+    "login": "Anmeldung",
+    "email": "E-Mail",
+    "password": "Password",
+    "submit": "Anmelden"
+  },
+  "element": {
+    "name": "Bezeichnung",
+    "labels": "Etiketts"
+  },
+  "mainNavbar": {
     "newDocDropdown": {
       "template": "Vorlage",
       "word": "Word",
@@ -21,6 +70,7 @@
   "labelSelect": {
     "noLabelMsg": "Kein Etikett gefunden",
     "createLabelMsg": "Erstelle",
+    "placeholder": "Auswählen...",
     "options": {
       "invoice": "Rechnung",
       "contract": "Vertrag",
@@ -44,11 +94,114 @@
     "name": "Bezeichnung",
     "type": "Typ",
     "labels": "Etiketts",
+    "docVersion": "Version",
     "createdAt": "Erstellt am",
-    "updatedAt": "Geändert am"
+    "updatedAt": "Geändert am",
+    "edit": "bearbeiten",
+    "save": "speichern",
+    "cancel": "abbrechen",
+    "feedback": {
+      "succ": "Details erfolgreich gespeichert"
+    }
   },
   "metaSidebar": {
     "details": "Details",
-    "history": "Verlauf"
+    "activities": "Aktivitäten"
+  },
+  "documentContent": {
+    "fullscreen": "Vollbild"
+  },
+  "toolbar": {
+    "move": "Verschieben",
+    "copy": "Kopieren",
+    "delete": "Löschen",
+    "newFolder": "Neuer Ordner",
+    "rename": "Umbennen",
+    "showMeta": "Zeige Info",
+    "sort": {
+      "text": "Sortieren",
+      "options": {
+        "type": "Typ",
+        "name": "Bezeichnung",
+        "date": "Datum",
+        "asc": "Aufsteigend",
+        "desc": "Absteigend"
+      }
+    },
+    "view": {
+      "text": "Ansicht",
+      "options": {
+        "list": "Liste",
+        "grid": "Kachel"
+      }
+    }
+  },
+  "moveElement": {
+    "description": "Bitte wählen sie das Ziel aus",
+    "title": "Element verschieben",
+    "cancel": "abbrechen",
+    "move": "verschieben",
+    "feedback": { "succ": "Element \"{{name}}\" verschoben" }
+  },
+  "deleteElement": {
+    "title": "Element löschen",
+    "cancel": "Nein",
+    "delete": "Ja",
+    "description": "Möchten Sie das Element <% strong {{name}} %> löschen?",
+    "feedback": { "succ": "Element \"{{name}}\" gelöscht" }
+  },
+  "copyElement": {
+    "description": "Bitte wählen sie das Ziel aus",
+    "title": "Element kopieren",
+    "cancel": "abbrechen",
+    "paste": "einfügen",
+    "feedback": { "succ": "Element \"{{name}}\" kopiert" }
+  },
+  "createFolder": {
+    "title": "Neuer Ordner",
+    "cancel": "abbrechen",
+    "create": "erstellen",
+    "feedback": {
+      "succ": "Neuer Ordner \"{{name}}\" erstellt"
+    }
+  },
+  "renameElement": {
+    "title": "Element umbennen",
+    "cancel": "abbrechen",
+    "rename": "umbennen",
+    "feedback": {
+      "succ": "Element \"{{name}}\" umbennant"
+    }
+  },
+  "elementForm": {
+    "name": "Bezeichung",
+    "labels": "Etiketts",
+    "parentId": "Ziel"
+  },
+  "folderListView": {
+    "type": "Typ",
+    "name": "Bezeichnung",
+    "date": "Datum",
+    "labels": "Etiketts"
+  },
+  "uploadButton": {
+    "label": "Hochladen"
+  },
+  "uploadDocuments": {
+    "title": "Dokumente hochladen",
+    "cancel": "abbrechen",
+    "upload": "hochladen",
+    "labels": "Etiketts",
+    "parentId": "Ziel",
+    "selectedFilesDesc": "Sie haben {{count}} dokumente ausgewählt",
+    "feedback": {
+      "succ": "{{count}} Dokumente hochgeladen"
+    }
+  },
+  "dropzone": {
+    "desc": "Drag & Drop hier oder klicke um Dateien auszuwählen"
+  },
+  "elementActivity": {
+    "noActivities": "Keine Aktivitäten gefunden"
   }
 }

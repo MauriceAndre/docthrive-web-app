@@ -1,0 +1,25 @@
+.context-menu {
+  position: absolute;
+  width: 13rem;
+}
+
+.header {
+  height: 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(245, 245, 245) !important;
+  color: rgb(83, 83, 83) !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .context-menu {
+    left: 0 !important;
+    width: 100%;
+  }
+}

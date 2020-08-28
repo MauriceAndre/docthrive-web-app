@@ -1,32 +1,30 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withTranslation } from "react-i18next";
 import Select from "react-select";
 import Creatable from "react-select/creatable";
-import { withTranslation } from "react-i18next";
 import { initT, t } from "../../../utils/intl";
-import { getAllLabels, saveLabel } from "../../../services/labelService";
+import { toArray } from "../../../utils/arrayUtils";
+import { saveLabel } from "../../../services/labelService";
 import PropTypes from "prop-types";
 
 class LabelSelect extends Component {
-  state = {
-    labels: [],
-  };
-
-  componentDidMount = async () => {
-    const labels = await this.loadLabels();
-    this.setState({ labels });
-  };
-
-  loadLabels = async () => {
-    let labels = await getAllLabels();
+  loadLabels = () => {
+    let { labels } = this.props;
     labels = labels.map((label) => this.mapToViewModel(label));
     return labels;
   };
 
-  mapToViewModel({ custom, name, id }) {
+  mapToViewModel({ custom, name, _id }) {
     return {
       label: custom ? name : t(`options.${name}`),
-      value: id,
+      value: _id,
     };
+  }
+
+  mapToDataModel({ value }) {
+    let { labels } = this.props;
+    return labels.find((label) => label._id === value);
   }
 
   handleCreateLabel = async (label) => {
@@ -35,17 +33,25 @@ class LabelSelect extends Component {
     this.setState({ labels });
   };
 
+  handleChange = (option) => {
+    option = toArray(option);
+    option = option.map((label) => this.mapToDataModel(label));
+    this.props.onChange(option);
+  };
+
   render() {
-    const { labels } = this.state;
-    const { multi, creatable, selectedOption, onChange } = this.props;
+    const { multi, creatable, selectedOption = [] } = this.props;
     initT(this.props.t, "labelSelect");
+    const labels = this.loadLabels();
+    const value = selectedOption.map((label) => this.mapToViewModel(label));
 
     const props = {
       isMulti: multi,
-      value: selectedOption,
-      onChange: onChange,
+      value,
+      onChange: this.handleChange,
       options: labels,
       noOptionsMessage: () => t("noLabelMsg"),
+      placeholder: t("placeholder"),
     };
 
     return creatable ? (
@@ -63,8 +69,12 @@ class LabelSelect extends Component {
 LabelSelect.propTypes = {
   multi: PropTypes.bool,
   creatable: PropTypes.bool,
-  selectedOption: PropTypes.array.isRequired,
+  selectedOption: PropTypes.array,
   onChange: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(LabelSelect);
+const mapStateToProps = ({ archive }) => {
+  return { labels: archive.labels };
+};
+
+export default withTranslation()(connect(mapStateToProps)(LabelSelect));

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Row, Button, Dropdown, Col } from "react-bootstrap";
-import FontAwesome from "react-fontawesome";
-import style from "./Tools.module.css";
-import { useT, initT, t } from "../../../../utils/intl";
 import TemplateModal from "../../../common/TemplateModal";
+import UploadButton from "./../../../common/UploadButton";
+import Icon from "./../../../common/Icon";
+import { useT, initT, t } from "../../../../utils/intl";
 
 function Tools() {
   initT(useT(), "mainNavbar");
@@ -15,24 +15,17 @@ function Tools() {
   return (
     <Row className="justify-content-between align-items-center">
       <Col xs={8} md={6} lg={8} className="mb-2 my-md-0">
-        <Button
-          variant="outline-primary"
-          size="sm"
-          className={style["upload-btn"]}
-          type="submit"
-        >
-          {t("uploadBtn.label")}
-        </Button>
+        <UploadButton />
       </Col>
       <Col xs={2} md={3} lg={2} className="mb-2 my-md-0">
-        <Button variant="outline-dark" size="sm" type="submit">
-          <FontAwesome name="bell" />
+        <Button variant="outline-dark" size="sm" type="submit" disabled>
+          <Icon name="bell" />
         </Button>
       </Col>
       <Col xs={2} md={3} lg={2} className="mb-2 my-md-0">
         <Dropdown alignRight>
-          <Dropdown.Toggle size="sm">
-            <FontAwesome name="plus" />
+          <Dropdown.Toggle size="sm" disabled>
+            <Icon name="plus" />
           </Dropdown.Toggle>
           <Dropdown.Menu className="text-center">
             <Dropdown.Item onClick={handleShow}>
