@@ -55,8 +55,8 @@ class Register extends Form {
       };
       exec().catch((ex) => {
         handleCatch(ex);
-        this.setState({ loading: false });
-      });
+      }).finally(() => 
+      this.setState({ loading: false }));
 
       return;
     }
