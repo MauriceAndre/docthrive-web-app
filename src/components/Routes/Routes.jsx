@@ -7,6 +7,7 @@ import Archive from "../Archive/Archive";
 import Register from "./../Register";
 import Login from "./../Login";
 import Logout from "./../Logout";
+import Confirm from "./../Confirm";
 import MainNavbar from "./../MainNavbar/MainNavbar";
 import Home from "./../Home";
 
@@ -22,6 +23,7 @@ const Routes = () => {
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
+      <Route path="/confirm/:id" component={Confirm} />
       <Route path="/not-found" component={NotFound} />
       <Route exact path="/" component={Home} />
       <Redirect to="/not-found" />
