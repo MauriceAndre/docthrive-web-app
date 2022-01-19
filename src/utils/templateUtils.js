@@ -1,7 +1,8 @@
 import React from "react";
-import Handlebars from "handlebars";
+import Handlebars from 'handlebars/dist/handlebars.min.js';
 import { indexOf } from "./stringUtils";
 import { remove } from "./arrayUtils";
+
 
 const seperator = {
   start: "<%",
